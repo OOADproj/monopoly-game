@@ -1,0 +1,219 @@
+package monopoly;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class StartFrame extends JFrame
+{
+    private JTextField P1Name = new JTextField();
+    private JTextField P2Name = new JTextField();
+    private JTextField P3Name = new JTextField();
+    private JTextField P4Name = new JTextField();
+    private JTextField playerNumber = new JTextField();
+    
+    private JLabel P1NameLbl = new JLabel("Player 1");
+    private JLabel P2NameLbl = new JLabel("Player 2");
+    private JLabel P3NameLbl = new JLabel("Player 3");
+    private JLabel P4NameLbl = new JLabel("Player 4");
+    private JLabel playerNumberLbl = new JLabel("number of Players");
+    
+    private JButton Btn1 = new JButton("Start Game");
+    private JButton Btn2 = new JButton("Set number");
+    
+    private int n;
+    public StartFrame()
+    {
+        Container c = getContentPane();
+        setContentPane(new JLabel(new ImageIcon("Background2.jpg")));
+        setSize(1000,730);
+        setTitle("Monopoly");
+        setLocation(150,0);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        
+        setLayout(null);
+        
+        P1Name.setEditable(false);
+        P2Name.setEditable(false);
+        P3Name.setEditable(false);
+        P4Name.setEditable(false);
+        
+        P1Name.setBounds(600,250,180,30);
+        P2Name.setBounds(600,290,180,30);
+        P3Name.setBounds(600,330,180,30);
+        P4Name.setBounds(600,370,180,30);
+        playerNumber.setBounds(750, 410,30,30);
+        
+        P1NameLbl.setBounds(785,250,100,30);
+        P1NameLbl.setForeground(Color.red);
+        
+        P2NameLbl.setBounds(785,290,100,30);
+        P2NameLbl.setForeground(Color.red);
+        
+        P3NameLbl.setBounds(785,330,100,30);
+        P3NameLbl.setForeground(Color.red);
+        
+        P4NameLbl.setBounds(785,370,100,30);
+        P4NameLbl.setForeground(Color.red);
+        
+        playerNumberLbl.setBounds(785,410,150,20);
+        playerNumberLbl.setForeground(Color.red);
+        
+        add(P1Name);
+        add(P2Name);
+        add(P3Name);
+        add(P4Name);
+        add(playerNumber);
+        
+        add(P1NameLbl);
+        add(P2NameLbl);
+        add(P3NameLbl);
+        add(P4NameLbl);
+        add(playerNumberLbl);
+        
+        add(Btn1);
+        add(Btn2);
+        
+        Btn1.setBounds(430,470,120,30);
+        Btn2.setBounds(600,410,140,30);
+        
+        Btn1.addActionListener(new Btn1Listener());
+        Btn2.addActionListener(new Btn2Listener());
+    }
+    
+    class Btn1Listener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            String[] names = new String[n];
+            boolean startFlag = false;
+            
+            if(n == 2)
+            {
+                if(P1Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
+                
+                else
+                    names[0] = P1Name.getText();
+                
+                if(P2Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
+                
+                else
+                {
+                    names[1] = P2Name.getText();
+                    startFlag = true;
+                }
+            }
+            
+            else if(n == 3)
+            {
+                if(P1Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
+                
+                else
+                    names[0] = P1Name.getText();
+                
+                if(P2Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
+                
+                else
+                    names[1] = P2Name.getText();
+                
+                if(P3Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 3!");
+                
+                else
+                {
+                    names[2] = P3Name.getText();
+                    startFlag = true;
+                }
+            }
+            
+            else if(n == 3)
+            {
+                if(P1Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
+                
+                else
+                    names[0] = P1Name.getText();
+                
+                if(P2Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
+                
+                else
+                    names[1] = P2Name.getText();
+                
+                if(P3Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 3!");
+                
+                else
+                    names[2] = P3Name.getText();
+                
+                if(P4Name.getText().equals(""))
+                    JOptionPane.showMessageDialog(null, "Enter a name for player 4!");
+                
+                else
+                {
+                    names[3] = P4Name.getText();
+                    startFlag = true;
+                }
+            }
+            
+            if(startFlag)
+            {
+                Game Monopoly = new Game(n,names);
+                setVisible(false);
+            }
+        }
+    }
+    
+    class Btn2Listener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            try
+            {
+                n = Integer.parseInt(playerNumber.getText());
+                if(n <= 0 || n > 4 || n == 1)
+                    JOptionPane.showMessageDialog(null, "Enter a number between 2 and 4!");
+                
+                else
+                {
+                    if(n == 2)
+                    {
+                        P1Name.setEditable(true);
+                        P2Name.setEditable(true);
+                        P3Name.setEditable(false);
+                        P4Name.setEditable(false);
+                    }
+                    
+                    else if(n == 3)
+                    {
+                        P1Name.setEditable(true);
+                        P2Name.setEditable(true);
+                        P3Name.setEditable(true);
+                        P4Name.setEditable(false);
+                    }
+                    
+                    else if(n == 4)
+                    {
+                        P1Name.setEditable(true);
+                        P2Name.setEditable(true);
+                        P3Name.setEditable(true);
+                        P4Name.setEditable(true);
+                    }
+                }
+
+            }
+            
+            catch(Exception E)
+            {
+                JOptionPane.showMessageDialog(null, "Enter a number!");
+            }
+        }
+    }
+}
