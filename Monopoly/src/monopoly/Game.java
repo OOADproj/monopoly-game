@@ -33,30 +33,29 @@ public class Game extends JFrame
     private Player p3;
     private Player p4;
     private Player currPlayer;
-    private int current;
-    private int numberOfPlayers = 4;
+    private int current = 0;
+    private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
     private ArrayList<Location> Countries = new ArrayList();
     
     private Die Dice = new Die();
     int DiceRoll;
+    
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
  
-    public Game() {initializePlayers(); initializeCountries(); initializeComponents(); startGame();} 
+    public Game(int n,String[] names)
+    {
+        numberOfPlayers = n;
+        initializePlayers(n,names);
+        initializeCountries(); 
+        initializeComponents(); 
+        startGame();
+    } 
     
     public void initializeComponents() 
     {
-        P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
-        P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
-        P3Lbl = new JLabel(p3.getName()+" : $"+p3.getMoney());
-        P4Lbl = new JLabel(p4.getName()+" : $"+p4.getMoney());
-        TitledBorder P1Title = BorderFactory.createTitledBorder(p1.getName()+" Properties");
-        TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
-        TitledBorder P3Title = BorderFactory.createTitledBorder(p3.getName()+" Properties");
-        TitledBorder P4Title = BorderFactory.createTitledBorder(p4.getName()+" Properites");
         TitledBorder InfoTitle = BorderFactory.createTitledBorder("Tile Info");
-        
         c = getContentPane(); 
         setSize(1000,730);
         setTitle("Monopoly");
@@ -65,46 +64,6 @@ public class Game extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Data.setPreferredSize(new Dimension(293,700));
-        Data.add(P1Lbl); 
-        Data.add(P1Owned);
-        Data.add(P2Lbl); 
-        Data.add(P2Owned);
-        Data.add(P3Lbl); 
-        Data.add(P3Owned);
-        Data.add(P4Lbl); 
-        Data.add(P4Owned);
-        
-        P1Lbl.setPreferredSize(new Dimension(293,15));
-        P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
-        P2Lbl.setPreferredSize(new Dimension(293,15));
-        P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
-        P3Lbl.setPreferredSize(new Dimension(293,15));
-        P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
-        P4Lbl.setPreferredSize(new Dimension(293,15));
-        P4Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
-        P1Owned.setEditable(false);
-        P1Owned.setBorder(P1Title);
-        P1Owned.setPreferredSize(new Dimension(293,150));
-        P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
-        
-        P2Owned.setEditable(false);
-        P2Owned.setBorder(P2Title);
-        P2Owned.setPreferredSize(new Dimension(293,150));
-        P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
-        
-        P3Owned.setEditable(false);
-        P3Owned.setBorder(P3Title);
-        P3Owned.setPreferredSize(new Dimension(293,150));
-        P3Owned.setFont(new Font("Arial",Font.PLAIN,12));
-        
-        P4Owned.setEditable(false);
-        P4Owned.setBorder(P4Title);
-        P4Owned.setPreferredSize(new Dimension(293,150));
-        P4Owned.setFont(new Font("Arial",Font.PLAIN,12));
         
         Buy.setPreferredSize(new Dimension(80,40));
         Buy.setBounds(270,295,80,40);
@@ -116,6 +75,7 @@ public class Game extends JFrame
         Info.setBorder(InfoTitle);
         
         Board = new Board(Players,numberOfPlayers);
+        Board.repaint();
         Board.add(Buy);
         Board.add(Roll);
         Board.add(InfoButton);
@@ -137,18 +97,160 @@ public class Game extends JFrame
         //motionTimer.start();
     }
     
-    void initializePlayers()
+    void initializePlayers(int n, String[] names)
     {
-        p1 = new Player("Player1","p1.png",640,640);
-        p2 = new Player("Player2","p2.png",667,640);
-        p3 = new Player("Player3","p3.png",640,670);
-        p4 = new Player("Player4","p4.png",667,670);
-        Players.add(p1);
-        Players.add(p2);
-        Players.add(p3);
-        Players.add(p4);
+        if(n == 2)
+        {
+            p1 = new Player(names[0],"p1.png",640,640);
+            p2 = new Player(names[1],"p2.png",667,640);
+            
+            P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
+            P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
+            
+            TitledBorder P1Title = BorderFactory.createTitledBorder(p1.getName()+" Properties");
+            TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
+            
+            Data.add(P1Lbl); 
+            Data.add(P1Owned);
+            Data.add(P2Lbl); 
+            Data.add(P2Owned);
+            
+            P1Lbl.setPreferredSize(new Dimension(293,15));
+            P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P2Lbl.setPreferredSize(new Dimension(293,15));
+            P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            
+            P1Owned.setEditable(false);
+            P1Owned.setBorder(P1Title);
+            P1Owned.setPreferredSize(new Dimension(293,300));
+            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
+        
+            P2Owned.setEditable(false);
+            P2Owned.setBorder(P2Title);
+            P2Owned.setPreferredSize(new Dimension(293,300));
+            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            Players.add(p1);
+            Players.add(p2);
+        }
+        
+        else if(n == 3)
+        {
+            p1 = new Player(names[0],"p1.png",640,640);
+            p2 = new Player(names[1],"p2.png",667,640);
+            p3 = new Player(names[2],"p3.png",640,670);
+            
+            P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
+            P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
+            P3Lbl = new JLabel(p3.getName()+" : $"+p3.getMoney());
+            
+            TitledBorder P1Title = BorderFactory.createTitledBorder(p1.getName()+" Properties");
+            TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
+            TitledBorder P3Title = BorderFactory.createTitledBorder(p3.getName()+" Properties");
+            
+            Data.add(P1Lbl); 
+            Data.add(P1Owned);
+            Data.add(P2Lbl); 
+            Data.add(P2Owned);
+            Data.add(P3Lbl); 
+            Data.add(P3Owned);
+            
+            P1Lbl.setPreferredSize(new Dimension(293,15));
+            P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P2Lbl.setPreferredSize(new Dimension(293,15));
+            P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            
+            P3Lbl.setPreferredSize(new Dimension(293,15));
+            P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P1Owned.setEditable(false);
+            P1Owned.setBorder(P1Title);
+            P1Owned.setPreferredSize(new Dimension(293,200));
+            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
+        
+            P2Owned.setEditable(false);
+            P2Owned.setBorder(P2Title);
+            P2Owned.setPreferredSize(new Dimension(293,200));
+            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            P3Owned.setEditable(false);
+            P3Owned.setBorder(P3Title);
+            P3Owned.setPreferredSize(new Dimension(293,200));
+            P3Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            Players.add(p1);
+            Players.add(p2);
+            Players.add(p3);
+        }
+        
+        else if(n == 4)
+        {
+            p1 = new Player(names[0],"p1.png",640,640);
+            p2 = new Player(names[1],"p2.png",667,640);
+            p3 = new Player(names[2],"p3.png",640,670);
+            p4 = new Player(names[3],"p4.png",667,670);
+            
+            P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
+            P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
+            P3Lbl = new JLabel(p3.getName()+" : $"+p3.getMoney());
+            P4Lbl = new JLabel(p4.getName()+" : $"+p4.getMoney());
+            
+            TitledBorder P1Title = BorderFactory.createTitledBorder(p1.getName()+" Properties");
+            TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
+            TitledBorder P3Title = BorderFactory.createTitledBorder(p3.getName()+" Properties");
+            TitledBorder P4Title = BorderFactory.createTitledBorder(p4.getName()+" Properites");
+            
+            Data.add(P1Lbl); 
+            Data.add(P1Owned);
+            Data.add(P2Lbl); 
+            Data.add(P2Owned);
+            Data.add(P3Lbl); 
+            Data.add(P3Owned);
+            Data.add(P4Lbl); 
+            Data.add(P4Owned);
+        
+            P1Lbl.setPreferredSize(new Dimension(293,15));
+            P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P2Lbl.setPreferredSize(new Dimension(293,15));
+            P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            
+            P3Lbl.setPreferredSize(new Dimension(293,15));
+            P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P4Lbl.setPreferredSize(new Dimension(293,15));
+            P4Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+        
+            P1Owned.setEditable(false);
+            P1Owned.setBorder(P1Title);
+            P1Owned.setPreferredSize(new Dimension(293,150));
+            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
+        
+            P2Owned.setEditable(false);
+            P2Owned.setBorder(P2Title);
+            P2Owned.setPreferredSize(new Dimension(293,150));
+            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            P3Owned.setEditable(false);
+            P3Owned.setBorder(P3Title);
+            P3Owned.setPreferredSize(new Dimension(293,150));
+            P3Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            P4Owned.setEditable(false);
+            P4Owned.setBorder(P4Title);
+            P4Owned.setPreferredSize(new Dimension(293,150));
+            P4Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            
+            Players.add(p1);
+            Players.add(p2);
+            Players.add(p3);
+            Players.add(p4);
+        }
         currPlayer = Players.get(current);
     }
+    
     void initializeCountries()
     {
         Countries.add(new Location("GO"));
@@ -232,6 +334,7 @@ public class Game extends JFrame
             Roll.setEnabled(false);
         }
     }
+    
     class EndButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -246,29 +349,32 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-            boolean Success = currPlayer.Buy();
-            if(currPlayer.getName().equals(p1.getName()) && Success)
+            if(!motionTimer.isRunning())
             {
-                P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
-                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
-            }
-            
-            else if(currPlayer.getName().equals(p2.getName()) && Success)
-            {
-                P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
-            }
-            
-            else if(currPlayer.getName().equals(p3.getName()) && Success)
-            {
-                P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
-            }
-            
-            else if(currPlayer.getName().equals(p4.getName()) && Success)
-            {
-                P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
-                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
+                boolean Success = currPlayer.Buy();
+                if(currPlayer.getName().equals(p1.getName()) && Success)
+                {
+                    P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+                    P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
+                }
+
+                else if(currPlayer.getName().equals(p2.getName()) && Success)
+                {
+                    P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+                    P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
+                }
+
+                else if(currPlayer.getName().equals(p3.getName()) && Success)
+                {
+                    P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+                    P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
+                }
+
+                else if(currPlayer.getName().equals(p4.getName()) && Success)
+                {
+                    P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+                    P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
+                }
             }
         }
     }
