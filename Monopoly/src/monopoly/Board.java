@@ -1,122 +1,47 @@
+
 package monopoly;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.*;
 import javax.swing.event.*;
+import java.util.Timer;
 
 
-public class Board extends JPanel
-{
-    private ArrayList<Player> Players = new ArrayList();
-    private ArrayList<Tile> Tiles = new ArrayList();
-    private int numberOfPlayers;
-    
-    
-    public Board(ArrayList<Player> Players , int numberOfPlayers)
+/**
+ *
+ * @author Mohammed
+ */
+public class Board extends JPanel {
+            
+
+    @Override
+    public void paintComponent(Graphics g)
     {
-        drawBoard();
-        this.Players = Players;
-        this.numberOfPlayers = numberOfPlayers;
-    }
-    
-    public void initComponents()
-    {
+        super.paintComponent(g);
         
-    }
+        
+         ImageIcon Background = new ImageIcon("back.jpg");
+        g.drawImage(Background.getImage(), 0, 0, getWidth(), getHeight(), this); 
+         ImageIcon car1 = new ImageIcon("car1.png");
+        g.drawImage(car1.getImage(), 590, 400, 60, 60, this); 
+         ImageIcon car2 = new ImageIcon("car2.png");
+        g.drawImage(car2.getImage(), 590,490, 60, 60, this); 
+         ImageIcon car3= new ImageIcon("car3.png");
+        g.drawImage(car3.getImage(), 590, 440, 60, 60, this); 
+//       ImageIcon die = new ImageIcon(dice[index]);
+//       
+//        g.drawImage(die.getImage(), 100, 100, 100, 100, this); 
+        
+       
+        
+    }    
     
-    public void drawBoard()
-    {
-        setLayout(null);
-        int x = 615;
-        int y = 615;
-        Tile t = null;
-        for(int i=0 ; i < 40 ; i++)
-        {
-            if(i >= 0 && i <= 10)
-            {
-                if(i == 0)
-                {
-                    t = new Tile(i+1+".png",x,y,85,85);
-                    x -= 58;
-                }
-                
-                else if( i == 10)
-                {
-                    t = new Tile(i+1+".png",x,y,85,85);
-                    y -= 58;
-                }
-                
-                else
-                {
-                    if(i == 9)
-                    {
-                        t = new Tile(i+1+".png",x,y,58,85);
-                        x -= 85;
-                    }
-                    
-                    else
-                    {
-                        t = new Tile(i+1+".png",x,y,58,85);
-                        x -= 58;
-                    }
-                }
-            }
-            
-            else if(i >= 11 && i <= 20)
-            {            
-                if( i == 20)
-                {
-                    t = new Tile(i+1+".png",x,y,85,85);
-                    x += 85;
-                }
-                
-                else
-                {
-                    if(i == 19)
-                    {
-                        t = new Tile(i+1+".png",x,y,85,58);
-                        y -= 85;
-                    }
-                    
-                    else
-                    {
-                        t = new Tile(i+1+".png",x,y,85,58);
-                        y -= 58;
-                    }
-                }
-            }
-            
-            else if(i >= 21 && i <= 30)
-            {            
-                if( i == 30)
-                {
-                    t = new Tile(i+1+".png",x,y,85,85);
-                    y += 85;
-                }
-                
-                else
-                {
-                    t = new Tile(i+1+".png",x,y,58,85);
-                    x += 58;                   
-                }
-            }
-            
-            else if(i >= 31 && i <= 39)
-            {            
-                t = new Tile(i+1+".png",x,y,85,58);
-                y += 58;
-            }
-            
-            add(t);
-            Tiles.add(t);
-        }      
-    }
     
-    public void paint(Graphics g)
-    {
-        super.paint(g);
-        for(int i=0 ; i < numberOfPlayers ; i++)
-            Players.get(i).draw(g, this);
-    }
+    
+    
 }
