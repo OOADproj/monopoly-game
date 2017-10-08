@@ -39,11 +39,13 @@ public class Game extends JFrame
     private ArrayList<Player> Players = new ArrayList();
     private ArrayList<Location> Countries = new ArrayList();
     
-    private Die Dice = new Die();
+    private Dice Dice = new Dice();
     int DiceRoll;
+    int DiceConst = 10;
     
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
- 
+    private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
+    
     public Game(int n,String[] names)
     {
         numberOfPlayers = n;
@@ -64,6 +66,7 @@ public class Game extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Data.setPreferredSize(new Dimension(293,700));
+        Data.setBackground(new Color(85,107,47));
         
         Buy.setPreferredSize(new Dimension(80,40));
         Buy.setBounds(270,295,80,40);
@@ -81,6 +84,7 @@ public class Game extends JFrame
         Board.add(InfoButton);
         Board.add(EndTurn);
         Board.add(Info);
+        Board.add(Dice);
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -117,9 +121,11 @@ public class Game extends JFrame
             
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P1Lbl.setForeground(Color.white);
+            
             P2Lbl.setPreferredSize(new Dimension(293,15));
             P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            P2Lbl.setForeground(Color.white);
             
             P1Owned.setEditable(false);
             P1Owned.setBorder(P1Title);
@@ -158,13 +164,16 @@ public class Game extends JFrame
             
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P1Lbl.setForeground(Color.white);
+            
             P2Lbl.setPreferredSize(new Dimension(293,15));
             P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            P2Lbl.setForeground(Color.white);
             
             P3Lbl.setPreferredSize(new Dimension(293,15));
             P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P3Lbl.setForeground(Color.white);
+            
             P1Owned.setEditable(false);
             P1Owned.setBorder(P1Title);
             P1Owned.setPreferredSize(new Dimension(293,200));
@@ -213,16 +222,20 @@ public class Game extends JFrame
         
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P1Lbl.setForeground(Color.white);
+           
             P2Lbl.setPreferredSize(new Dimension(293,15));
             P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
+            P2Lbl.setForeground(Color.white);
             
             P3Lbl.setPreferredSize(new Dimension(293,15));
             P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P3Lbl.setForeground(Color.white);
+            
             P4Lbl.setPreferredSize(new Dimension(293,15));
             P4Lbl.setFont((new Font("Arial",Font.BOLD,15)));
-        
+            P4Lbl.setForeground(Color.white);
+            
             P1Owned.setEditable(false);
             P1Owned.setBorder(P1Title);
             P1Owned.setPreferredSize(new Dimension(293,150));
@@ -304,7 +317,7 @@ public class Game extends JFrame
     
     void startRound()
     {
-        int n = Dice.Roll();
+        //int n = Dice.Roll();
         
         for(int i = 0; i < Countries.size(); i++)
         {
@@ -328,9 +341,7 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-            DiceRoll = Dice.Roll();
-            Info.setText("You rolled "+DiceRoll);
-            motionTimer.start();
+            DiceTimer.start();         
             Roll.setEnabled(false);
         }
     }
@@ -397,6 +408,27 @@ public class Game extends JFrame
                motionTimer.stop();
            }
         }
+    }
+    
+    class DiceListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            if(Dice.getCount() < DiceConst)
+            {
+                Dice.Roll();
+                Board.repaint();
+            }
+            
+            else
+            {
+                DiceRoll = Dice.getDiceRoll();
+                System.out.println(DiceRoll);
+                Dice.setCount(0);
+                motionTimer.start();
+                DiceTimer.stop();
+            }
+        }   
     }
 }
  

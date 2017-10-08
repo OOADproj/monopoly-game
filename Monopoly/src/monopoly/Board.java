@@ -28,6 +28,7 @@ public class Board extends JPanel
     public void drawBoard()
     {
         setLayout(null);
+        setBackground(new Color(85,107,47));
         int x = 615;
         int y = 615;
         Tile t = null;
