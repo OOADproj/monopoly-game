@@ -146,6 +146,8 @@ public class Player
         }
                   
         Index = (Index+1)%40;  
+        if(Index == 0)
+            this.Money += 200;
     }
     
     public void checkRent(ArrayList <Player> ps)
@@ -160,12 +162,13 @@ public class Player
                 for(int i=0; i< ps.size();i++)
                 {
                     if(this.getName() == name)
-                    {System.out.println("5alas");}
+                    {System.out.println("5alas"); return;}
                       
                     else if (ps.get(i).getName()== name)
                     {   
-                        this.deductMoney(c.getRent());
+                        this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
+                        return;
                     }    
                 }
             }

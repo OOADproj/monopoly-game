@@ -333,8 +333,11 @@ public class Game extends JFrame
     {
         P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
         P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-        P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-        P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+        if(!(p3 == null))
+            P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+        
+        if(!(p4 == null))
+            P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
     }
     
     class InfoButtonListener implements ActionListener
@@ -365,6 +368,7 @@ public class Game extends JFrame
             currPlayer = Players.get(current);
             Roll.setEnabled(true);
             Buy.setEnabled(false);
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -395,6 +399,7 @@ public class Game extends JFrame
            if(DiceRoll > 0)
            {
                 currPlayer.Move();
+                updateLabels();
                 DiceRoll--;
                 Board.repaint();
            }
@@ -405,6 +410,8 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               currPlayer.checkRent(Players);
+               updateLabels();
                EndTurn.setEnabled(true);
            }
         }
