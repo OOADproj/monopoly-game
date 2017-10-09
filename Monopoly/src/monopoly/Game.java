@@ -70,6 +70,7 @@ public class Game extends JFrame
         
         Buy.setPreferredSize(new Dimension(80,40));
         Buy.setBounds(270,295,80,40);
+        Buy.setEnabled(false);
         InfoButton.setBounds(270,250,180,40);
         Roll.setBounds(370,295,80,40);
         Info.setBounds(270,390,180,200);
@@ -342,7 +343,7 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             DiceTimer.start();         
-            Roll.setEnabled(false);
+            Roll.setEnabled(false);     
         }
     }
     
@@ -353,6 +354,7 @@ public class Game extends JFrame
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
             Roll.setEnabled(true);
+            Buy.setEnabled(false);
         }
     }
     
@@ -360,32 +362,29 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(!motionTimer.isRunning())
+            boolean Success = currPlayer.Buy();
+            if(currPlayer.getName().equals(p1.getName()) && Success)
             {
-                boolean Success = currPlayer.Buy();
-                if(currPlayer.getName().equals(p1.getName()) && Success)
-                {
-                    P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
-                    P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
-                }
+                P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
+            }
 
-                else if(currPlayer.getName().equals(p2.getName()) && Success)
-                {
-                    P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-                    P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
-                }
+            else if(currPlayer.getName().equals(p2.getName()) && Success)
+            {
+                P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
+            }
 
-                else if(currPlayer.getName().equals(p3.getName()) && Success)
-                {
-                    P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-                    P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
-                }
+            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
+            {
+                P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
+            }
 
-                else if(currPlayer.getName().equals(p4.getName()) && Success)
-                {
-                    P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
-                    P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
-                }
+            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
+            {
+                P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
             }
         }
     }
@@ -406,6 +405,7 @@ public class Game extends JFrame
                Location l = Countries.get(currPlayer.getIndex());
                currPlayer.setCurr(l);
                motionTimer.stop();
+               Buy.setEnabled(true);
            }
         }
     }
