@@ -169,6 +169,7 @@ public class Player
                     {   
                         this.deductMoney(c.getRent());
                         ps.get(i).addMoney(c.getRent());
+                        System.out.println("The rent have been paid");
                         return;
                     }    
                 }

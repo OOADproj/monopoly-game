@@ -407,6 +407,7 @@ public class Game extends JFrame
                Buy.setEnabled(true);
                EndTurn.setEnabled(true);
                currPlayer.checkRent(Players);
+               updateLabels();
            }
         }
     }
