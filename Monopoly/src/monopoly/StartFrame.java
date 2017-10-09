@@ -20,7 +20,7 @@ public class StartFrame extends JFrame
     private JLabel playerNumberLbl = new JLabel("number of Players");
     
     private JButton Btn1 = new JButton("Start Game");
-    private JButton Btn2 = new JButton("Set number");
+    private JButton Btn2 = new JButton("Set number"); 
     
     private int n;
     public StartFrame()
@@ -48,7 +48,7 @@ public class StartFrame extends JFrame
         playerNumber.setBounds(750, 410,30,30);
         
         P1NameLbl.setBounds(785,250,100,30);
-        P1NameLbl.setForeground(Color.red);
+        P1NameLbl.setForeground(Color.red); 
         
         P2NameLbl.setBounds(785,290,100,30);
         P2NameLbl.setForeground(Color.red);

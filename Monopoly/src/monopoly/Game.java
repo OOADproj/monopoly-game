@@ -37,7 +37,7 @@ public class Game extends JFrame
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
-    private ArrayList<Location> Countries = new ArrayList();
+    private ArrayList<Location> locations = new ArrayList();
     
     private Dice Dice = new Dice();
     int DiceRoll;
@@ -50,7 +50,7 @@ public class Game extends JFrame
     {
         numberOfPlayers = n;
         initializePlayers(n,names);
-        initializeCountries(); 
+        initializeLocations(); 
         initializeComponents(); 
         startGame();
     } 
@@ -265,62 +265,62 @@ public class Game extends JFrame
         currPlayer = Players.get(current);
     }
     
-    void initializeCountries()
+    void initializeLocations()
     {
-        Countries.add(new Location("GO"));
+        locations.add(new Location("GO"));
         
-        Countries.add(new Country("Times Square",60,2));
-        Countries.add(new Chance("Community Chest"));
-        Countries.add(new Country("Baltic Avenue",60,4));
-        Countries.add(new Location ("Income Tax"));
-        Countries.add(new RailRoad("Reading Railroad"));
-        Countries.add(new Country("Oriental Avenue",100,6));
-        Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Vermont Avenue",100,6));
-        Countries.add(new Country("Ellis Island",120,8));
+        locations.add(new Country("Times Square",60,2));
+       locations.add(new Chance("Community Chest"));
+        locations.add(new Country("Baltic Avenue",60,4));
+        locations.add(new Location ("Income Tax"));
+        locations.add(new RailRoad("Reading Railroad"));
+        locations.add(new Country("Oriental Avenue",100,6));
+        locations.add(new Chance("Chance"));
+        locations.add(new Country("Vermont Avenue",100,6));
+        locations.add(new Country("Ellis Island",120,8));
         
-        Countries.add(new Jail());
+        locations.add(new Jail());
         
-        Countries.add(new Country("East Village",140,10));
-        Countries.add(new waterelec("Electric Company"));
-        Countries.add(new Country("States Avenue",140,10));
-        Countries.add(new Country("Virginia Avenue",160,12));
-        Countries.add(new RailRoad("Pennsylvania Railroad"));
-        Countries.add(new Country("St James Place",160,14));
-        Countries.add(new Chance("Community Chest"));
-        Countries.add(new Country("Tennesee Avenue",180,14));
-        Countries.add(new Country("New York Avenue",200,16));
+        locations.add(new Country("East Village",140,10));
+        locations.add(new waterelec("Electric Company"));
+        locations.add(new Country("States Avenue",140,10));
+        locations.add(new Country("Virginia Avenue",160,12));
+        locations.add(new RailRoad("Pennsylvania Railroad"));
+        locations.add(new Country("St James Place",160,14));
+        locations.add(new Chance("Community Chest"));
+        locations.add(new Country("Tennesee Avenue",180,14));
+        locations.add(new Country("New York Avenue",200,16));
         
-        Countries.add(new Location("Free Parking"));
+        locations.add(new Location("Free Parking"));
         
-        Countries.add(new Country("Kentucky Avenue",220,18));
-        Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Indiana Avenue",220,18));
-        Countries.add(new Country("Illinois Avenue",240,20));
-        Countries.add(new RailRoad("B&O Railroad"));
-        Countries.add(new Country("Atlantic Avenue",260,22));
-        Countries.add(new Country("Ventor Avenue",260,22));
-        Countries.add(new waterelec("Water Works"));        
-        Countries.add(new Country("Marvin Gardens",280,24));
+        locations.add(new Country("Kentucky Avenue",220,18));
+        locations.add(new Chance("Chance"));
+        locations.add(new Country("Indiana Avenue",220,18));
+        locations.add(new Country("Illinois Avenue",240,20));
+        locations.add(new RailRoad("B&O Railroad"));
+        locations.add(new Country("Atlantic Avenue",260,22));
+        locations.add(new Country("Ventor Avenue",260,22));
+        locations.add(new waterelec("Water Works"));        
+        locations.add(new Country("Marvin Gardens",280,24));
         
-        Countries.add(new Location ("Go to Jail"));
+        locations.add(new Location ("Go to Jail"));
         
-        Countries.add(new Country("Pacific Avenue",300,26));      
-        Countries.add(new Country("Central Park",300,26));
-        Countries.add(new Chance("Community Chest"));
-        Countries.add(new Country("Penn Avenue",320,28));
-        Countries.add(new RailRoad("Short Line"));
-        Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Park Place",350,35));
-        Countries.add(new Location ("Luxury Tax"));
-        Countries.add(new Country("Wall Street",400,50));
+        locations.add(new Country("Pacific Avenue",300,26));      
+        locations.add(new Country("Central Park",300,26));
+        locations.add(new Chance("Community Chest"));
+        locations.add(new Country("Penn Avenue",320,28));
+        locations.add(new RailRoad("Short Line"));
+        locations.add(new Chance("Chance"));
+        locations.add(new Country("Park Place",350,35));
+        locations.add(new Location ("Luxury Tax"));
+        locations.add(new Country("Wall Street",400,50));
     }
     
     void startRound()
     {
         //int n = Dice.Roll();
         
-        for(int i = 0; i < Countries.size(); i++)
+        for(int i = 0; i < locations.size(); i++)
         {
             //Country cc = (Country) Countries.get(i);
             //(cc.getName().equals(currPlayer.getCurrentLocation().getName()))
@@ -332,7 +332,7 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-            Location l = Countries.get(currPlayer.getIndex());
+            Location l = locations.get(currPlayer.getIndex());
             Info.setText(l.viewInformation());
             Info.setFont(new Font("Arial",Font.BOLD,14));
         }
@@ -402,7 +402,7 @@ public class Game extends JFrame
            
            else
            {
-               Location l = Countries.get(currPlayer.getIndex());
+               Location l = locations.get(currPlayer.getIndex());
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
