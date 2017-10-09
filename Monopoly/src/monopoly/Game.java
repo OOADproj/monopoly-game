@@ -75,6 +75,7 @@ public class Game extends JFrame
         Roll.setBounds(370,295,80,40);
         Info.setBounds(270,390,180,200);
         EndTurn.setBounds(300,340,120,40);
+        EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
         
@@ -343,7 +344,8 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             DiceTimer.start();         
-            Roll.setEnabled(false);     
+            Roll.setEnabled(false);    
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -406,6 +408,7 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               EndTurn.setEnabled(true);
            }
         }
     }
