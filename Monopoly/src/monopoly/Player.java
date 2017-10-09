@@ -161,7 +161,7 @@ public class Player
                
                 for(int i=0; i< ps.size();i++)
                 {
-                    if(this.getName() == name)
+                    if(this.Name == name)
                     {System.out.println("5alas"); return;}
                       
                     else if (ps.get(i).getName()== name)
