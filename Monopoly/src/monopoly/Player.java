@@ -146,6 +146,9 @@ public class Player
                 y += 58;                
         }
                   
-        Index = (Index+1)%40;  
+        Index = (Index+1)%40; 
+        if (Index ==0){
+            this.Money+=200;
+        }
     }
 }

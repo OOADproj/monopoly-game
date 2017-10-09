@@ -44,7 +44,7 @@ public class Game extends JFrame
     int DiceConst = 10;
     
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
-    private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
+    private javax.swing.Timer DiceTimer = new javax.swing.Timer(100,new DiceListener());
     
     public Game(int n,String[] names)
     {
@@ -396,6 +396,7 @@ public class Game extends JFrame
            if(DiceRoll > 0)
            {
                 currPlayer.Move();
+                System.out.println(currPlayer.getIndex());
                 DiceRoll--;
                 Board.repaint();
            }
