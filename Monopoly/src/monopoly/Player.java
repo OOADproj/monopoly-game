@@ -148,4 +148,29 @@ public class Player
                   
         Index = (Index+1)%40;  
     }
+    
+    public void checkRent(ArrayList <Player> ps)
+    {
+       if(currentLocation instanceof Country)
+        {
+            Country c = (Country) currentLocation;
+            if(c.isBought())
+            {
+               String name = c.getOwner();
+               
+                for(int i=0; i< ps.size();i++)
+                {
+                    if(this.getName() == name)
+                    {System.out.println("5alas");}
+                      
+                    else if (ps.get(i).getName()== name)
+                    {   
+                        this.deductMoney(c.getRent());
+                        ps.get(i).addMoney(c.getRent());
+                    }    
+                }
+            }
+        }
+    }
+
 }
