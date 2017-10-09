@@ -409,6 +409,7 @@ public class Game extends JFrame
                motionTimer.stop();
                Buy.setEnabled(true);
                EndTurn.setEnabled(true);
+               currPlayer.checkRent(Players);
            }
         }
     }

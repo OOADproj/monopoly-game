@@ -157,15 +157,19 @@ public class Player
             {
                String name = c.getOwner();
                
-                for(int i=0; i< ps.size();i++)
+               if(this.Name == name)
                 {
-                    if(this.getName() == name)
-                    {System.out.println("5alas");}
-                      
-                    else if (ps.get(i).getName()== name)
+                    System.out.println("5alas");
+                    return;
+                }
+               
+                for(int i=0; i< ps.size();i++)
+                { 
+                    if (ps.get(i).getName() == name)
                     {   
                         this.deductMoney(c.getRent());
                         ps.get(i).addMoney(c.getRent());
+                        return;
                     }    
                 }
             }
