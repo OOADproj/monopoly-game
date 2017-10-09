@@ -329,6 +329,14 @@ public class Game extends JFrame
         }    
     }
  
+    void updateLabels()
+    {
+        P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+        P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+        P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+        P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+    }
+    
     class InfoButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -365,29 +373,18 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             boolean Success = currPlayer.Buy();
+            updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-            {
-                P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
                 P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
-            }
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-            {
-                P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
                 P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
-            }
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-            {
-                P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
                 P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
-            }
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-            {
-                P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
                 P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
-            }
         }
     }
     
