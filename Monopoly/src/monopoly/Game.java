@@ -34,6 +34,7 @@ public class Game extends JFrame
     private Player p4;
     private Player currPlayer;
     private int current = 0;
+
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
@@ -102,7 +103,7 @@ public class Game extends JFrame
         //motionTimer.start();
     }
     
-    void initializePlayers(int n, String[] names)
+    void initializePlayers(int n , String[] names)
     {
         if(n == 2)
         {

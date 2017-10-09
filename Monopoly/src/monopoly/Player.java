@@ -13,6 +13,7 @@ public class Player
     private int x;
     private int y;
     private int Index = 0;
+    private int turnnum=0;
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
@@ -107,43 +108,73 @@ public class Player
     {
         g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
     }
+    public void prisoned(){
+        
+    if (this.currentLocation.getName()== "Go to Jail")
+    { 
+        for (int i=0; i<20;i++)
+        {
+            this.Move();
+        }
+    
+    }
+    else this.Move(); ;    
+    }
     
     public void Move()
     {            
         if(Index >= 0 && Index <= 9)
         {
             if(Index == 0 || Index == 9)
-                x -= 83;
-            
+            {    x -= 83;
+                 turnnum++;
+            }
             else
-                x -= 58;
+            {   x -= 58;
+                turnnum++;
+            }
         }
         
         else if(Index >= 10 && Index <= 19)
         {
             if(Index == 10 || Index == 19)
+            {
                 y -= 83;
+                turnnum++;
+            }
                 
             else
+            {
                 y -= 58;
+                turnnum++;
+            }
         }
+        
         
         else if(Index >= 20 && Index <= 29)
         {
             if(Index == 20 || Index  == 29)
-                x += 83;
-            
+            {        x += 83;
+                     turnnum++;
+            }
             else
-                x += 58;
+            {       x += 58;
+                    turnnum++;      
+            }
         }
         
         else if(Index  >= 30 && Index <= 39)
         {
             if(Index  == 30 || Index == 39)
+            {  
                 y+= 83;
-            
+                turnnum++;
+            }
             else
+            {
                 y += 58;                
+                turnnum++;
+            }
         }
                   
         Index = (Index+1)%40;  
