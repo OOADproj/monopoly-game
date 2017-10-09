@@ -375,16 +375,16 @@ public class Game extends JFrame
             boolean Success = currPlayer.Buy();
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
+                P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
+                P2Owned.setText(P2Owned.getText()+p2.getCurrentLocation().getName()+"\n");
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
+                P3Owned.setText(P3Owned.getText()+p3.getCurrentLocation().getName()+"\n");
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
+                P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
         }
     }
     
