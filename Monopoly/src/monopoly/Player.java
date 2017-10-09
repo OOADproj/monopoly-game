@@ -42,7 +42,6 @@ public class Player
     {
         if(currentLocation instanceof Country)
         {
-            System.out.println("hi");
             Country c = (Country) currentLocation;
             if(c.isBought())
             {

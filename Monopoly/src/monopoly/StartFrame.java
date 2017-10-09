@@ -133,7 +133,7 @@ public class StartFrame extends JFrame
                 }
             }
             
-            else if(n == 3)
+            else if(n == 4)
             {
                 if(P1Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 1!");

@@ -1,72 +1,57 @@
-
 package monopoly;
-
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
 
 
-public class Dice extends JPanel {
-    String[] dice = new String[]{"dice1.png","dice2.png","dice3.png","dice4.png","dice5.png","dice6.png" }; 
-   protected int index1 ;
-   protected int  index2 ;
-   private JLabel lbldie1 = new JLabel() ;  
-   private JLabel lbldie2 = new JLabel() ; 
-   private ImageIcon die1 = die1 = new ImageIcon(dice[index1]) ;  ;
-   Image redie1 =  die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
-   private ImageIcon die2 = new ImageIcon(dice[3]) ;
-   Image redie2 =die2.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
-   int count = 0 ; 
+public class Dice extends JPanel
+{
+   String[] Dice = new String[]{"dice1.png","dice2.png","dice3.png","dice4.png","dice5.png","dice6.png" }; 
+   private int Index1 ;
+   private int Index2 ;
+   private JLabel Die1_Lbl = new JLabel() ;  
+   private JLabel Die2_Lbl = new JLabel() ; 
+   private ImageIcon Die1 = new ImageIcon("dice6.png");
+   private Image ResizedDie1 = Die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
+   private ImageIcon Die2 = new ImageIcon("dice6.png");
+   private Image ResizedDie2 = Die2.getImage().getScaledInstance(80,80, Image.SCALE_DEFAULT);
+   private int count = 0 ; 
    
    public  Dice() { init() ; }
    
-   public void init() {
-   
-   lbldie1.setIcon(new ImageIcon(redie1));
-   lbldie2.setIcon(new ImageIcon(redie2));
-   this.setLayout(null);
+   public int getCount(){return count;}
+           
+   public void init()
+   {
+        this.setLayout(null);
+        this.setBounds(275,130,170,85);
+        setBackground(new Color(85,107,47));
+        Die1_Lbl.setIcon(new ImageIcon(ResizedDie1));
+        Die2_Lbl.setIcon(new ImageIcon(ResizedDie2));
+        Die1_Lbl.setBounds(0, 0, 80, 80);
+        Die2_Lbl.setBounds(90, 0, 80, 80);
 
-   lbldie1.setBounds(0, 0, 80, 80);
-   lbldie2.setBounds(90, 0, 80, 80);
-
-   this.add(lbldie1);
-   this.add(lbldie2);
+        this.add(Die1_Lbl);
+        this.add(Die2_Lbl); 
    }
                 
-    public int Roll()
+    public void Roll()
     {
-        
-        
- 
-        
-        Timer timer = new Timer(500,new ActionListener() {
-       @Override
-       public void actionPerformed(ActionEvent ae) {
-        index1 = (int) (Math.random() * (dice.length - 1));
-        index2 =  (int) (Math.random() * (dice.length - 1)) ;
-        ImageIcon die1 = die1 = new ImageIcon(dice[index1]) ;  ;
-        Image redie1 =  die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
-        ImageIcon die2 = new ImageIcon(dice[index2]) ;
-        Image redie2 =die2.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
-        Image[] redie = new Image[]{redie1,redie2 }; 
-        lbldie1.setIcon(new ImageIcon(redie1));
-       lbldie2.setIcon(new ImageIcon(redie2));      
-           count ++ ; 
-       }
-   }) ;  
-        timer.start();
-if(count== 10)
-{
-    timer.stop();
-}
-    
-    this.repaint();
-    return index1+index2 ; 
+        Random r = new Random();
+        Index1 =  r.nextInt(6);
+        Index2 =  r.nextInt(6);
+        Die1 =  new ImageIcon(Dice[Index1]) ;  ;
+        ResizedDie1 =  Die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
+        Die2 = new ImageIcon(Dice[Index2]) ;
+        ResizedDie2 =Die2.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
+        Die1_Lbl.setIcon(new ImageIcon(ResizedDie1));
+        Die2_Lbl.setIcon(new ImageIcon(ResizedDie2));  
+        count++; 
+        repaint();
     }
+    
+    public int getDiceRoll(){return Index1+Index2+2;}
+    
+    public void setCount(int n){count = n;}
 }
