@@ -13,7 +13,7 @@ public class Player
     private int x;
     private int y;
     private int Index = 0;
-    private int turnnum=0;
+    private int turnnum = 0;
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
@@ -43,7 +43,6 @@ public class Player
     {
         if(currentLocation instanceof Country)
         {
-            System.out.println("hi");
             Country c = (Country) currentLocation;
             if(c.isBought())
             {
@@ -178,5 +177,34 @@ public class Player
         }
                   
         Index = (Index+1)%40;  
+        if(Index == 0)
+            this.Money += 200;
     }
+    
+    public void checkRent(ArrayList <Player> ps)
+    {
+       if(currentLocation instanceof Country)
+        {
+            Country c = (Country) currentLocation;
+            if(c.isBought())
+            {
+               String name = c.getOwner();
+               
+                for(int i=0; i< ps.size();i++)
+                {
+                    if(this.getName() == name)
+                    {System.out.println("5alas"); return;}
+                      
+                    else if (ps.get(i).getName()== name)
+                    {   
+                        this.Money -= c.getRent();
+                        ps.get(i).addMoney(c.getRent());
+                        System.out.println("hi");
+                        return;
+                    }    
+                }
+            }
+        }
+    }
+
 }

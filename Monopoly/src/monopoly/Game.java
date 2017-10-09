@@ -76,6 +76,7 @@ public class Game extends JFrame
         Roll.setBounds(370,295,80,40);
         Info.setBounds(270,390,180,200);
         EndTurn.setBounds(300,340,120,40);
+        EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
         
@@ -329,6 +330,17 @@ public class Game extends JFrame
         }    
     }
  
+    void updateLabels()
+    {
+        P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+        P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+        if(!(p3 == null))
+            P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+        
+        if(!(p4 == null))
+            P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+    }
+    
     class InfoButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -344,7 +356,8 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             DiceTimer.start();         
-            Roll.setEnabled(false);     
+            Roll.setEnabled(false);    
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -356,6 +369,7 @@ public class Game extends JFrame
             currPlayer = Players.get(current);
             Roll.setEnabled(true);
             Buy.setEnabled(false);
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -364,29 +378,18 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             boolean Success = currPlayer.Buy();
+            updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-            {
-                P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
-                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
-            }
+                P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-            {
-                P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
-            }
+                P2Owned.setText(P2Owned.getText()+p2.getCurrentLocation().getName()+"\n");
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-            {
-                P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
-            }
+                P3Owned.setText(P3Owned.getText()+p3.getCurrentLocation().getName()+"\n");
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-            {
-                P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
-                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
-            }
+                P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
         }
     }
     
@@ -397,6 +400,7 @@ public class Game extends JFrame
            if(DiceRoll > 0)
            {
                 currPlayer.Move();
+                updateLabels();
                 DiceRoll--;
                 Board.repaint();
            }
@@ -407,6 +411,9 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               currPlayer.checkRent(Players);
+               updateLabels();
+               EndTurn.setEnabled(true);
            }
         }
     }
