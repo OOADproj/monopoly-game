@@ -168,6 +168,7 @@ public class Player
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
+                        System.out.println("hi");
                         return;
                     }    
                 }
