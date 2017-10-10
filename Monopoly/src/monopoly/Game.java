@@ -38,9 +38,6 @@ public class Game extends JFrame
     
     private ArrayList<Player> Players = new ArrayList();
 
-    public ArrayList<Player> getPlayers() {
-        return Players;
-    }
     private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
@@ -52,6 +49,8 @@ public class Game extends JFrame
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
     
+    
+    
     public Game(int n,String[] names)
     {
         numberOfPlayers = n;
@@ -60,6 +59,7 @@ public class Game extends JFrame
         initializeComponents(); 
         startGame();
     } 
+    
     
     public void initializeComponents() 
     {
@@ -102,6 +102,11 @@ public class Game extends JFrame
         Buy.addActionListener(new BuyButtonListener());
         EndTurn.addActionListener(new EndButtonListener());
         setVisible(true); 
+    }
+    
+    public ArrayList<Player> getPlayers() 
+    {
+        return Players;
     }
     
     void startGame()
@@ -286,14 +291,14 @@ public class Game extends JFrame
         Countries.add(new Country("Vermont Avenue",100,6));
         Countries.add(new Country("Ellis Island",120,8));
         
-<<<<<<< HEAD
-        locations.add(jail);
-=======
+
+        Countries.add(jail);
+
         Countries.add(new Jail());
->>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
+
         
         Countries.add(new Country("East Village",140,10));
-        Countries.add(new waterelec("Electric Company"));
+        Countries.add(new WaterElec("Electric Company"));
         Countries.add(new Country("States Avenue",140,10));
         Countries.add(new Country("Virginia Avenue",160,12));
         Countries.add(new RailRoad("Pennsylvania Railroad"));
@@ -311,7 +316,7 @@ public class Game extends JFrame
         Countries.add(new RailRoad("B&O Railroad"));
         Countries.add(new Country("Atlantic Avenue",260,22));
         Countries.add(new Country("Ventor Avenue",260,22));
-        Countries.add(new waterelec("Water Works"));        
+        Countries.add(new WaterElec("Water Works"));        
         Countries.add(new Country("Marvin Gardens",280,24));
         
         Countries.add(new Location ("Go to Jail"));
@@ -412,11 +417,9 @@ public class Game extends JFrame
         {
            if(DiceRoll >  0)
            {
-<<<<<<< HEAD
-                currPlayer.Move();
-=======
+
                 currPlayer.Move(currPlayer.isForward());
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
+
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
@@ -433,14 +436,13 @@ public class Game extends JFrame
                      currPlayer.setCurr(jail);
                }
                Buy.setEnabled(true);
-               currPlayer.checkRent(Players);
-<<<<<<< HEAD
-=======
+               currPlayer.checkRent(Players,Dice);
+
+
                //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
+
                updateLabels();
                EndTurn.setEnabled(true);
-               currPlayer.checkRent(Players);
                updateLabels();
            }
         }
@@ -466,8 +468,7 @@ public class Game extends JFrame
         }   
     }
     
-    public void setDiceRoll(int x)
-    {this.DiceRoll=x ; }
+    public void setDiceRoll(int x) { this.DiceRoll=x ; }
 }
  
 
