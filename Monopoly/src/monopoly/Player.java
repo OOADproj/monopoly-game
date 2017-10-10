@@ -187,7 +187,7 @@ public class Player
             if(Index == 0)
                 this.Money += 200;
         }
-        
+        /////////
         else
         {
             if(Index >= 0 && Index <= 9)
