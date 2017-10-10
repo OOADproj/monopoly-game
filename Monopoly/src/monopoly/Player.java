@@ -39,6 +39,9 @@ public class Player
     
     public int getIndex(){return Index;}
     
+//    public int getturn(){ return turnnum;}
+//    public void setturn(int m){turnnum=m;}
+    
     public boolean Buy()
     {
         if(currentLocation instanceof Country)
@@ -107,17 +110,24 @@ public class Player
     {
         g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
     }
-    public void prisoned(){
-        
-    if (this.currentLocation.getName()== "Go to Jail")
-    { 
-        for (int i=0; i<20;i++)
-        {
-            this.Move();
-        }
+   
+   
+  
     
+    public boolean isPrisoned(){
+    
+        
+    if (this.currentLocation.getName().equals( "Go to Jail"))
+//        this.setCurr(Jail);
+        return true ;
+    else return false ;
     }
-    else this.Move(); ;    
+    
+    public boolean hasLost()
+    {
+        if(this.getMoney()==0)
+            return true;
+                    else return false;
     }
     
     public void Move()
@@ -126,11 +136,11 @@ public class Player
         {
             if(Index == 0 || Index == 9)
             {    x -= 83;
-                 turnnum++;
+                 
             }
             else
             {   x -= 58;
-                turnnum++;
+                
             }
         }
         
@@ -139,13 +149,13 @@ public class Player
             if(Index == 10 || Index == 19)
             {
                 y -= 83;
-                turnnum++;
+                
             }
                 
             else
             {
                 y -= 58;
-                turnnum++;
+               
             }
         }
         
@@ -154,11 +164,11 @@ public class Player
         {
             if(Index == 20 || Index  == 29)
             {        x += 83;
-                     turnnum++;
+                     
             }
             else
             {       x += 58;
-                    turnnum++;      
+                        
             }
         }
         
@@ -167,12 +177,12 @@ public class Player
             if(Index  == 30 || Index == 39)
             {  
                 y+= 83;
-                turnnum++;
+                
             }
             else
             {
                 y += 58;                
-                turnnum++;
+                
             }
         }
                   

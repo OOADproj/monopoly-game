@@ -53,5 +53,5 @@ public class Dice extends JPanel
     
     public int getDiceRoll(){return Index1+Index2+2;}
     
-    public void setCount(int n){count = n;}
+    public void setCount(int n){count = n;} //??
 }

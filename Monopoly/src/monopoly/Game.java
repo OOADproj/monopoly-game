@@ -44,6 +44,8 @@ public class Game extends JFrame
     int DiceRoll;
     int DiceConst = 10;
     
+    private Jail jail = new Jail();
+            
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
     
@@ -281,7 +283,7 @@ public class Game extends JFrame
         locations.add(new Country("Vermont Avenue",100,6));
         locations.add(new Country("Ellis Island",120,8));
         
-        locations.add(new Jail());
+        locations.add(jail);
         
         locations.add(new Country("East Village",140,10));
         locations.add(new waterelec("Electric Company"));
@@ -339,7 +341,11 @@ public class Game extends JFrame
         
         if(!(p4 == null))
             P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+        if(currPlayer.hasLost() == true){
+           // currPlayer.
+        }
     }
+   
     
     class InfoButtonListener implements ActionListener
     {
@@ -397,12 +403,13 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-           if(DiceRoll > 0)
+           if(DiceRoll >  0)
            {
                 currPlayer.Move();
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
+                
            }
            
            else
@@ -410,6 +417,10 @@ public class Game extends JFrame
                Location l = locations.get(currPlayer.getIndex());
                currPlayer.setCurr(l);
                motionTimer.stop();
+               if (currPlayer.isPrisoned()== true)
+               {
+                     currPlayer.setCurr(jail);
+               }
                Buy.setEnabled(true);
                currPlayer.checkRent(Players);
                updateLabels();
