@@ -333,8 +333,11 @@ public class Game extends JFrame
     {
         P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
         P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-        P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-        P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+        if(!(p3 == null))
+            P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+        
+        if(!(p4 == null))
+            P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
     }
     
     class InfoButtonListener implements ActionListener
@@ -365,6 +368,7 @@ public class Game extends JFrame
             currPlayer = Players.get(current);
             Roll.setEnabled(true);
             Buy.setEnabled(false);
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -375,16 +379,16 @@ public class Game extends JFrame
             boolean Success = currPlayer.Buy();
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
+                P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
+                P2Owned.setText(P2Owned.getText()+p2.getCurrentLocation().getName()+"\n");
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
+                P3Owned.setText(P3Owned.getText()+p3.getCurrentLocation().getName()+"\n");
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
+                P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
         }
     }
     
@@ -395,6 +399,7 @@ public class Game extends JFrame
            if(DiceRoll > 0)
            {
                 currPlayer.Move();
+                updateLabels();
                 DiceRoll--;
                 Board.repaint();
            }
@@ -405,6 +410,8 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               currPlayer.checkRent(Players);
+               updateLabels();
                EndTurn.setEnabled(true);
                currPlayer.checkRent(Players);
                updateLabels();
