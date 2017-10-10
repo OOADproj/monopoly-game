@@ -12,8 +12,6 @@ public class communityChest extends Location
 "Advance to Go (Collect $200)",
 "Bank error in your favor—Collect $200",
 "Doctor's fee—Pay $50",
-
-
 "From sale of stock you get $50",
 "Get Out of Jail Free",
 "Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200",
