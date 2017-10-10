@@ -37,6 +37,10 @@ public class Game extends JFrame
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
+
+    public ArrayList<Player> getPlayers() {
+        return Players;
+    }
     private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
@@ -398,7 +402,11 @@ public class Game extends JFrame
         {
            if(DiceRoll > 0)
            {
+<<<<<<< HEAD
                 currPlayer.Move();
+=======
+                currPlayer.Move(currPlayer.isForward());
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
@@ -411,6 +419,10 @@ public class Game extends JFrame
                motionTimer.stop();
                Buy.setEnabled(true);
                currPlayer.checkRent(Players);
+<<<<<<< HEAD
+=======
+               //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                updateLabels();
                EndTurn.setEnabled(true);
                currPlayer.checkRent(Players);
@@ -432,13 +444,15 @@ public class Game extends JFrame
             else
             {
                 DiceRoll = Dice.getDiceRoll();
-                System.out.println(DiceRoll);
                 Dice.setCount(0);
                 motionTimer.start();
                 DiceTimer.stop();
             }
         }   
     }
+    
+    public void setDiceRoll(int x)
+    {this.DiceRoll=x ; }
 }
  
 
