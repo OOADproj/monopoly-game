@@ -275,7 +275,7 @@ public class Game extends JFrame
         Countries.add(new Location("GO"));
         
         Countries.add(new Country("Times Square",60,2));
-        Countries.add(new Chance("Community Chest"));
+        Countries.add(new communityChest("Community Chest"));
         Countries.add(new Country("Baltic Avenue",60,4));
         Countries.add(new Location ("Income Tax"));
         Countries.add(new RailRoad("Reading Railroad"));
@@ -292,7 +292,7 @@ public class Game extends JFrame
         Countries.add(new Country("Virginia Avenue",160,12));
         Countries.add(new RailRoad("Pennsylvania Railroad"));
         Countries.add(new Country("St James Place",160,14));
-        Countries.add(new Chance("Community Chest"));
+        Countries.add(new communityChest("Community Chest"));
         Countries.add(new Country("Tennesee Avenue",180,14));
         Countries.add(new Country("New York Avenue",200,16));
         
@@ -312,7 +312,7 @@ public class Game extends JFrame
         
         Countries.add(new Country("Pacific Avenue",300,26));      
         Countries.add(new Country("Central Park",300,26));
-        Countries.add(new Chance("Community Chest"));
+        Countries.add(new communityChest("Community Chest"));
         Countries.add(new Country("Penn Avenue",320,28));
         Countries.add(new RailRoad("Short Line"));
         Countries.add(new Chance("Chance"));
@@ -402,11 +402,9 @@ public class Game extends JFrame
         {
            if(DiceRoll > 0)
            {
-<<<<<<< HEAD
-                currPlayer.Move();
-=======
+                EndTurn.setEnabled(false);
                 currPlayer.Move(currPlayer.isForward());
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
+                
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
@@ -414,19 +412,15 @@ public class Game extends JFrame
            
            else
            {
+               currPlayer.setDirection(true);
                Location l = Countries.get(currPlayer.getIndex());
                currPlayer.setCurr(l);
-               motionTimer.stop();
-               Buy.setEnabled(true);
+               motionTimer.stop();         
                currPlayer.checkRent(Players);
-<<<<<<< HEAD
-=======
-               //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
+               currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
+               currPlayer.checkCommunity(motionTimer, DiceTimer, Dice, Game.this);
                updateLabels();
                EndTurn.setEnabled(true);
-               currPlayer.checkRent(Players);
-               updateLabels();
            }
         }
     }
@@ -443,7 +437,8 @@ public class Game extends JFrame
             
             else
             {
-                DiceRoll = Dice.getDiceRoll();
+                //DiceRoll = Dice.getDiceRoll();
+                DiceRoll = 36 ; 
                 Dice.setCount(0);
                 motionTimer.start();
                 DiceTimer.stop();

@@ -180,7 +180,7 @@ public class Player
             else if(Index >= 20 && Index <= 29)
             {
                 if(Index == 20 || Index  == 29)
-                    x -= 83;
+                    y += 83;
 
                 else
                     x -= 58;
@@ -199,13 +199,6 @@ public class Player
             if(Index == 0)
                 this.Money += 200;
         }
-<<<<<<< HEAD
-                  
-        Index = (Index+1)%40;  
-        if(Index == 0)
-            this.Money += 200;
-=======
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
     }
     
     public void checkRent(ArrayList <Player> ps)
@@ -217,34 +210,16 @@ public class Player
             {
                String name = c.getOwner();
                
-               
-               
                 for(int i=0; i< ps.size();i++)
-<<<<<<< HEAD
-                {   
-                    if(this.Name == name)
-                    {
-                        System.out.println("5alas"); 
-                        return;
-                    }
-=======
                 {
                     if(this.getName() == name)
                     {System.out.println("5alas"); return;}
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                       
                     else if (ps.get(i).getName()== name)
-
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
-<<<<<<< HEAD
-
-                        System.out.println("The rent have been paid");
-
-=======
                         System.out.println("hi");
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                         return;
                     }    
                 }
@@ -261,4 +236,12 @@ public class Player
         }
     }
    
+    public void checkCommunity(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof communityChest)
+        {
+            communityChest c = (communityChest) currentLocation;
+            c.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
 }
