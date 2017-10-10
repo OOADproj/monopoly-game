@@ -13,7 +13,7 @@ public class Player
     private int x;
     private int y;
     private int Index = 0;
-    private int turnnum = 0;
+    private boolean Forward = true;
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
@@ -38,6 +38,10 @@ public class Player
     public void setIndex(int i){Index = i;}
     
     public int getIndex(){return Index;}
+    
+    public void setDirection(boolean f){Forward = f;}
+    
+    public boolean isForward(){return Forward;}
     
     public boolean Buy()
     {
@@ -107,78 +111,94 @@ public class Player
     {
         g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
     }
-    public void prisoned(){
-        
-    if (this.currentLocation.getName()== "Go to Jail")
-    { 
-        for (int i=0; i<20;i++)
-        {
-            this.Move();
-        }
     
-    }
-    else this.Move(); ;    
-    }
-    
-    public void Move()
-    {            
-        if(Index >= 0 && Index <= 9)
+    public void Move(boolean Forward)
+    {       
+        if(Forward)
         {
-            if(Index == 0 || Index == 9)
-            {    x -= 83;
-                 turnnum++;
-            }
-            else
-            {   x -= 58;
-                turnnum++;
-            }
-        }
-        
-        else if(Index >= 10 && Index <= 19)
-        {
-            if(Index == 10 || Index == 19)
+            if(Index >= 0 && Index <= 9)
             {
-                y -= 83;
-                turnnum++;
+                if(Index == 0 || Index == 9)
+                    x -= 83;
+
+                else
+                    x -= 58;
             }
-                
-            else
+
+            else if(Index >= 10 && Index <= 19)
             {
-                y -= 58;
-                turnnum++;
+                if(Index == 10 || Index == 19)
+                    y -= 83;
+
+                else
+                    y -= 58;
             }
-        }
-        
-        
-        else if(Index >= 20 && Index <= 29)
-        {
-            if(Index == 20 || Index  == 29)
-            {        x += 83;
-                     turnnum++;
-            }
-            else
-            {       x += 58;
-                    turnnum++;      
-            }
-        }
-        
-        else if(Index  >= 30 && Index <= 39)
-        {
-            if(Index  == 30 || Index == 39)
-            {  
-                y+= 83;
-                turnnum++;
-            }
-            else
+
+            else if(Index >= 20 && Index <= 29)
             {
-                y += 58;                
-                turnnum++;
+                if(Index == 20 || Index  == 29)
+                    x += 83;
+
+                else
+                    x += 58;
             }
+
+            else if(Index  >= 30 && Index <= 39)
+            {
+                if(Index  == 30 || Index == 39)
+                    y+= 83;
+
+                else
+                    y += 58;                
+            }
+
+            Index = (Index+1)%40;  
+            if(Index == 0)
+                this.Money += 200;
         }
-                  
-        Index = (Index+1)%40;  
-        if(Index == 0)
-            this.Money += 200;
+        
+        else
+        {
+            if(Index >= 0 && Index <= 9)
+            {
+                if(Index == 0 || Index == 9)
+                    x += 83;
+
+                else
+                    x += 58;
+            }
+
+            else if(Index >= 10 && Index <= 19)
+            {
+                if(Index == 10 || Index == 19)
+                    y += 83;
+
+                else
+                    y += 58;
+            }
+
+            else if(Index >= 20 && Index <= 29)
+            {
+                if(Index == 20 || Index  == 29)
+                    x -= 83;
+
+                else
+                    x -= 58;
+            }
+
+            else if(Index  >= 30 && Index <= 39)
+            {
+                if(Index  == 30 || Index == 39)
+                    y-= 83;
+
+                else
+                    y -= 58;                
+            }
+
+            Index = (Index-1)%40;  
+            if(Index == 0)
+                this.Money += 200;
+        }
     }
     
     public void checkRent(ArrayList <Player> ps)
@@ -192,7 +212,7 @@ public class Player
                
                 for(int i=0; i< ps.size();i++)
                 {
-                    if(this.Name == name)
+                    if(this.getName() == name)
                     {System.out.println("5alas"); return;}
                       
                     else if (ps.get(i).getName()== name)
@@ -207,4 +227,13 @@ public class Player
         }
     }
 
+    public void checkChance(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof Chance)
+        {
+            Chance c = (Chance) currentLocation;
+            c.assChance(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
+   
 }
