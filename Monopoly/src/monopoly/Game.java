@@ -402,7 +402,11 @@ public class Game extends JFrame
         {
            if(DiceRoll > 0)
            {
+<<<<<<< HEAD
+                currPlayer.Move();
+=======
                 currPlayer.Move(currPlayer.isForward());
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
@@ -415,9 +419,14 @@ public class Game extends JFrame
                motionTimer.stop();
                Buy.setEnabled(true);
                currPlayer.checkRent(Players);
+<<<<<<< HEAD
+=======
                //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                updateLabels();
                EndTurn.setEnabled(true);
+               currPlayer.checkRent(Players);
+               updateLabels();
            }
         }
     }

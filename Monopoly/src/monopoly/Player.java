@@ -199,6 +199,13 @@ public class Player
             if(Index == 0)
                 this.Money += 200;
         }
+<<<<<<< HEAD
+                  
+        Index = (Index+1)%40;  
+        if(Index == 0)
+            this.Money += 200;
+=======
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
     }
     
     public void checkRent(ArrayList <Player> ps)
@@ -210,16 +217,34 @@ public class Player
             {
                String name = c.getOwner();
                
+               
+               
                 for(int i=0; i< ps.size();i++)
+<<<<<<< HEAD
+                {   
+                    if(this.Name == name)
+                    {
+                        System.out.println("5alas"); 
+                        return;
+                    }
+=======
                 {
                     if(this.getName() == name)
                     {System.out.println("5alas"); return;}
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                       
                     else if (ps.get(i).getName()== name)
+
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
+<<<<<<< HEAD
+
+                        System.out.println("The rent have been paid");
+
+=======
                         System.out.println("hi");
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                         return;
                     }    
                 }
@@ -233,6 +258,14 @@ public class Player
         {
             Chance c = (Chance) currentLocation;
             c.assChance(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
+    public void checkCommunityChest(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof communityChest )
+        {
+           communityChest  cc = (Chance) currentLocation;
+           cc.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
    
