@@ -34,7 +34,7 @@ public class Chance extends Location
     {
         Random r = new Random();
        //int index =  r.nextInt(card.length);
-       int index = 0;
+       int index = 11;
         if(index==0 )
         {
         JOptionPane.showMessageDialog(null,"your chance is "+card[0]);
@@ -47,18 +47,58 @@ public class Chance extends Location
         if(index==1 )
         {
              JOptionPane.showMessageDialog(null,"your chance is "+card[1]);
+             Game.setDiceRoll(26-p.getIndex());
+            moveTimer.start();
         }
         if(index==2 )
         {
              JOptionPane.showMessageDialog(null,"your chance is "+card[2]);
+             Game.setDiceRoll(11-p.getIndex());
+            moveTimer.start();
         }
         if(index==3 )
         {
              JOptionPane.showMessageDialog(null,"your chance is "+card[3]);
+             if(p.getIndex()==7)
+             {
+                 Game.setDiceRoll(8-p.getIndex());
+            moveTimer.start();
+             }
+             
+             if(p.getIndex()==22)
+             {
+                 Game.setDiceRoll(23-p.getIndex());
+            moveTimer.start();
+             }
+             
+             if(p.getIndex()==36)
+             {
+                 Game.setDiceRoll(37-p.getIndex());
+            moveTimer.start();
+             }
         }
         if(index==4 )
         {
              JOptionPane.showMessageDialog(null,"your chance is "+card[4]);
+             if(p.getIndex()==7)
+             {
+                 Game.setDiceRoll(15-p.getIndex());
+                 
+            moveTimer.start();
+            //lesa mafrod el owner ya5od twice el rent 
+             }
+             
+             if(p.getIndex()==22)
+             {
+                 Game.setDiceRoll(25-p.getIndex());
+            moveTimer.start();
+             }
+             
+             if(p.getIndex()==36)
+             {
+                 Game.setDiceRoll(45-p.getIndex());
+            moveTimer.start();
+             }
         }
         if(index==5 )
         {
@@ -72,6 +112,10 @@ public class Chance extends Location
         if(index==7 )
         {
              JOptionPane.showMessageDialog(null,"your chance is "+card[7]);
+             p.setDirection(false);
+             Game.setDiceRoll(3); 
+            moveTimer.start();
+             
         }
         if(index==8 )
         {
@@ -89,6 +133,8 @@ public class Chance extends Location
         if(index==11 )
         {
              JOptionPane.showMessageDialog(null,"your chance is"+card[11]);
+             Game.setDiceRoll(45-p.getIndex());
+            moveTimer.start();
         }
         if(index==12 )
         {
@@ -103,7 +149,7 @@ public class Chance extends Location
             for (int i = 0; i < Game.getPlayers().size(); i++) {
                 Game.getPlayers().get(i).addMoney(50);
             }
-            //lesa ma7dsh 5ad flosoo
+            
         }
         if(index==14 )
         {

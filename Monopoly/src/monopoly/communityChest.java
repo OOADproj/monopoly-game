@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+package monopoly;
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
 
 import monopoly.Location;
 import java.util.Random;
@@ -8,7 +12,11 @@ import monopoly.Player;
  
 public class communityChest extends Location
 {
+<<<<<<< HEAD
     String[] cccard = { 
+=======
+    String[] cccard =new String[] { 
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
 "Advance to Go (Collect $200)",
 "Bank error in your favor—Collect $200",
 "Doctor's fee—Pay $50",

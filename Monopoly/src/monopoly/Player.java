@@ -76,6 +76,7 @@ public class Player
         else if(currentLocation instanceof RailRoad)
         {
             RailRoad r = (RailRoad) currentLocation;
+            
             if(r.isBought())
             {
                 for(int i=0 ; i < OwnedCountries.size() ; i++)
@@ -94,12 +95,42 @@ public class Player
             else
             {
                 r.setOwner(this.Name);
+                r.setBought(true);
                 this.deductMoney(r.getCost());
                 this.OwnedCountries.add(r);
                 return true;
             }
         }
-        
+        //
+        else if(currentLocation instanceof WaterElec)
+        {
+            WaterElec w = (WaterElec) currentLocation;
+                
+            if(w.isBought())
+            {
+                for(int i=0 ; i < OwnedCountries.size() ; i++)
+                {
+                    if(OwnedCountries.get(i).getName().equals(w.getName()))
+                    {
+                        System.out.println("You already own this property.");
+                        return false;
+                    }
+                }
+                
+                System.out.println("WaterElec is already owned by "+w.getOwner());
+                return false;
+            }
+            
+            else
+            {
+                w.setOwner(this.Name);
+                w.setBought(true);
+                this.deductMoney(w.getCost());
+                this.OwnedCountries.add(w);
+                return true;
+            }
+        }
+        //
         else
         {
             System.out.println("This tile cannot be bought");
@@ -180,7 +211,7 @@ public class Player
             else if(Index >= 20 && Index <= 29)
             {
                 if(Index == 20 || Index  == 29)
-                    x -= 83;
+                    y += 83;
 
                 else
                     x -= 58;
@@ -199,16 +230,9 @@ public class Player
             if(Index == 0)
                 this.Money += 200;
         }
-<<<<<<< HEAD
-                  
-        Index = (Index+1)%40;  
-        if(Index == 0)
-            this.Money += 200;
-=======
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
     }
     
-    public void checkRent(ArrayList <Player> ps)
+    public void checkRent(ArrayList <Player> ps,Dice d)
     {
        if(currentLocation instanceof Country)
         {
@@ -217,41 +241,118 @@ public class Player
             {
                String name = c.getOwner();
                
-               
-               
                 for(int i=0; i< ps.size();i++)
-<<<<<<< HEAD
-                {   
-                    if(this.Name == name)
-                    {
-                        System.out.println("5alas"); 
-                        return;
-                    }
-=======
                 {
                     if(this.getName() == name)
                     {System.out.println("5alas"); return;}
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                       
                     else if (ps.get(i).getName()== name)
-
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
-<<<<<<< HEAD
-
-                        System.out.println("The rent have been paid");
-
-=======
                         System.out.println("hi");
->>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                         return;
                     }    
                 }
             }
                 
         }
-    }
+       
+       else if(currentLocation instanceof WaterElec)
+       {
+           WaterElec w = (WaterElec) currentLocation;
+           
+           if(w.isBought())
+           {
+               String name = w.getOwner();
+               
+               for(int i=0; i< ps.size();i++)
+                {
+                    if(this.getName() == name)
+                    {
+                        System.out.println("5alas");
+                        return;
+                    }
+                
+                      
+                    else if (ps.get(i).getName() == name)
+                    {   
+                        ArrayList <Location> l = ps.get(i).getOwnedCountries();
+                        String tileName = w.getName();
+                        
+                        for(int j=0; j<l.size();j++)
+                        {
+                            if(tileName == "Water Company")
+                            {
+                                if(l.get(i).getName().equals("Electric Company") )
+                                {
+                                    this.Money -= 10*d.getDiceRoll();
+                                    ps.get(i).addMoney(10*d.getDiceRoll());          
+                                }
+                                else
+                                {
+                                    this.Money -= 4*d.getDiceRoll();
+                                    ps.get(i).addMoney(4*d.getDiceRoll());
+                                }
+                                return;
+                            }
+                            else if (tileName == "Electric Company")
+                            {
+                                if(l.get(i).getName().equals("Water Works") )
+                                {
+                                    this.Money -= 10*d.getDiceRoll();
+                                    ps.get(i).addMoney(10*d.getDiceRoll());
+                                }
+                                else
+                                {
+                                    this.Money -= 4*d.getDiceRoll();
+                                    ps.get(i).addMoney(4*d.getDiceRoll());
+                                } 
+                                return;
+                            }
+                        }
+                        return;
+                    }    
+                }
+            }
+        }
+        else if(currentLocation instanceof RailRoad)
+        {
+           RailRoad r = (RailRoad) currentLocation;
+           
+           if(r.isBought())
+           {
+               String name = r.getOwner();
+               
+               for(int i=0; i< ps.size();i++)
+                {
+                    if(this.getName() == name)
+                    {
+                        System.out.println("5alas");
+                        return;
+                    }
+                
+                    else if (ps.get(i).getName() == name)
+                    {   
+                        ArrayList <Location> l = ps.get(i).getOwnedCountries();
+                        int rent = 0;
+                        
+                           for(int j=0; j<l.size();j++)
+                           {
+                               if(l.get(i) instanceof RailRoad)
+                               {
+                                   rent+=25;
+                               }
+                           }                              
+                            this.Money -= rent;
+                            ps.get(i).addMoney(rent);
+         
+                    }
+                }
+            }
+        }
+    } 
+    
 
     public void checkChance(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
     {
@@ -261,6 +362,7 @@ public class Player
             c.assChance(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
+<<<<<<< HEAD
     public void checkCommunityChest(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
     {
         if(currentLocation instanceof communityChest )
@@ -268,6 +370,46 @@ public class Player
            communityChest  cc = (Chance) currentLocation;
            cc.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
         }
+=======
+    
+    public void checkTaxes()
+    {
+        if(currentLocation.getName().equals("Luxury Tax"))
+        {
+            this.Money -= 7500;
+        }
+        
+        else if(currentLocation.getName().equals("Income Tax"))
+        {
+            this.Money -= 0.1*this.Money;
+        }
+    }
+    
+    
+    public boolean isPrisoned()
+    {
+        if (this.currentLocation.getName().equals( "Go to Jail"))
+    //        this.setCurr(Jail);
+            return true ;
+        
+        else return false ;
+    }
+    
+    public boolean hasLost()
+    {
+        if(this.getMoney()<=0)
+            return true;
+        else 
+            return false;
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
     }
    
+    public void checkCommunity(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof communityChest)
+        {
+            communityChest c = (communityChest) currentLocation;
+            c.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
 }
