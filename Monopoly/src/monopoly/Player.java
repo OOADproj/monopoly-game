@@ -13,7 +13,7 @@ public class Player
     private int x;
     private int y;
     private int Index = 0;
-    private int turnnum = 0;
+    private boolean Forward = true;
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
@@ -39,8 +39,14 @@ public class Player
     
     public int getIndex(){return Index;}
     
+<<<<<<< HEAD
 //    public int getturn(){ return turnnum;}
 //    public void setturn(int m){turnnum=m;}
+=======
+    public void setDirection(boolean f){Forward = f;}
+    
+    public boolean isForward(){return Forward;}
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
     
     public boolean Buy()
     {
@@ -110,6 +116,7 @@ public class Player
     {
         g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
     }
+<<<<<<< HEAD
    
    
   
@@ -129,11 +136,14 @@ public class Player
             return true;
                     else return false;
     }
+=======
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
     
-    public void Move()
-    {            
-        if(Index >= 0 && Index <= 9)
+    public void Move(boolean Forward)
+    {       
+        if(Forward)
         {
+<<<<<<< HEAD
             if(Index == 0 || Index == 9)
             {    x -= 83;
                  
@@ -141,27 +151,62 @@ public class Player
             else
             {   x -= 58;
                 
-            }
-        }
-        
-        else if(Index >= 10 && Index <= 19)
-        {
-            if(Index == 10 || Index == 19)
+=======
+            if(Index >= 0 && Index <= 9)
             {
+                if(Index == 0 || Index == 9)
+                    x -= 83;
+
+                else
+                    x -= 58;
+            }
+
+            else if(Index >= 10 && Index <= 19)
+            {
+                if(Index == 10 || Index == 19)
+                    y -= 83;
+
+                else
+                    y -= 58;
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
+            }
+
+            else if(Index >= 20 && Index <= 29)
+            {
+<<<<<<< HEAD
                 y -= 83;
                 
+=======
+                if(Index == 20 || Index  == 29)
+                    x += 83;
+
+                else
+                    x += 58;
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
             }
-                
-            else
+
+            else if(Index  >= 30 && Index <= 39)
             {
+<<<<<<< HEAD
                 y -= 58;
                
+=======
+                if(Index  == 30 || Index == 39)
+                    y+= 83;
+
+                else
+                    y += 58;                
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
             }
+
+            Index = (Index+1)%40;  
+            if(Index == 0)
+                this.Money += 200;
         }
         
-        
-        else if(Index >= 20 && Index <= 29)
+        else
         {
+<<<<<<< HEAD
             if(Index == 20 || Index  == 29)
             {        x += 83;
                      
@@ -178,17 +223,60 @@ public class Player
             {  
                 y+= 83;
                 
-            }
-            else
+=======
+            if(Index >= 0 && Index <= 9)
             {
+                if(Index == 0 || Index == 9)
+                    x += 83;
+
+                else
+                    x += 58;
+            }
+
+            else if(Index >= 10 && Index <= 19)
+            {
+                if(Index == 10 || Index == 19)
+                    y += 83;
+
+                else
+                    y += 58;
+            }
+
+            else if(Index >= 20 && Index <= 29)
+            {
+                if(Index == 20 || Index  == 29)
+                    x -= 83;
+
+                else
+                    x -= 58;
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
+            }
+
+            else if(Index  >= 30 && Index <= 39)
+            {
+<<<<<<< HEAD
                 y += 58;                
                 
+=======
+                if(Index  == 30 || Index == 39)
+                    y-= 83;
+
+                else
+                    y -= 58;                
+>>>>>>> 2d893e99b7a6a5666fead4fb2aa0eed5b461400f
             }
+
+            Index = (Index-1)%40;  
+            if(Index == 0)
+                this.Money += 200;
         }
+<<<<<<< HEAD
                   
         Index = (Index+1)%40;  
         if(Index == 0)
             this.Money += 200;
+=======
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
     }
     
     public void checkRent(ArrayList <Player> ps)
@@ -200,16 +288,34 @@ public class Player
             {
                String name = c.getOwner();
                
+               
+               
                 for(int i=0; i< ps.size();i++)
-                {
+<<<<<<< HEAD
+                {   
                     if(this.Name == name)
+                    {
+                        System.out.println("5alas"); 
+                        return;
+                    }
+=======
+                {
+                    if(this.getName() == name)
                     {System.out.println("5alas"); return;}
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                       
                     else if (ps.get(i).getName()== name)
+
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
+<<<<<<< HEAD
+
+                        System.out.println("The rent have been paid");
+
+=======
                         System.out.println("hi");
+>>>>>>> 457b8c73a9b484935722a3c1f04fe6f5f81a5860
                         return;
                     }    
                 }
@@ -217,4 +323,13 @@ public class Player
         }
     }
 
+    public void checkChance(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof Chance)
+        {
+            Chance c = (Chance) currentLocation;
+            c.assChance(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
+   
 }
