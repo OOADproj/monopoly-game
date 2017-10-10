@@ -38,17 +38,18 @@ public class Game extends JFrame
     
     private ArrayList<Player> Players = new ArrayList();
 
-    public ArrayList<Player> getPlayers() {
-        return Players;
-    }
     private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
     int DiceRoll;
     int DiceConst = 10;
     
+    private Jail jail = new Jail();
+            
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
+    
+    
     
     public Game(int n,String[] names)
     {
@@ -58,6 +59,7 @@ public class Game extends JFrame
         initializeComponents(); 
         startGame();
     } 
+    
     
     public void initializeComponents() 
     {
@@ -100,6 +102,11 @@ public class Game extends JFrame
         Buy.addActionListener(new BuyButtonListener());
         EndTurn.addActionListener(new EndButtonListener());
         setVisible(true); 
+    }
+    
+    public ArrayList<Player> getPlayers() 
+    {
+        return Players;
     }
     
     void startGame()
@@ -284,10 +291,14 @@ public class Game extends JFrame
         Countries.add(new Country("Vermont Avenue",100,6));
         Countries.add(new Country("Ellis Island",120,8));
         
+
+        Countries.add(jail);
+
         Countries.add(new Jail());
+
         
         Countries.add(new Country("East Village",140,10));
-        Countries.add(new waterelec("Electric Company"));
+        Countries.add(new WaterElec("Electric Company"));
         Countries.add(new Country("States Avenue",140,10));
         Countries.add(new Country("Virginia Avenue",160,12));
         Countries.add(new RailRoad("Pennsylvania Railroad"));
@@ -305,7 +316,7 @@ public class Game extends JFrame
         Countries.add(new RailRoad("B&O Railroad"));
         Countries.add(new Country("Atlantic Avenue",260,22));
         Countries.add(new Country("Ventor Avenue",260,22));
-        Countries.add(new waterelec("Water Works"));        
+        Countries.add(new WaterElec("Water Works"));        
         Countries.add(new Country("Marvin Gardens",280,24));
         
         Countries.add(new Location ("Go to Jail"));
@@ -342,7 +353,11 @@ public class Game extends JFrame
         
         if(!(p4 == null))
             P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+        if(currPlayer.hasLost() == true){
+           // currPlayer.
+        }
     }
+   
     
     class InfoButtonListener implements ActionListener
     {
@@ -400,14 +415,21 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-           if(DiceRoll > 0)
+           if(DiceRoll >  0)
            {
+<<<<<<< HEAD
                 EndTurn.setEnabled(false);
                 currPlayer.Move(currPlayer.isForward());
                 
+=======
+
+                currPlayer.Move(currPlayer.isForward());
+
+>>>>>>> 780c9ff2876c1e2a9d93d2534f2f7aea43b30d21
                 updateLabels();
                 DiceRoll--;
                 Board.repaint();
+                
            }
            
            else
@@ -415,12 +437,29 @@ public class Game extends JFrame
                currPlayer.setDirection(true);
                Location l = Countries.get(currPlayer.getIndex());
                currPlayer.setCurr(l);
+<<<<<<< HEAD
                motionTimer.stop();         
                currPlayer.checkRent(Players);
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.checkCommunity(motionTimer, DiceTimer, Dice, Game.this);
                updateLabels();
                EndTurn.setEnabled(true);
+=======
+               motionTimer.stop();
+               if (currPlayer.isPrisoned()== true)
+               {
+                     currPlayer.setCurr(jail);
+               }
+               Buy.setEnabled(true);
+               currPlayer.checkRent(Players,Dice);
+
+
+               //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
+
+               updateLabels();
+               EndTurn.setEnabled(true);
+               updateLabels();
+>>>>>>> 780c9ff2876c1e2a9d93d2534f2f7aea43b30d21
            }
         }
     }
@@ -446,8 +485,7 @@ public class Game extends JFrame
         }   
     }
     
-    public void setDiceRoll(int x)
-    {this.DiceRoll=x ; }
+    public void setDiceRoll(int x) { this.DiceRoll=x ; }
 }
  
 

@@ -20,6 +20,8 @@ public class RailRoad extends Location
     
     public boolean isBought(){return Bought;}
     
+    public void setBought(boolean b){ this.Bought = b;}
+    
     public String getOwner(){return Owner;}
     
     public void setOwner(String Owner){this.Owner = Owner;}
