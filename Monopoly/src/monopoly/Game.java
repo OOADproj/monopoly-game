@@ -37,6 +37,10 @@ public class Game extends JFrame
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
+
+    public ArrayList<Player> getPlayers() {
+        return Players;
+    }
     private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
@@ -44,7 +48,7 @@ public class Game extends JFrame
     int DiceConst = 10;
     
     private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
-    private javax.swing.Timer DiceTimer = new javax.swing.Timer(100,new DiceListener());
+    private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
     
     public Game(int n,String[] names)
     {
@@ -329,6 +333,17 @@ public class Game extends JFrame
         }    
     }
  
+    void updateLabels()
+    {
+        P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+        P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+        if(!(p3 == null))
+            P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
+        
+        if(!(p4 == null))
+            P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
+    }
+    
     class InfoButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -357,6 +372,7 @@ public class Game extends JFrame
             currPlayer = Players.get(current);
             Roll.setEnabled(true);
             Buy.setEnabled(false);
+            EndTurn.setEnabled(false);
         }
     }
     
@@ -365,29 +381,18 @@ public class Game extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             boolean Success = currPlayer.Buy();
+            updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-            {
-                P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
-                P1Owned.setText(p1.getCurrentLocation().getName()+"\n");
-            }
+                P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-            {
-                P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-                P2Owned.setText(p2.getCurrentLocation().getName()+"\n");
-            }
+                P2Owned.setText(P2Owned.getText()+p2.getCurrentLocation().getName()+"\n");
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-            {
-                P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
-                P3Owned.setText(p3.getCurrentLocation().getName()+"\n");
-            }
+                P3Owned.setText(P3Owned.getText()+p3.getCurrentLocation().getName()+"\n");
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-            {
-                P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
-                P4Owned.setText(p4.getCurrentLocation().getName()+"\n");
-            }
+                P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
         }
     }
     
@@ -397,8 +402,8 @@ public class Game extends JFrame
         {
            if(DiceRoll > 0)
            {
-                currPlayer.Move();
-                System.out.println(currPlayer.getIndex());
+                currPlayer.Move(currPlayer.isForward());
+                updateLabels();
                 DiceRoll--;
                 Board.repaint();
            }
@@ -409,6 +414,9 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               currPlayer.checkRent(Players);
+               //currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
+               updateLabels();
                EndTurn.setEnabled(true);
            }
         }
@@ -427,13 +435,15 @@ public class Game extends JFrame
             else
             {
                 DiceRoll = Dice.getDiceRoll();
-                System.out.println(DiceRoll);
                 Dice.setCount(0);
                 motionTimer.start();
                 DiceTimer.stop();
             }
         }   
     }
+    
+    public void setDiceRoll(int x)
+    {this.DiceRoll=x ; }
 }
  
 
