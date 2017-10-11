@@ -438,8 +438,7 @@ public class Game extends JFrame
             
             else
             {
-                //DiceRoll = Dice.getDiceRoll();
-                DiceRoll = 30;
+                DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 motionTimer.start();
                 DiceTimer.stop();
