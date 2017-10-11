@@ -44,8 +44,8 @@ public class Game extends JFrame
     int DiceRoll;
     int DiceConst = 10;
             
-    private javax.swing.Timer motionTimer = new javax.swing.Timer(400,new motionListener());
-    private javax.swing.Timer DiceTimer = new javax.swing.Timer(300,new DiceListener());
+    private javax.swing.Timer motionTimer = new javax.swing.Timer(50,new motionListener());
+    private javax.swing.Timer DiceTimer = new javax.swing.Timer(50,new DiceListener());
     
     
     

@@ -354,7 +354,7 @@ public class Player
                                     {  
                                         this.Money -= 10*d.getDiceRoll();
                                         ps.get(i).addMoney(10*d.getDiceRoll()); 
-                                        JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+l.get(i).getName());
+                                        JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
@@ -365,7 +365,7 @@ public class Player
                                     {  
                                         this.Money -= 4*d.getDiceRoll();
                                         ps.get(i).addMoney(4*d.getDiceRoll());
-                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+l.get(i).getName());
+                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
@@ -381,7 +381,7 @@ public class Player
                                     {  
                                         this.Money -= 10*d.getDiceRoll();
                                         ps.get(i).addMoney(10*d.getDiceRoll());
-                                        JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getName());
+                                        JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
@@ -392,7 +392,7 @@ public class Player
                                     { 
                                         this.Money -= 4*d.getDiceRoll();
                                         ps.get(i).addMoney(4*d.getDiceRoll());
-                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getName());
+                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                     
@@ -425,17 +425,22 @@ public class Player
                     if(ps.get(i).getName().equals(name))
                     {   
                         ArrayList <Location> l = ps.get(i).getOwnedCountries();
-                        int rent = 0;
+                        int rent = 25;
                         
                         for(int j=0; j<l.size();j++)
-                            if(l.get(i) instanceof RailRoad)
-                                rent+=25;
-                                        
+                        {
+                            if(l.get(j).getName().equals(r.getName()))
+                                continue;
+                            
+                            else if(l.get(j) instanceof RailRoad)
+                                rent*=2;
+                        }
+                        
                         if(CanBuy(rent))
                         { 
                             this.Money -= rent;
                             ps.get(i).addMoney(rent);
-                            JOptionPane.showMessageDialog(null,"You paid $"+rent+" to "+r.getName());
+                            JOptionPane.showMessageDialog(null,"You paid $"+rent+" to "+r.getOwner());
                             
                         }
                         
@@ -473,8 +478,14 @@ public class Player
     {
         if(currentLocation.getName().equals("Luxury Tax"))
         {
-            this.Money -= 7500;
-            JOptionPane.showMessageDialog(null,"You paid $7500 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
+            if(CanBuy(7500))
+            {
+                this.Money -= 7500;
+                JOptionPane.showMessageDialog(null,"You paid $7500 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
+            }
+            
+            //else
+                //hasLost = true;
         }
         
         else if(currentLocation.getName().equals("Income Tax"))
@@ -502,9 +513,6 @@ public class Player
             moveTimer.start();
             isPrisoned = true;
         }
-        
-        else
-            isPrisoned = false;
     }
     
     

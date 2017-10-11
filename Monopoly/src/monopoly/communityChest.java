@@ -127,8 +127,7 @@ public class communityChest extends Location
         if(index==12 )
         {
             JOptionPane.showMessageDialog(null,cccard[12],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            Game.setDiceRoll(39-p.getIndex());
-            moveTimer.start();
+            p.deductMoney(100);
         }
         
         if(index==13 )

@@ -43,14 +43,46 @@ public class Chance extends Location
         if (index == 1) 
         {
             JOptionPane.showMessageDialog(null,card[1],"CHANCE",JOptionPane.PLAIN_MESSAGE);
-            Game.setDiceRoll(26 - p.getIndex());
+            if (p.getIndex() == 7)
+            {
+                Game.setDiceRoll(17);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 22)
+            {
+                Game.setDiceRoll(2);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 36) 
+            {
+                Game.setDiceRoll(28);
+                moveTimer.start();
+            }
             moveTimer.start();
         }
         
         if (index == 2) 
         {
             JOptionPane.showMessageDialog(null,card[2],"CHANCE",JOptionPane.PLAIN_MESSAGE);
-            Game.setDiceRoll(11 - p.getIndex());
+            if (p.getIndex() == 7)
+            {
+                Game.setDiceRoll(4);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 22)
+            {
+                Game.setDiceRoll(29);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 36) 
+            {
+                Game.setDiceRoll(15);
+                moveTimer.start();
+            }
             moveTimer.start();
         }
         
@@ -83,19 +115,19 @@ public class Chance extends Location
             JOptionPane.showMessageDialog(null,card[4],"CHANCE",JOptionPane.PLAIN_MESSAGE);
             if (p.getIndex() == 7)
             {
-                Game.setDiceRoll(15 - p.getIndex());
+                Game.setDiceRoll(8);
                 moveTimer.start();           
             }
 
             if (p.getIndex() == 22)
             {
-                Game.setDiceRoll(25 - p.getIndex());
+                Game.setDiceRoll(3);
                 moveTimer.start();
             }
 
             if (p.getIndex() == 36) 
             {
-                Game.setDiceRoll(45 - p.getIndex());
+                Game.setDiceRoll(9);
                 moveTimer.start();
             }
             
