@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 package monopoly;
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
 
 import monopoly.Location;
 import java.util.Random;
@@ -6,9 +9,10 @@ import javax.swing.JOptionPane;
 import monopoly.Dice;
 import monopoly.Game;
 import monopoly.Player;
- 
+////////////////////////////////////////////////////////////// 
 public class communityChest extends Location
 {
+<<<<<<< HEAD
     String[] cccard =new String[]
     { 
         "Advance to Go (Collect $200)",
@@ -27,6 +31,29 @@ public class communityChest extends Location
         "Receive $25 consultancy fee",
         "You have won second prize in a beauty contest–Collect $10",
         "You inherit $100"
+=======
+<<<<<<< HEAD
+    String[] cccard = { 
+=======
+    String[] cccard =new String[] { 
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
+"Advance to Go (Collect $200)",
+"Bank error in your favor—Collect $200",
+"Doctor's fee—Pay $50",
+"From sale of stock you get $50",
+"Get Out of Jail Free",
+"Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200",
+"Grand Opera Night—Collect $50 from every player for opening night seats",
+"Holiday Fund matures—Receive $100",
+"Income tax refund–Collect $20",
+"It is your birthday—Collect $10",
+"life insurance matures–Collect $100",
+"Pay hospital fees of $100",
+"Pay school fees of $150",
+"Receive $25 consultancy fee",
+"You have won second prize in a beauty contest–Collect $10",
+"You inherit $100"
+>>>>>>> 73498558b7a08f9a6daf49a233ac1b29aead00c4
     };
     
     public communityChest (String s) 

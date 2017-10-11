@@ -211,7 +211,7 @@ public class Player
                 cannotCollect = false;
             }
         }
-        
+        /////////
         else
         {
             if(Index >= 0 && Index <= 9)
@@ -282,6 +282,7 @@ public class Player
                     }    
                 }
             }
+                
         }
        
        else if(currentLocation instanceof waterelec)
@@ -385,6 +386,15 @@ public class Player
             c.assignChance(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
+<<<<<<< HEAD
+    public void checkCommunityChest(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof communityChest )
+        {
+           communityChest  cc = (Chance) currentLocation;
+           cc.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
+        }
+=======
     
     public void checkTaxes()
     {
@@ -430,5 +440,19 @@ public class Player
             return true;
         else 
             return false;
+<<<<<<< HEAD
     }   
+=======
+>>>>>>> cf6b64413c415fc83fd6fa06c69fbc3d34dcc587
+    }
+   
+    public void checkCommunity(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+    {
+        if(currentLocation instanceof communityChest)
+        {
+            communityChest c = (communityChest) currentLocation;
+            c.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
+        }
+    }
+>>>>>>> 73498558b7a08f9a6daf49a233ac1b29aead00c4
 }
