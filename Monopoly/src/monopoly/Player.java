@@ -14,9 +14,29 @@ public class Player
     private int y;
     private int Index = 0;
     private boolean Forward = true;
+    private boolean doubleRent = false;
+    private boolean isPrisoned = false;
+    private boolean freePass = false;
+    private boolean cannotCollect = false;
+
+    
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
+    public boolean isDoubleRent(){return doubleRent;}
+    
+    public boolean isPrisoned(){return isPrisoned;}
+    
+    public boolean hasFreePass(){return freePass;}
+    
+    public void setFreePass(boolean b){freePass = b;}
+    
+    public boolean CannotCollect() {return cannotCollect;}
+       
+    public void setCannotCollect(boolean cannotCollect) {this.cannotCollect = cannotCollect;}
+        
+    public void setPrisoned(boolean b){isPrisoned = b;}
+    
     public ImageIcon getImage(){return Img;};
     
     public String getName(){return Name;}
@@ -54,12 +74,13 @@ public class Player
                 {
                     if(OwnedCountries.get(i).getName().equals(c.getName()))
                     {
-                        System.out.println("You already own this property.");
+                        JOptionPane.showMessageDialog(null,"You already own this property");
+    
                         return false;
                     }
                 }
                 
-                System.out.println("Country is already owned by "+c.getOwner());
+               JOptionPane.showMessageDialog(null,"Country is already owned by "+c.getOwner());
                 return false;
             }
             
@@ -83,12 +104,12 @@ public class Player
                 {
                     if(OwnedCountries.get(i).getName().equals(r.getName()))
                     {
-                        System.out.println("You already own this property.");
+                        JOptionPane.showMessageDialog(null,"You already own this property.");
                         return false;
                     }
                 }
                 
-                System.out.println("RailRoad is already owned by "+r.getOwner());
+                JOptionPane.showMessageDialog(null,"RailRoad is already owned by "+r.getOwner());
                 return false;
             }
             
@@ -102,9 +123,9 @@ public class Player
             }
         }
         //
-        else if(currentLocation instanceof WaterElec)
+        else if(currentLocation instanceof waterelec)
         {
-            WaterElec w = (WaterElec) currentLocation;
+            waterelec w = (waterelec) currentLocation;
                 
             if(w.isBought())
             {
@@ -112,12 +133,12 @@ public class Player
                 {
                     if(OwnedCountries.get(i).getName().equals(w.getName()))
                     {
-                        System.out.println("You already own this property.");
+                       JOptionPane.showMessageDialog(null,"You already own this property.");
                         return false;
                     }
                 }
                 
-                System.out.println("WaterElec is already owned by "+w.getOwner());
+                JOptionPane.showMessageDialog(null,"WaterElec is already owned by "+w.getOwner());
                 return false;
             }
             
@@ -133,7 +154,7 @@ public class Player
         //
         else
         {
-            System.out.println("This tile cannot be bought");
+            JOptionPane.showMessageDialog(null,"This tile cannot be bought");
             return false;
         }
     }
@@ -184,8 +205,11 @@ public class Player
             }
 
             Index = (Index+1)%40;  
-            if(Index == 0)
+            if(Index == 0 && !cannotCollect)
+            {
                 this.Money += 200;
+                cannotCollect = false;
+            }
         }
         
         else
@@ -227,8 +251,11 @@ public class Player
             }
 
             Index = (Index-1)%40;  
-            if(Index == 0)
+            if(Index == 0 && !cannotCollect)
+            {
                 this.Money += 200;
+                cannotCollect = false;
+            }      
         }
     }
     
@@ -243,78 +270,80 @@ public class Player
                
                 for(int i=0; i< ps.size();i++)
                 {
-                    if(this.getName() == name)
-                    {System.out.println("5alas"); return;}
+                    if(this.getName().equals(name))
+                        return;
                       
-                    else if (ps.get(i).getName()== name)
+                    else if (ps.get(i).getName().equals(name))
                     {   
                         this.Money -= c.getRent();
                         ps.get(i).addMoney(c.getRent());
-                        System.out.println("hi");
+                        JOptionPane.showMessageDialog(null,"You paid rent of $"+c.getRent()+" to "+c.getOwner());
                         return;
                     }    
                 }
             }
         }
        
-       else if(currentLocation instanceof WaterElec)
+       else if(currentLocation instanceof waterelec)
        {
-           WaterElec w = (WaterElec) currentLocation;
+           waterelec w = (waterelec) currentLocation;
            
            if(w.isBought())
            {
                String name = w.getOwner();
                
-               for(int i=0; i< ps.size();i++)
+                if(this.Name == name)
+                    return;
+               
+                for(int i=0; i< ps.size();i++)
                 {
-                    if(this.getName() == name)
-                    {
-                        System.out.println("5alas");
-                        return;
-                    }
-                
-                      
-                    else if (ps.get(i).getName() == name)
+                    if (ps.get(i).getName().equals(name))
                     {   
                         ArrayList <Location> l = ps.get(i).getOwnedCountries();
                         String tileName = w.getName();
-                        
+
                         for(int j=0; j<l.size();j++)
                         {
-                            if(tileName == "Water Company")
+                            if(tileName.equals("Water Works"))
                             {
-                                if(l.get(i).getName().equals("Electric Company") )
+                                if(l.get(i).getName().equals("Electric Company"))
                                 {
                                     this.Money -= 10*d.getDiceRoll();
-                                    ps.get(i).addMoney(10*d.getDiceRoll());          
+                                    ps.get(i).addMoney(10*d.getDiceRoll()); 
+                                    JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+l.get(i).getName());
                                 }
                                 else
                                 {
                                     this.Money -= 4*d.getDiceRoll();
                                     ps.get(i).addMoney(4*d.getDiceRoll());
+                                    JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+l.get(i).getName());
                                 }
                                 return;
                             }
-                            else if (tileName == "Electric Company")
+
+                            else if (tileName.equals("Electric Company"))
                             {
                                 if(l.get(i).getName().equals("Water Works") )
                                 {
                                     this.Money -= 10*d.getDiceRoll();
                                     ps.get(i).addMoney(10*d.getDiceRoll());
+                                     JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getName());
                                 }
                                 else
                                 {
                                     this.Money -= 4*d.getDiceRoll();
                                     ps.get(i).addMoney(4*d.getDiceRoll());
+                                    JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getName());
                                 } 
                                 return;
                             }
                         }
-                        return;
-                    }    
-                }
+                    return;
+                }    
             }
         }
+    }
+       
         else if(currentLocation instanceof RailRoad)
         {
            RailRoad r = (RailRoad) currentLocation;
@@ -323,29 +352,24 @@ public class Player
            {
                String name = r.getOwner();
                
+               if(this.getName().equals (name))
+                    return;
+               
                for(int i=0; i< ps.size();i++)
                 {
-                    if(this.getName() == name)
-                    {
-                        System.out.println("5alas");
-                        return;
-                    }
-                
-                    else if (ps.get(i).getName() == name)
+                    if(ps.get(i).getName().equals(name))
                     {   
                         ArrayList <Location> l = ps.get(i).getOwnedCountries();
                         int rent = 0;
                         
-                           for(int j=0; j<l.size();j++)
-                           {
-                               if(l.get(i) instanceof RailRoad)
-                               {
-                                   rent+=25;
-                               }
-                           }                              
-                            this.Money -= rent;
-                            ps.get(i).addMoney(rent);
-         
+                        for(int j=0; j<l.size();j++)
+                            if(l.get(i) instanceof RailRoad)
+                                rent+=25;
+
+                        this.Money -= rent;
+                        ps.get(i).addMoney(rent);
+                        JOptionPane.showMessageDialog(null,"You paid $"+rent+" to "+r.getName());
+                        return;
                     }
                 }
             }
@@ -358,7 +382,7 @@ public class Player
         if(currentLocation instanceof Chance)
         {
             Chance c = (Chance) currentLocation;
-            c.assChance(this, moveTimer, DiceTimer, Dice, Game);
+            c.assignChance(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
     
@@ -367,32 +391,16 @@ public class Player
         if(currentLocation.getName().equals("Luxury Tax"))
         {
             this.Money -= 7500;
+            JOptionPane.showMessageDialog(null,"You paid $7500 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
         }
         
         else if(currentLocation.getName().equals("Income Tax"))
         {
             this.Money -= 0.1*this.Money;
+            JOptionPane.showMessageDialog(null,"You paid $"+0.1*this.Money+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
         }
     }
     
-    
-    public boolean isPrisoned()
-    {
-        if (this.currentLocation.getName().equals( "Go to Jail"))
-    //        this.setCurr(Jail);
-            return true ;
-        
-        else return false ;
-    }
-    
-    public boolean hasLost()
-    {
-        if(this.getMoney()<=0)
-            return true;
-        else 
-            return false;
-    }
-   
     public void checkCommunity(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
     {
         if(currentLocation instanceof communityChest)
@@ -401,4 +409,26 @@ public class Player
             c.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
+    
+    public void CheckJail(javax.swing.Timer moveTimer,Game Game)
+    {
+        if (this.currentLocation.getName().equals( "Go to Jail"))
+        {
+            JOptionPane.showMessageDialog(null, "You have been imprisoned" , "GO TO JAIL" , JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(20);
+            moveTimer.start();
+            isPrisoned = true;
+        }
+        
+        else
+            isPrisoned = false;
+    }
+    
+    public boolean hasLost()
+    {
+        if(this.getMoney()<=0)
+            return true;
+        else 
+            return false;
+    }   
 }

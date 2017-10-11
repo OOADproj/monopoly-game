@@ -5,163 +5,183 @@ import javax.swing.JOptionPane;
 
 public class Chance extends Location
 {
-     String[] card = new String[]{
-        "Advance to Go (Collect $200)" , 
-       " Advance to Illinois Ave—If you pass Go, collect $200",
-"Advance to East Village – If you pass Go, collect $200",
-"Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.",
-"Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.",
-"Bank pays you dividend of $50",
-"Get Out of Jail Free",
-"Go Back 3 Spaces",
-"Go to Jail–Go directly to Jail–Do not pass Go, do not collect $200",
-"Make general repairs on all your property–For each house pay $25–For each hotel $100",
-"Pay poor tax of $15",
-"Take a trip to Reading Railroad–If you pass Go, collect $200",
-"Take a walk on Wall Street–Advance token to Wall Street",
-"You have been elected Chairman of the Board–Pay each player $50",
-"Your building and loan matures—Collect $150",
-"You have won a crossword competition—Collect $100"
-   
-    };
-     
-    public Chance(String s) 
+    String[] card = new String[]
     {
+        "Advance to Go (Collect $200)",
+        " Advance to Illinois Ave—If you pass Go, collect $200",
+        "Advance to East Village – If you pass Go, collect $200",
+        "Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.",
+        "Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.",
+        "Bank pays you dividend of $50",
+        "Get Out of Jail Free",
+        "Go Back 3 Spaces",
+        "Go to Jail–Go directly to Jail–Do not pass Go, do not collect $200",
+        "Make general repairs on all your property–For each house pay $25–For each hotel $100",
+        "Pay poor tax of $15",
+        "Take a trip to Reading Railroad–If you pass Go, collect $200",
+        "Take a walk on Wall Street–Advance token to Wall Street",
+        "You have been elected Chairman of the Board–Pay each player $50",
+        "Your building and loan matures—Collect $150",
+        "You have won a crossword competition—Collect $100"
+    };
+
+    public Chance(String s) {
         super(s);
     }
-    
-    public void assChance(Player p,javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
+
+    public void assignChance(Player p, javax.swing.Timer moveTimer, javax.swing.Timer DiceTimer, Dice Dice, Game Game) 
     {
         Random r = new Random();
-       //int index =  r.nextInt(card.length);
-       int index = 11;
-        if(index==0 )
+        int index = r.nextInt(16);
+        if (index == 0) 
         {
-        JOptionPane.showMessageDialog(null,"your chance is "+card[0]);
-
-            Game.setDiceRoll(40-p.getIndex());
+            JOptionPane.showMessageDialog(null,card[0],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(40 - p.getIndex());
             moveTimer.start();
-            
-            
-        }
-        if(index==1 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[1]);
-             Game.setDiceRoll(26-p.getIndex());
-            moveTimer.start();
-        }
-        if(index==2 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[2]);
-             Game.setDiceRoll(11-p.getIndex());
-            moveTimer.start();
-        }
-        if(index==3 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[3]);
-             if(p.getIndex()==7)
-             {
-                 Game.setDiceRoll(8-p.getIndex());
-            moveTimer.start();
-             }
-             
-             if(p.getIndex()==22)
-             {
-                 Game.setDiceRoll(23-p.getIndex());
-            moveTimer.start();
-             }
-             
-             if(p.getIndex()==36)
-             {
-                 Game.setDiceRoll(37-p.getIndex());
-            moveTimer.start();
-             }
-        }
-        if(index==4 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[4]);
-             if(p.getIndex()==7)
-             {
-                 Game.setDiceRoll(15-p.getIndex());
-                 
-            moveTimer.start();
-            //lesa mafrod el owner ya5od twice el rent 
-             }
-             
-             if(p.getIndex()==22)
-             {
-                 Game.setDiceRoll(25-p.getIndex());
-            moveTimer.start();
-             }
-             
-             if(p.getIndex()==36)
-             {
-                 Game.setDiceRoll(45-p.getIndex());
-            moveTimer.start();
-             }
-        }
-        if(index==5 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[5]);
-            p.addMoney(50);
-        }
-        if(index==6 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[6]);
-        }
-        if(index==7 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[7]);
-             p.setDirection(false);
-             Game.setDiceRoll(3); 
-            moveTimer.start();
-             
-        }
-        if(index==8 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[8]);
-        }
-        if(index==9 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[9]);
-        }
-        if(index==10 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[10]);
-            p.deductMoney(15);
-        }
-        if(index==11 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is"+card[11]);
-             Game.setDiceRoll(45-p.getIndex());
-            moveTimer.start();
-        }
-        if(index==12 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[12]);
-            Game.setDiceRoll(39-p.getIndex());
-            moveTimer.start();
-        }
-        if(index==13 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[13]);
-            p.deductMoney(50*Game.getPlayers().size());
-            for (int i = 0; i < Game.getPlayers().size(); i++) {
-                Game.getPlayers().get(i).addMoney(50);
-            }
-            
-        }
-        if(index==14 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[14]);
-            p.addMoney(150*Game.getPlayers().size());
-        }
-        if(index==15 )
-        {
-             JOptionPane.showMessageDialog(null,"your chance is "+card[15]);
-            p.addMoney(100);
         }
         
+        if (index == 1) 
+        {
+            JOptionPane.showMessageDialog(null,card[1],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(26 - p.getIndex());
+            moveTimer.start();
+        }
+        
+        if (index == 2) 
+        {
+            JOptionPane.showMessageDialog(null,card[2],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(11 - p.getIndex());
+            moveTimer.start();
+        }
+        
+        if (index == 3)
+        {
+            JOptionPane.showMessageDialog(null,card[3],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            if (p.getIndex() == 7)
+            {
+                Game.setDiceRoll(5);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 22)
+            {
+                Game.setDiceRoll(6);
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 36) 
+            {
+                Game.setDiceRoll(16);
+                moveTimer.start();
+            }
+            
+            /////
+        }
+        
+        if (index == 4)
+        {
+            JOptionPane.showMessageDialog(null,card[4],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            if (p.getIndex() == 7)
+            {
+                Game.setDiceRoll(15 - p.getIndex());
+                moveTimer.start();           
+            }
+
+            if (p.getIndex() == 22)
+            {
+                Game.setDiceRoll(25 - p.getIndex());
+                moveTimer.start();
+            }
+
+            if (p.getIndex() == 36) 
+            {
+                Game.setDiceRoll(45 - p.getIndex());
+                moveTimer.start();
+            }
+            
+            //////
+        }
+        
+        if (index == 5)
+        {
+            JOptionPane.showMessageDialog(null,card[5],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.addMoney(50);
+        }
+        
+        if (index == 6) 
+        {
+            JOptionPane.showMessageDialog(null,card[6],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.setFreePass(true);
+        }
+        
+        if (index == 7) 
+        {
+            JOptionPane.showMessageDialog(null,card[7],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.setDirection(false);
+            Game.setDiceRoll(3);
+            moveTimer.start();
+
+        }
+        
+        if (index == 8)
+        {
+            JOptionPane.showMessageDialog(null,card[8],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.setPrisoned(true);
+            p.CannotCollect();
+            if(p.getIndex() == 7)
+                Game.setDiceRoll(3);
+            
+            if(p.getIndex() == 22)
+                Game.setDiceRoll(28);
+            
+            if(p.getIndex() == 36)
+                Game.setDiceRoll(14);
+            
+            moveTimer.start();
+        }
+        
+        if (index == 9)
+        {
+            JOptionPane.showMessageDialog(null,card[9],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+        }
+        if (index == 10)
+        {
+            JOptionPane.showMessageDialog(null,card[10],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.deductMoney(15);
+        }
+        
+        if (index == 11) 
+        {
+            JOptionPane.showMessageDialog(null,card[11],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(45 - p.getIndex());
+            moveTimer.start();
+        }
+        
+        if (index == 12) 
+        {
+            JOptionPane.showMessageDialog(null,card[12],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            Game.setDiceRoll(39 - p.getIndex());
+            moveTimer.start();
+        }
+        
+        if (index == 13) 
+        {
+            JOptionPane.showMessageDialog(null,card[13],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.deductMoney(50 * Game.getPlayers().size());
+            for (int i = 0; i < Game.getPlayers().size(); i++)
+                Game.getPlayers().get(i).addMoney(50);
+        }
+        
+        if (index == 14)
+        {
+            JOptionPane.showMessageDialog(null,card[14],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.addMoney(150 * Game.getPlayers().size());
+        }
+        
+        if (index == 15) 
+        {
+            JOptionPane.showMessageDialog(null,card[15],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            p.addMoney(100);
+        }
     }
-    
 }

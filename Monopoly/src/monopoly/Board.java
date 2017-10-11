@@ -20,11 +20,6 @@ public class Board extends JPanel
         this.numberOfPlayers = numberOfPlayers;
     }
     
-    public void initComponents()
-    {
-        
-    }
-    
     public void drawBoard()
     {
         setLayout(null);

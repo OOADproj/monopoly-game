@@ -3,13 +3,14 @@ public class RailRoad extends Location
 {  
     private int Cost = 200;
     private int Rent;
-     private String Owner;
-     
+    private String Owner;
+   
+    
     public RailRoad(String Name) 
     {
         super(Name);
     }
- 
+   
     public void setRent(int Rent){this.Rent = Rent;}
 
     private boolean Bought =false;
@@ -25,4 +26,12 @@ public class RailRoad extends Location
     public String getOwner(){return Owner;}
     
     public void setOwner(String Owner){this.Owner = Owner;}
+    
+    public String viewInformation()
+    {
+        return
+        "Name: "+getName()+"\n"+
+        "Cost: "+"$"+Cost+"\n"+        
+        "Owner: "+Owner;  
+    }
 }
