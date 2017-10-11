@@ -362,6 +362,12 @@ public class Game extends JFrame
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
             }
+            else if(currPlayer.hasLost())
+            {
+                current = (current+1)%numberOfPlayers;
+                currPlayer = Players.get(current);
+                currPlayer.Kick();
+            }
             
             currPlayer.setFreePass(false);
             Roll.setEnabled(true);
