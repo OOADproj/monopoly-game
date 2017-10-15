@@ -9,12 +9,27 @@ public class Country extends Location
     private int nHotels;
     private int nHouses;
     private String Owner;
+    private int cIndex;
+    private boolean setComplete;
+
+    public int getcIndex() {
+        return cIndex;
+    }
+
+    public boolean isSetComplete() {
+        return setComplete;
+    }
+
+    public void setSetComplete(boolean setComplete) {
+        this.setComplete = setComplete;
+    }
     
-    public Country(String Name, int Cost, int Rent)
+    public Country(String Name, int Cost, int Rent,int cind)
     {
         super(Name);
         this.Cost = Cost;
         this.Rent = Rent;
+        this.cIndex=cind;
         Owner = "None";
     }
     

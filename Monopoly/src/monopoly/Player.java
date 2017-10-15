@@ -19,7 +19,7 @@ public class Player
     private boolean freePass = false;
     private boolean cannotCollect = false;
     private boolean hasLost = false;
-
+    private char[] myCountries=new char[40];
     
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
@@ -65,6 +65,49 @@ public class Player
     public boolean isForward(){return Forward;}
     
     public boolean hasLost(){ return hasLost; }
+    public void checker(int a,int b)
+    {
+      if(myCountries[a]==1&&myCountries[b]==1)
+        { for(int i=0;i<OwnedCountries.size();i++)
+            {
+                if(OwnedCountries.get(i) instanceof Country)
+                {
+                    Country c = (Country) OwnedCountries.get(i);
+                    if(c.getcIndex()==a||c.getcIndex()==b)
+                    {
+                        c.setSetComplete(true);
+                    }
+                }
+            }
+        }
+    }
+    public void checker(int a, int b ,int c)
+    {
+        if(myCountries[a]==1&&myCountries[b]==1&&myCountries[c]==1)
+            { for(int i=0;i<OwnedCountries.size();i++)
+                {
+                    if(OwnedCountries.get(i) instanceof Country)
+                    {
+                        Country d = (Country) OwnedCountries.get(i);
+                        if(d.getcIndex()==a||d.getcIndex()==b||d.getcIndex()==c)
+                        {
+                            d.setSetComplete(true);
+                        }
+                    }
+                }
+            }
+    }
+    public void checkFullSet(){
+        checker(1,3);
+        checker(6,8,9);
+        checker(11,13,14); 
+        checker(16,18,19);
+        checker(21,23,24);
+        checker(26,27,29);
+        checker(31,32,34);
+        checker(37,39);    
+    }
+            
     
     public boolean Buy()
     {
@@ -92,9 +135,11 @@ public class Player
                 if(CanBuy(c.getCost()))
                 {
                     c.setOwner(this.Name);
-                    c.setBought(true);
+                    c.setBought(true); 
                     this.deductMoney(c.getCost());
                     this.OwnedCountries.add(c);
+                    myCountries[c.getcIndex()]=1;
+                    checkFullSet();
                     return true;
                 }
                 else
