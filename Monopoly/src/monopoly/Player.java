@@ -67,6 +67,7 @@ public class Player
     
     public boolean hasLost(){ return hasLost; }
     
+    
     public boolean Buy()
     {
         if(currentLocation instanceof Country)
@@ -191,11 +192,9 @@ public class Player
     
     public void draw(Graphics g , Board b)
     {
-        if(!hasLost())
+       // if(!hasLost())
             g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
-        
-        else
-            Img = null;
+      
         
     }
     
