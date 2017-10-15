@@ -475,18 +475,7 @@ public class Game extends JFrame
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
             }
-<<<<<<< HEAD
-            else if(currPlayer.hasLost())
-            {
-                current = (current+1)%numberOfPlayers;
-                currPlayer = Players.get(current);
-                currPlayer.Kick();
-                
-            }
-=======
-
->>>>>>> 91d4459af4e3deaba22fdacb9d18667804f716e6
-            
+           
             currPlayer.setFreePass(false);
             Roll.setEnabled(true);
             Buy.setEnabled(false);
@@ -559,20 +548,11 @@ public class Game extends JFrame
                Buy.setEnabled(true);
                Sell.setEnabled(true);
                
-               if(currPlayer.hasLost())
-               {
-                   ;
-               }
                currPlayer.checkRent(Players,Dice);
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
-<<<<<<< HEAD
                currPlayer.checkCommunityChest(motionTimer, DiceTimer, Dice, Game.this);
-               currPlayer.CheckJail(motionTimer, Game.this);
-=======
-               currPlayer.checkCommunity(motionTimer, DiceTimer, Dice, Game.this);
-               currPlayer.CheckJail(motionTimer, Game.this);            
->>>>>>> 91d4459af4e3deaba22fdacb9d18667804f716e6
+               currPlayer.CheckJail(motionTimer, Game.this);      
                updateLabels();        
                EndTurn.setEnabled(true);
                checkIfLost();
@@ -594,14 +574,9 @@ public class Game extends JFrame
             {
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
-                if(currPlayer.isDifferentRent())
-                    DiceTimer.stop();
-                
-                else
-                {
-                    motionTimer.start();
-                    DiceTimer.stop();
-                }
+                DiceTimer.stop();
+                motionTimer.start();
+                DiceTimer.stop();
             }
         }   
     }
