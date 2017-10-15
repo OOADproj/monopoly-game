@@ -398,6 +398,48 @@ public class Game extends JFrame
         }
     }
     
+    public void checkIfLost()
+    {
+        if(currPlayer.hasLost())
+           {
+               JOptionPane.showMessageDialog(null, "YOU LOST :(");
+               if(currPlayer.getName().equals(p1.getName()))
+               {
+                   P1Lbl.setText(p1.getName()+" : LOST");
+                   P1Owned.setText("");
+               }
+               
+               else if(currPlayer.getName().equals(p2.getName()))
+               {
+                   P2Lbl.setText(p1.getName()+" : LOST");
+                   P2Owned.setText("");
+               }
+               
+               else if(currPlayer.getName().equals(p3.getName()))
+               {
+                   P3Lbl.setText(p3.getName()+" : LOST");
+                   P3Owned.setText("");
+               }
+               
+               else if(currPlayer.getName().equals(p4.getName()))
+               {
+                   P4Lbl.setText(p4.getName()+" : LOST");
+                   P4Owned.setText("");
+               }
+               
+               numberOfPlayers--;
+               Board.setNumberOfPlayers(numberOfPlayers);
+               currPlayer.Kick();
+               Players.remove(currPlayer); 
+               Board.setPlayers(Players);
+               Board.repaint();               
+               currPlayer = Players.get(current);
+               Roll.setEnabled(true);
+               Buy.setEnabled(false);
+               EndTurn.setEnabled(false);
+           }
+    }
+    
     class InfoButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -431,12 +473,7 @@ public class Game extends JFrame
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
             }
-            else if(currPlayer.hasLost())
-            {
-                current = (current+1)%numberOfPlayers;
-                currPlayer = Players.get(current);
-                currPlayer.Kick();
-            }
+
             
             currPlayer.setFreePass(false);
             Roll.setEnabled(true);
@@ -517,9 +554,10 @@ public class Game extends JFrame
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.checkCommunity(motionTimer, DiceTimer, Dice, Game.this);
-               currPlayer.CheckJail(motionTimer, Game.this);
+               currPlayer.CheckJail(motionTimer, Game.this);            
                updateLabels();        
                EndTurn.setEnabled(true);
+               checkIfLost();
            }
         }
     }
@@ -543,6 +581,8 @@ public class Game extends JFrame
             }
         }   
     }
+    
+   
 }
  
 
