@@ -112,7 +112,30 @@ public class Board extends JPanel
     public void paint(Graphics g)
     {
         super.paint(g);
+        System.out.println(numberOfPlayers);
         for(int i=0 ; i < numberOfPlayers ; i++)
             Players.get(i).draw(g, this);
+        
+        
+    }
+
+    public ArrayList<Player> getPlayers()
+    {
+        return Players;
+    }
+
+    public void setPlayers(ArrayList<Player> Players) 
+    {
+        this.Players = Players;
+    }
+
+    public int getNumberOfPlayers() 
+    {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers)
+    {
+        this.numberOfPlayers = numberOfPlayers;
     }
 }

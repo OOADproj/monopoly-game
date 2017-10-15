@@ -107,7 +107,7 @@ public class Chance extends Location
                 moveTimer.start();
             }
             
-            /////
+            p.setDifferentRent(true);
         }
         
         if (index == 4)
@@ -131,7 +131,7 @@ public class Chance extends Location
                 moveTimer.start();
             }
             
-            //////
+            p.setDifferentRent(true);
         }
         
         if (index == 5)

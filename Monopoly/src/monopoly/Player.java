@@ -14,18 +14,23 @@ public class Player
     private int y;
     private int Index = 0;
     private boolean Forward = true;
-    private boolean doubleRent = false;
     private boolean isPrisoned = false;
     private boolean freePass = false;
     private boolean cannotCollect = false;
     private boolean hasLost = false;
+<<<<<<< HEAD
     private char[] myCountries=new char[40];
+=======
+    private boolean DifferentRent = false;
+>>>>>>> 1ed17e62158a8a14df74aa59297703ab72b9b057
     
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
 
-    public boolean isDoubleRent(){return doubleRent;}
+    public boolean isDifferentRent(){return DifferentRent;}
     
+    public void setDifferentRent(boolean b){ DifferentRent = b;}
+            
     public boolean isPrisoned(){return isPrisoned;}
     
     public boolean hasFreePass(){return freePass;}
@@ -108,6 +113,7 @@ public class Player
         checker(37,39);    
     }
             
+    
     
     public boolean Buy()
     {
@@ -235,11 +241,9 @@ public class Player
     
     public void draw(Graphics g , Board b)
     {
-        if(!hasLost())
+       // if(!hasLost())
             g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
-        
-        else
-            Img = null;
+      
         
     }
     
@@ -492,10 +496,11 @@ public class Player
                         {
                             if(tileName.equals("Water Works"))
                             {
-                                if(l.get(i).getName().equals("Electric Company"))
+                                if(DifferentRent)
                                 {
                                     if(CanBuy(10*d.getDiceRoll()))
                                     {  
+                                        DifferentRent = false;
                                         this.Money -= 10*d.getDiceRoll();
                                         ps.get(i).addMoney(10*d.getDiceRoll()); 
                                         JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
@@ -503,54 +508,86 @@ public class Player
                                     else
                                         hasLost = true;
                                 }
+                                
                                 else
                                 {
-                                    if(CanBuy(4*d.getDiceRoll()))
-                                    {  
-                                        this.Money -= 4*d.getDiceRoll();
-                                        ps.get(i).addMoney(4*d.getDiceRoll());
-                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                    if(l.get(i).getName().equals("Electric Company"))
+                                    {
+                                        if(CanBuy(10*d.getDiceRoll()))
+                                        {  
+                                            this.Money -= 10*d.getDiceRoll();
+                                            ps.get(i).addMoney(10*d.getDiceRoll()); 
+                                            JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                        }
+                                        else
+                                            hasLost = true;
                                     }
                                     else
-                                        hasLost = true;
+                                    {
+                                        if(CanBuy(4*d.getDiceRoll()))
+                                        {  
+                                            this.Money -= 4*d.getDiceRoll();
+                                            ps.get(i).addMoney(4*d.getDiceRoll());
+                                            JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                        }
+                                        else
+                                            hasLost = true;
+                                    }
+                                    return;
                                 }
-                                return;
                             }
 
                             else if (tileName.equals("Electric Company"))
                             {
-                                if(l.get(i).getName().equals("Water Works") )
+                                if(DifferentRent)
                                 {
                                     if(CanBuy(10*d.getDiceRoll()))
                                     {  
+                                        DifferentRent = false;
                                         this.Money -= 10*d.getDiceRoll();
-                                        ps.get(i).addMoney(10*d.getDiceRoll());
+                                        ps.get(i).addMoney(10*d.getDiceRoll()); 
                                         JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
                                 }
+                                
                                 else
                                 {
-                                    if(CanBuy(4*d.getDiceRoll()))
-                                    { 
-                                        this.Money -= 4*d.getDiceRoll();
-                                        ps.get(i).addMoney(4*d.getDiceRoll());
-                                        JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                    if(l.get(i).getName().equals("Water Works") )
+                                    {
+                                        if(CanBuy(10*d.getDiceRoll()))
+                                        {  
+                                            this.Money -= 10*d.getDiceRoll();
+                                            ps.get(i).addMoney(10*d.getDiceRoll());
+                                            JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                        }
+                                        else
+                                            hasLost = true;
                                     }
                                     else
-                                    
-                                        hasLost = true;
+                                    {
+                                        if(CanBuy(4*d.getDiceRoll()))
+                                        { 
+                                            this.Money -= 4*d.getDiceRoll();
+                                            ps.get(i).addMoney(4*d.getDiceRoll());
+                                            JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                        }
+                                        else
+
+                                            hasLost = true;
                                         
-                                    
+                                    }
+                                     return;
                                 } 
-                                return;
                             }
                         }
                     return;
                 }    
             }
         }
+           
+        DifferentRent = false;
     }
        
         else if(currentLocation instanceof RailRoad)
@@ -580,6 +617,12 @@ public class Player
                                 rent*=2;
                         }
                         
+                        if(DifferentRent)
+                        {
+                            rent *= 2;
+                            DifferentRent = false;
+                        }
+                        
                         if(CanBuy(rent))
                         { 
                             this.Money -= rent;
@@ -596,6 +639,7 @@ public class Player
                     
                 }
             }
+           DifferentRent = false;
         }
     } 
     
@@ -622,10 +666,10 @@ public class Player
     {
         if(currentLocation.getName().equals("Luxury Tax"))
         {
-            if(CanBuy(7500))
+            if(CanBuy(650))
             {
-                this.Money -= 7500;
-                JOptionPane.showMessageDialog(null,"You paid $7500 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
+                this.Money -= 650;
+                JOptionPane.showMessageDialog(null,"You paid $650 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
             }
             
             //else
@@ -636,15 +680,6 @@ public class Player
         {
             this.Money -= 0.1*this.Money;
             JOptionPane.showMessageDialog(null,"You paid $"+0.1*this.Money+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
-        }
-    }
-    
-    public void checkCommunity(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
-    {
-        if(currentLocation instanceof communityChest)
-        {
-            communityChest c = (communityChest) currentLocation;
-            c.assignCommunityChest(this, moveTimer, DiceTimer, Dice, Game);
         }
     }
     
