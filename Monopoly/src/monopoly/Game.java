@@ -72,18 +72,17 @@ public class Game extends JFrame
         Data.setBackground(new Color(85,107,47));
         
         Buy.setPreferredSize(new Dimension(80,40));
-        Buy.setBounds(270,295,80,40);
+        Buy.setBounds(220,295,80,40);
         Buy.setEnabled(false);
         InfoButton.setBounds(270,250,180,40);
-        Roll.setBounds(370,295,80,40);
+        Roll.setBounds(420,295,80,40);
         Info.setBounds(270,390,180,200);
         EndTurn.setBounds(300,340,120,40);
         EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
         Sell.setPreferredSize(new Dimension(80,40));
-        Sell.setBounds(450,340,80,40);
-        //Sell.setEnabled(false);
+        Sell.setBounds(320,295,80,40);
         
         Board = new Board(Players,numberOfPlayers);
         Board.repaint();
@@ -337,6 +336,68 @@ public class Game extends JFrame
             P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
     }
       
+    void updateLists()
+    {
+        int gapIndex;
+        char[] Text;
+        String newText = "";
+        if(currPlayer.equals(p1))
+        {
+            gapIndex = P1Owned.getText().indexOf("");
+            newText = "";
+            Text = P1Owned.getText().toCharArray();
+            for(int i=0 ; i < gapIndex ; i++)
+                newText += Text[i];
+            
+            for(int i=gapIndex+1 ; i < Text.length ; i++)
+                newText += Text[i];
+            
+            P1Owned.setText(newText);
+        }
+        
+        else if(currPlayer.equals(p2))
+        {
+            gapIndex = P2Owned.getText().indexOf("");
+            newText = "";
+            Text = P2Owned.getText().toCharArray();
+            for(int i=0 ; i < gapIndex ; i++)
+                newText += Text[i];
+            
+            for(int i=gapIndex+1 ; i < Text.length ; i++)
+                newText += Text[i];
+            
+            P2Owned.setText(newText);
+        }
+        
+        else if(currPlayer.equals(p3))
+        {
+            gapIndex = P3Owned.getText().indexOf("");
+            newText = "";
+            Text = P3Owned.getText().toCharArray();
+            for(int i=0 ; i < gapIndex ; i++)
+                newText += Text[i];
+            
+            for(int i=gapIndex+1 ; i < Text.length ; i++)
+                newText += Text[i];
+            
+            P3Owned.setText(newText);
+        }
+        
+        else if(currPlayer.equals(p4))
+        {
+            gapIndex = P4Owned.getText().indexOf("");
+            newText = "";
+            Text = P4Owned.getText().toCharArray();
+            for(int i=0 ; i < gapIndex ; i++)
+                newText += Text[i];
+            
+            for(int i=gapIndex+1 ; i < Text.length ; i++)
+                newText += Text[i];
+            
+            P4Owned.setText(newText);
+        }
+    }
+    
     class InfoButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -411,7 +472,6 @@ public class Game extends JFrame
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
                 P1Owned.setText(P1Owned.getText().replace(p1.getCurrentLocation().getName(),""));
-                
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
                 P2Owned.setText(P2Owned.getText().replace(p2.getCurrentLocation().getName(),""));
@@ -421,6 +481,8 @@ public class Game extends JFrame
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
                 P4Owned.setText(P4Owned.getText().replace(p4.getCurrentLocation().getName(),""));
+            
+            updateLists();
         }
     }
     

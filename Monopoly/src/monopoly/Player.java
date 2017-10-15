@@ -205,43 +205,97 @@ public class Player
             Country c =  (Country) currentLocation;
             if(c.isBought())
             {
-               c.removeOwner();
-               this.OwnedCountries.remove(c) ; 
-               this.addMoney(c.getCost());
-               c.setBought(false);
-               return true ; 
-            } 
+               if(c.getOwner().equals(this.Name))
+               {
+                    c.removeOwner();
+                    this.OwnedCountries.remove(c) ; 
+                    this.addMoney(c.getCost());
+                    c.setBought(false);
+                    JOptionPane.showMessageDialog(null, "You sold "+c.getName());
+                    return true; 
+               }
+               
+               else
+               {
+                   JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
+                   return false;
+               }
+                   
+            }
+            
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
+                return false;
+            }
         }
-            else if(currentLocation instanceof RailRoad)
+        
+        else if(currentLocation instanceof RailRoad)
         {
             RailRoad r = (RailRoad) currentLocation;
             
             if(r.isBought())
-        {
-               r.removeOwner();
-               this.OwnedCountries.remove(r) ; 
-               this.addMoney(r.getCost());
-               r.setBought(false);
-               return true ; 
+            {
+                if(r.getOwner().equals(this.Name))
+                {
+                    r.removeOwner();
+                    this.OwnedCountries.remove(r) ; 
+                    this.addMoney(r.getCost());
+                    r.setBought(false);
+                    JOptionPane.showMessageDialog(null, "You sold "+r.getName());
+                    return true ; 
+                }
+                
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "You do not own "+r.getName());
+                    return false;
+                }
+            }
+            
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You do not own "+r.getName());
+                return false;
+            }    
         }
-       
-    }
-            else if(currentLocation instanceof waterelec)
+        
+        else if(currentLocation instanceof waterelec)
         {
             waterelec w = (waterelec) currentLocation;
                 
             if(w.isBought())
             {
-                w.removeOwner();
-               this.OwnedCountries.remove(w) ; 
-               this.addMoney(w.getCost());
-               w.setBought(false);
-               return true ; 
+                if(w.getOwner().equals(this.Name))
+                {
+                    w.removeOwner();
+                    this.OwnedCountries.remove(w) ; 
+                    this.addMoney(w.getCost());
+                    w.setBought(false);
+                    JOptionPane.showMessageDialog(null, "You sold "+w.getName());
+                    return true ; 
+                }
+                
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "You do not own "+w.getName());
+                    return false;
+                }          
+            }
+            
+            else
+            {
+                JOptionPane.showMessageDialog(null, "You do not own "+w.getName());
+                return false;
             }
         } 
         
-    
-        return false ;
+        else
+        {
+            JOptionPane.showMessageDialog(null, "You cannot sell this tile");
+            return false ; 
+        }
+        
     }
       public void Move(boolean Forward)
     {       
