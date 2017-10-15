@@ -18,11 +18,11 @@ public class Player
     private boolean freePass = false;
     private boolean cannotCollect = false;
     private boolean hasLost = false;
-<<<<<<< HEAD
+
     private char[] myCountries=new char[40];
-=======
+
     private boolean DifferentRent = false;
->>>>>>> 1ed17e62158a8a14df74aa59297703ab72b9b057
+
     
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}

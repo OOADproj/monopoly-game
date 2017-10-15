@@ -22,7 +22,7 @@ public class Game extends JFrame
     private JButton Roll = new JButton("Roll"); 
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
-    
+    private JButton BuildHouse = new JButton("Build House");
     private JLabel InfoLbl = new JLabel("Tile Information");
     private JLabel P1Lbl;
     private JLabel P2Lbl;
@@ -83,6 +83,10 @@ public class Game extends JFrame
         Info.setBorder(InfoTitle);
         Sell.setPreferredSize(new Dimension(80,40));
         Sell.setBounds(320,295,80,40);
+        BuildHouse.setPreferredSize(new Dimension(120,40));
+        BuildHouse.setBounds(460,390,120,40);
+       
+        
         
         Board = new Board(Players,numberOfPlayers);
         Board.repaint();
@@ -93,7 +97,7 @@ public class Game extends JFrame
         Board.add(Info);
         Board.add(Dice);
         Board.add(Sell);
-
+        Board.add(BuildHouse);
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -103,8 +107,21 @@ public class Game extends JFrame
         Buy.addActionListener(new BuyButtonListener());
         EndTurn.addActionListener(new EndButtonListener());
         Sell.addActionListener(new SellButtonListener());
-
+        BuildHouse.addActionListener(new BtnBuildListener());
         setVisible(true); 
+    }
+    public class BtnBuildListener implements ActionListener
+    {
+    public void actionPerformed(ActionEvent e){
+        if(currPlayer.CanBuy(200))
+        {
+            currPlayer.deductMoney(200);
+            Country c = (Country) currPlayer.getCurrentLocation() ;
+            c.setnHouses(c.getnHouses()+1);
+            c.setRent(200*c.getnHouses());
+        
+        }
+    }
     }
     
     public ArrayList<Player> getPlayers(){return Players;}
@@ -500,6 +517,15 @@ public class Game extends JFrame
 
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
                 P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
+            if (currPlayer.getCurrentLocation() instanceof Country)
+            {
+                Country c = (Country) currPlayer.getCurrentLocation() ;
+                   if(c.isSetComplete())
+                   {
+                       //buttonbuildHouse.setEnabled(true);
+                   }
+            }
+            
         }
     }
     class SellButtonListener implements ActionListener
@@ -548,6 +574,14 @@ public class Game extends JFrame
                Buy.setEnabled(true);
                Sell.setEnabled(true);
                
+               if(l instanceof Country)
+               {
+                   Country c = (Country) l;
+                   if(c.isSetComplete())
+                   {
+                       //buttonbuildHouse.setEnabled(true);
+                   }
+               }
                currPlayer.checkRent(Players,Dice);
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
