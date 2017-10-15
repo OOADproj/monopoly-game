@@ -32,7 +32,8 @@ public class Chance extends Location
     public void assignChance(Player p, javax.swing.Timer moveTimer, javax.swing.Timer DiceTimer, Dice Dice, Game Game) 
     {
         Random r = new Random();
-        int index = r.nextInt(16);
+        //int index = r.nextInt(16);
+        int index = 3;
         if (index == 0) 
         {
             JOptionPane.showMessageDialog(null,card[0],"CHANCE",JOptionPane.PLAIN_MESSAGE);
@@ -107,7 +108,7 @@ public class Chance extends Location
                 moveTimer.start();
             }
             
-            /////
+            p.setDifferentRent(true);
         }
         
         if (index == 4)
@@ -131,7 +132,7 @@ public class Chance extends Location
                 moveTimer.start();
             }
             
-            //////
+            p.setDifferentRent(true);
         }
         
         if (index == 5)

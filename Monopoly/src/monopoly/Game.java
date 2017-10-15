@@ -111,6 +111,8 @@ public class Game extends JFrame
     
     public void setDiceRoll(int x) { this.DiceRoll=x;}
     
+    public JButton getRollButton(){return Roll;}
+    
     void initializePlayers(int n, String[] names)
     {
         if(n == 2)
@@ -436,6 +438,7 @@ public class Game extends JFrame
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
                 currPlayer.Kick();
+                
             }
             
             currPlayer.setFreePass(false);
@@ -509,6 +512,7 @@ public class Game extends JFrame
                motionTimer.stop();
                Buy.setEnabled(true);
                Sell.setEnabled(true);
+               
                if(currPlayer.hasLost())
                {
                    ;
@@ -516,7 +520,7 @@ public class Game extends JFrame
                currPlayer.checkRent(Players,Dice);
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
-               currPlayer.checkCommunity(motionTimer, DiceTimer, Dice, Game.this);
+               currPlayer.checkCommunityChest(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.CheckJail(motionTimer, Game.this);
                updateLabels();        
                EndTurn.setEnabled(true);
@@ -538,8 +542,14 @@ public class Game extends JFrame
             {
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
-                motionTimer.start();
-                DiceTimer.stop();
+                if(currPlayer.isDifferentRent())
+                    DiceTimer.stop();
+                
+                else
+                {
+                    motionTimer.start();
+                    DiceTimer.stop();
+                }
             }
         }   
     }
