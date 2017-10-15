@@ -18,6 +18,7 @@ public class Game extends JFrame
     private Board Board; 
     private JPanel Data = new JPanel(); 
     private JButton Buy = new JButton("Buy"); 
+    private JButton Sell = new JButton("Sell"); 
     private JButton Roll = new JButton("Roll"); 
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
@@ -80,6 +81,9 @@ public class Game extends JFrame
         EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
+        Sell.setPreferredSize(new Dimension(80,40));
+        Sell.setBounds(450,340,80,40);
+        //Sell.setEnabled(false);
         
         Board = new Board(Players,numberOfPlayers);
         Board.repaint();
@@ -89,6 +93,8 @@ public class Game extends JFrame
         Board.add(EndTurn);
         Board.add(Info);
         Board.add(Dice);
+        Board.add(Sell);
+
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -97,6 +103,8 @@ public class Game extends JFrame
         Roll.addActionListener(new RollButtonListener());
         Buy.addActionListener(new BuyButtonListener());
         EndTurn.addActionListener(new EndButtonListener());
+        Sell.addActionListener(new SellButtonListener());
+
         setVisible(true); 
     }
     
@@ -395,6 +403,26 @@ public class Game extends JFrame
                 P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
         }
     }
+    class SellButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            boolean Success = currPlayer.Sell();
+            updateLabels();
+            if(currPlayer.getName().equals(p1.getName()) && Success)
+                P1Owned.setText(P1Owned.getText().replace(p1.getCurrentLocation().getName(),""));
+                
+
+            else if(currPlayer.getName().equals(p2.getName()) && Success)
+                P2Owned.setText(P2Owned.getText().replace(p2.getCurrentLocation().getName(),""));
+
+            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
+                P3Owned.setText(P3Owned.getText().replace(p3.getCurrentLocation().getName(),""));
+
+            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
+                P4Owned.setText(P4Owned.getText().replace(p4.getCurrentLocation().getName(),""));
+        }
+    }
     
     class motionListener implements ActionListener
     {
@@ -404,6 +432,7 @@ public class Game extends JFrame
            {
                 EndTurn.setEnabled(false);
                 Buy.setEnabled(false);
+                Sell.setEnabled(false);
                 currPlayer.Move(currPlayer.isForward());
                 DiceRoll--;
                 Board.repaint();
@@ -417,6 +446,7 @@ public class Game extends JFrame
                currPlayer.setCurr(l);
                motionTimer.stop();
                Buy.setEnabled(true);
+               Sell.setEnabled(true);
                if(currPlayer.hasLost())
                {
                    ;

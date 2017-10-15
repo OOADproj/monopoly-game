@@ -198,7 +198,52 @@ public class Player
         
     }
     
-    public void Move(boolean Forward)
+    public boolean Sell()
+    {
+        if(currentLocation instanceof Country)
+        {
+            Country c =  (Country) currentLocation;
+            if(c.isBought())
+            {
+               c.removeOwner();
+               this.OwnedCountries.remove(c) ; 
+               this.addMoney(c.getCost());
+               c.setBought(false);
+               return true ; 
+            } 
+        }
+            else if(currentLocation instanceof RailRoad)
+        {
+            RailRoad r = (RailRoad) currentLocation;
+            
+            if(r.isBought())
+        {
+               r.removeOwner();
+               this.OwnedCountries.remove(r) ; 
+               this.addMoney(r.getCost());
+               r.setBought(false);
+               return true ; 
+        }
+       
+    }
+            else if(currentLocation instanceof waterelec)
+        {
+            waterelec w = (waterelec) currentLocation;
+                
+            if(w.isBought())
+            {
+                w.removeOwner();
+               this.OwnedCountries.remove(w) ; 
+               this.addMoney(w.getCost());
+               w.setBought(false);
+               return true ; 
+            }
+        } 
+        
+    
+        return false ;
+    }
+      public void Move(boolean Forward)
     {       
         if(Forward)
         {

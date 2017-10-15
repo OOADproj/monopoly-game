@@ -41,6 +41,7 @@ public class Country extends Location
     public String getOwner(){return Owner;}
     
     public void setOwner(String Owner){this.Owner = Owner;}
+    public void removeOwner(){this.Owner = "None" ; }
     
     public String viewInformation()
     {

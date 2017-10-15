@@ -37,7 +37,7 @@ public class communityChest extends Location
     public void assignCommunityChest (Player p,javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
     {
         Random r = new Random();
-        int index = r.nextInt(16);
+        int index = r.nextInt(17);
         if(index ==0 )
         {
             JOptionPane.showMessageDialog(null,cccard[0],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
@@ -127,24 +127,30 @@ public class communityChest extends Location
         if(index==12 )
         {
             JOptionPane.showMessageDialog(null,cccard[12],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(150);
+            p.deductMoney(100);
         }
         
         if(index==13 )
         {
             JOptionPane.showMessageDialog(null,cccard[13],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            p.addMoney(25);
+            p.deductMoney(150);
         }
         
         if(index==14 )
         {
             JOptionPane.showMessageDialog(null,cccard[14],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
+            p.addMoney(25);
+        }
+        
+        if(index==15 )
+        {
+            JOptionPane.showMessageDialog(null,cccard[15],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
             p.addMoney(10);
         }
         
-        if(index==15)
+        if(index==16)
         {
-            JOptionPane.showMessageDialog(null,cccard[15],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null,cccard[16],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
             p.addMoney(100);
         }
     }
