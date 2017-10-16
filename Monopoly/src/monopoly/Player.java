@@ -97,6 +97,7 @@ public class Player
                         if(d.getcIndex()==a||d.getcIndex()==b||d.getcIndex()==c)
                         {
                             d.setSetComplete(true);
+                            
                         }
                     }
                 }
@@ -678,7 +679,7 @@ public class Player
         
         else if(currentLocation.getName().equals("Income Tax"))
         {
-            this.Money -= 0.1*this.Money;
+            this.Money -= (int)0.1*this.Money;
             JOptionPane.showMessageDialog(null,"You paid $"+0.1*this.Money+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
         }
     }

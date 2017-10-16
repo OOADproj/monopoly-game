@@ -85,7 +85,7 @@ public class Game extends JFrame
         Sell.setBounds(320,295,80,40);
         BuildHouse.setPreferredSize(new Dimension(120,40));
         BuildHouse.setBounds(460,390,120,40);
-       
+        BuildHouse.setEnabled(false);
         
         
         Board = new Board(Players,numberOfPlayers);
@@ -521,7 +521,7 @@ public class Game extends JFrame
                 Country c = (Country) currPlayer.getCurrentLocation() ;
                    if(c.isSetComplete())
                    {
-                       //buttonbuildHouse.setEnabled(true);
+                       BuildHouse.setEnabled(true);
                    }
             }
             
@@ -579,7 +579,7 @@ public class Game extends JFrame
                    Country c = (Country) l;
                    if(c.isSetComplete())
                    {
-                       //buttonbuildHouse.setEnabled(true);
+                       BuildHouse.setEnabled(true);
                    }
                }
                currPlayer.checkRent(Players,Dice);
