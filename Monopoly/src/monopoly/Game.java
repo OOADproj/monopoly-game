@@ -33,13 +33,13 @@ public class Game extends JFrame
     private Player p2;
     private Player p3;
     private Player p4;
-    private Player currPlayer;
+    Player currPlayer;
     private int current = 0;
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
 
-    private ArrayList<Location> Countries = new ArrayList();
+    ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
     int DiceRoll;
