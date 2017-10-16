@@ -119,7 +119,7 @@ public class Game extends JFrame
             Country c = (Country) currPlayer.getCurrentLocation() ;
             c.setnHouses(c.getnHouses()+1);
             c.setRent(200*c.getnHouses());
-        
+            updateLabels();
         }
     }
     }
@@ -520,7 +520,7 @@ public class Game extends JFrame
             if (currPlayer.getCurrentLocation() instanceof Country)
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
-                   if(c.isSetComplete())
+                   if(c.isSetComplete()&&Success)
                    {
                        BuildHouse.setEnabled(true);
                    }
@@ -577,7 +577,7 @@ public class Game extends JFrame
                if(l instanceof Country)
                {
                    Country c = (Country) l;
-                   if(c.isSetComplete())
+                   if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
                    {
                        BuildHouse.setEnabled(true);
                    }
