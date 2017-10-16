@@ -112,7 +112,6 @@ public class Board extends JPanel
     public void paint(Graphics g)
     {
         super.paint(g);
-        System.out.println(numberOfPlayers);
         for(int i=0 ; i < numberOfPlayers ; i++)
             Players.get(i).draw(g, this);
         

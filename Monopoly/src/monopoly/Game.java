@@ -485,8 +485,7 @@ public class Game extends JFrame
         {
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
-            
-            if(currPlayer.isPrisoned() && !currPlayer.hasFreePass())
+            while(currPlayer.isPrisoned() && !(currPlayer.hasFreePass()))
             {
                 currPlayer.setPrisoned(false);
                 current = (current+1)%numberOfPlayers;
@@ -560,6 +559,7 @@ public class Game extends JFrame
                 Buy.setEnabled(false);
                 Sell.setEnabled(false);
                 currPlayer.Move(currPlayer.isForward());
+                updateLabels();
                 DiceRoll--;
                 Board.repaint();
                 
@@ -606,7 +606,8 @@ public class Game extends JFrame
             
             else
             {
-                DiceRoll = Dice.getDiceRoll();
+                DiceRoll = 30;
+                //DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();
                 motionTimer.start();

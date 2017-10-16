@@ -387,7 +387,7 @@ public class Player
             }
 
             Index = (Index+1)%40;  
-            if(Index == 0 && !cannotCollect)
+            if(Index == 0 && !cannotCollect && !isPrisoned)
             {
                 this.Money += 200;
                 cannotCollect = false;
@@ -433,7 +433,7 @@ public class Player
             }
 
             Index = (Index-1)%40;  
-            if(Index == 0 && !cannotCollect)
+            if(Index == 0 && !cannotCollect && !isPrisoned)
             {
                 this.Money += 200;
                 cannotCollect = false;
