@@ -163,6 +163,21 @@ public class StartFrame extends JFrame
                 }
             }
             
+            for(int i=0 ; i < names.length-1 ; i++)
+            {
+                for(int j=i+1 ; j < names.length ; j++)
+                {
+                    if(i == j)
+                        continue;
+                    
+                    if(names[i].equalsIgnoreCase(names[j]))
+                    {
+                        JOptionPane.showMessageDialog(null, "Players "+(i+1)+" and "+(j+1)+" have the same name!");
+                        startFlag = false;
+                    }
+                }
+            }
+            
             if(startFlag)
             {
                 Game Monopoly = new Game(n,names);

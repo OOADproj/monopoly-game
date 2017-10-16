@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Gina%20Salib/Documents/NetBeansProjects/monopoly-game/Monopoly/src/monopoly/Player.java</file>
             <file>file:/C:/Users/Gina%20Salib/Documents/NetBeansProjects/monopoly-game/Monopoly/src/monopoly/Country.java</file>
             <file>file:/C:/Users/Gina%20Salib/Documents/NetBeansProjects/monopoly-game/Monopoly/src/monopoly/Location.java</file>
             <file>file:/C:/Users/Gina%20Salib/Documents/NetBeansProjects/monopoly-game/Monopoly/src/monopoly/Game.java</file>
+=======
+            <file>file:/C:/Users/Moussa/Desktop/monopoly-game/Monopoly/src/monopoly/Game.java</file>
+            <file>file:/C:/Users/Moussa/Desktop/monopoly-game/Monopoly/src/monopoly/waterelec.java</file>
+            <file>file:/C:/Users/Moussa/Desktop/monopoly-game/Monopoly/src/monopoly/Chance.java</file>
+            <file>file:/C:/Users/Moussa/Desktop/monopoly-game/Monopoly/src/monopoly/Monopoly.java</file>
+            <file>file:/C:/Users/Moussa/Desktop/monopoly-game/Monopoly/src/monopoly/Player.java</file>
+>>>>>>> b3a6446bd8cf372ba3a9dbc8e1ba9d99f859dcf1
         </group>
     </open-files>
 </project-private>
