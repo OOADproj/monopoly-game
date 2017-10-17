@@ -170,7 +170,7 @@ public class StartFrame extends JFrame
                     if(i == j)
                         continue;
                     
-                    if(names[i].equalsIgnoreCase(names[j]))
+                    if(names[j] != null && names[i] != null && names[i].equalsIgnoreCase(names[j]) && names[j] != null && names[i] != null)
                     {
                         JOptionPane.showMessageDialog(null, "Players "+(i+1)+" and "+(j+1)+" have the same name!");
                         startFlag = false;
