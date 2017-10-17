@@ -33,13 +33,13 @@ public class Game extends JFrame
     private Player p2;
     private Player p3;
     private Player p4;
-    private Player currPlayer;
+    Player currPlayer;
     private int current = 0;
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
 
-    private ArrayList<Location> Countries = new ArrayList();
+    ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
     int DiceRoll;
@@ -119,7 +119,7 @@ public class Game extends JFrame
             Country c = (Country) currPlayer.getCurrentLocation() ;
             c.setnHouses(c.getnHouses()+1);
             c.setRent(200*c.getnHouses());
-        
+            updateLabels();
         }
     }
     }
@@ -519,7 +519,7 @@ public class Game extends JFrame
             if (currPlayer.getCurrentLocation() instanceof Country)
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
-                   if(c.isSetComplete())
+                   if(c.isSetComplete()&&Success)
                    {
                        BuildHouse.setEnabled(true);
                    }
@@ -577,7 +577,7 @@ public class Game extends JFrame
                if(l instanceof Country)
                {
                    Country c = (Country) l;
-                   if(c.isSetComplete())
+                   if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
                    {
                        BuildHouse.setEnabled(true);
                    }

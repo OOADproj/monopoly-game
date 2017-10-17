@@ -65,5 +65,6 @@ public class Country extends Location
         "Cost: "+"$"+Cost+"\n"+        
         "Rent: "+"$"+Rent+"\n"+
         "Owner: "+Owner;  
+        
     }
 }
