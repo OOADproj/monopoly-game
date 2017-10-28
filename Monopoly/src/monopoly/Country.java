@@ -11,11 +11,18 @@ public class Country extends Location
     private String Owner;
     private int cIndex;
     private boolean setComplete;
+    private int listIndex ; 
 
     public int getcIndex() {
         return cIndex;
     }
-
+    public int getListIndex() {
+        return listIndex;
+    }
+    public void setListIndex(int x)
+    {
+        this.listIndex =  x ; 
+    }
     public boolean isSetComplete() {
         return setComplete;
     }
