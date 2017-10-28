@@ -679,8 +679,9 @@ public class Player
         
         else if(currentLocation.getName().equals("Income Tax"))
         {
-            this.Money -= (int)0.1*this.Money;
-            JOptionPane.showMessageDialog(null,"You paid $"+0.1*this.Money+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
+            double fees = Math.round(0.1*this.Money);
+            this.Money -= fees;
+            JOptionPane.showMessageDialog(null,"You paid $"+fees+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
         }
     }
     

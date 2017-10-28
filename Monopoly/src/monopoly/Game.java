@@ -134,8 +134,8 @@ public class Game extends JFrame
     {
         if(n == 2)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
@@ -172,9 +172,9 @@ public class Game extends JFrame
         
         else if(n == 3)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
-            p3 = new Player(names[2],"p3.png",640,670);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
+            p3 = new Player(names[2],"Resources/p3.png",640,670);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
@@ -225,10 +225,10 @@ public class Game extends JFrame
         
         else if(n == 4)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
-            p3 = new Player(names[2],"p3.png",640,670);
-            p4 = new Player(names[3],"p4.png",667,670);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
+            p3 = new Player(names[2],"Resources/p3.png",640,670);
+            p4 = new Player(names[3],"Resources/p4.png",667,670);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());

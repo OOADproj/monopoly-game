@@ -33,13 +33,13 @@ public class Board extends JPanel
             {
                 if(i == 0)
                 {
-                    t = new Tile(i+1+".png",x,y,85,85);
+                    t = new Tile("Resources/"+(i+1)+".png",x,y,85,85);
                     x -= 58;
                 }
                 
                 else if( i == 10)
                 {
-                    t = new Tile(i+1+".png",x,y,85,85);
+                    t = new Tile("Resources/"+(i+1)+".png",x,y,85,85);
                     y -= 58;
                 }
                 
@@ -47,13 +47,13 @@ public class Board extends JPanel
                 {
                     if(i == 9)
                     {
-                        t = new Tile(i+1+".png",x,y,58,85);
+                        t = new Tile("Resources/"+(i+1)+".png",x,y,58,85);
                         x -= 85;
                     }
                     
                     else
                     {
-                        t = new Tile(i+1+".png",x,y,58,85);
+                        t = new Tile("Resources/"+(i+1)+".png",x,y,58,85);
                         x -= 58;
                     }
                 }
@@ -63,7 +63,7 @@ public class Board extends JPanel
             {            
                 if( i == 20)
                 {
-                    t = new Tile(i+1+".png",x,y,85,85);
+                    t = new Tile("Resources/"+(i+1)+".png",x,y,85,85);
                     x += 85;
                 }
                 
@@ -71,13 +71,13 @@ public class Board extends JPanel
                 {
                     if(i == 19)
                     {
-                        t = new Tile(i+1+".png",x,y,85,58);
+                        t = new Tile("Resources/"+(i+1)+".png",x,y,85,58);
                         y -= 85;
                     }
                     
                     else
                     {
-                        t = new Tile(i+1+".png",x,y,85,58);
+                        t = new Tile("Resources/"+(i+1)+".png",x,y,85,58);
                         y -= 58;
                     }
                 }
@@ -87,20 +87,20 @@ public class Board extends JPanel
             {            
                 if( i == 30)
                 {
-                    t = new Tile(i+1+".png",x,y,85,85);
+                    t = new Tile("Resources/"+(i+1)+".png",x,y,85,85);
                     y += 85;
                 }
                 
                 else
                 {
-                    t = new Tile(i+1+".png",x,y,58,85);
+                    t = new Tile("Resources/"+(i+1)+".png",x,y,58,85);
                     x += 58;                   
                 }
             }
             
             else if(i >= 31 && i <= 39)
             {            
-                t = new Tile(i+1+".png",x,y,85,58);
+                t = new Tile("Resources/"+(i+1)+".png",x,y,85,58);
                 y += 58;
             }
             
