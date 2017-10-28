@@ -22,7 +22,8 @@ public class Player
     private char[] myCountries=new char[40];
 
     private boolean DifferentRent = false;
-
+    
+    private Game game ;
     
     
     public Player(String name,String ImgPath, int x , int y){this.Name = name; this.Img = new ImageIcon(ImgPath); this.x = x ; this.y = y;}
@@ -248,21 +249,26 @@ public class Player
         
     }
     
-    public boolean Sell()
+    public boolean Sell(int index)
     {
-        if(currentLocation instanceof Country)
+        if(this.getOwnedCountries().get(index) instanceof Country)
         {
-            Country c =  (Country) currentLocation;
+            Country c =  (Country) this.getOwnedCountries().get(index);
             if(c.isBought())
-            {
+            {int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+c.getName()+"?", "", JOptionPane.YES_NO_OPTION);
                if(c.getOwner().equals(this.Name))
                {
+                    if (reply == JOptionPane.YES_OPTION)
+                    {
+                   
                     c.removeOwner();
                     this.OwnedCountries.remove(c) ; 
-                    this.addMoney(c.getCost());
+                    this.addMoney(c.getCost()/2);
                     c.setBought(false);
                     JOptionPane.showMessageDialog(null, "You sold "+c.getName());
                     return true; 
+                    }
+                    else { return false;}
                }
                
                else
@@ -280,20 +286,27 @@ public class Player
             }
         }
         
-        else if(currentLocation instanceof RailRoad)
+        else if(this.getOwnedCountries().get(index) instanceof RailRoad)
         {
-            RailRoad r = (RailRoad) currentLocation;
+            RailRoad r = (RailRoad) this.getOwnedCountries().get(index);
             
             if(r.isBought())
-            {
+            {   int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+r.getName()+"?", "", JOptionPane.YES_NO_OPTION);
                 if(r.getOwner().equals(this.Name))
                 {
+                    if (reply == JOptionPane.YES_OPTION)
+                    {
                     r.removeOwner();
                     this.OwnedCountries.remove(r) ; 
                     this.addMoney(r.getCost());
                     r.setBought(false);
                     JOptionPane.showMessageDialog(null, "You sold "+r.getName());
                     return true ; 
+                   }
+                   else {
+//           JOptionPane.showMessageDialog(null, "GOODBYE");
+           return false;
+        }
                 }
                 
                 else
@@ -310,20 +323,24 @@ public class Player
             }    
         }
         
-        else if(currentLocation instanceof waterelec)
+        else if(this.getOwnedCountries().get(index) instanceof waterelec)
         {
-            waterelec w = (waterelec) currentLocation;
+            waterelec w = (waterelec) this.getOwnedCountries().get(index);
                 
             if(w.isBought())
-            {
+            { int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+w.getName()+"?", "", JOptionPane.YES_NO_OPTION);
                 if(w.getOwner().equals(this.Name))
                 {
+                     if (reply == JOptionPane.YES_OPTION)
+                    {
                     w.removeOwner();
                     this.OwnedCountries.remove(w) ; 
                     this.addMoney(w.getCost());
                     w.setBought(false);
                     JOptionPane.showMessageDialog(null, "You sold "+w.getName());
                     return true ; 
+                    }
+                     else { return false;}
                 }
                 
                 else
@@ -345,6 +362,7 @@ public class Player
             JOptionPane.showMessageDialog(null, "You cannot sell this tile");
             return false ; 
         }
+        
         
     }
       public void Move(boolean Forward)
