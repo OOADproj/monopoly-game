@@ -7,14 +7,14 @@ import javax.swing.*;
 
 public class Dice extends JPanel
 {
-   String[] Dice = new String[]{"dice1.png","dice2.png","dice3.png","dice4.png","dice5.png","dice6.png" }; 
+   String[] Dice = new String[]{"Resources/dice1.png","Resources/dice2.png","Resources/dice3.png","Resources/dice4.png","Resources/dice5.png","Resources/dice6.png" }; 
    private int Index1 ;
    private int Index2 ;
    private JLabel Die1_Lbl = new JLabel() ;  
    private JLabel Die2_Lbl = new JLabel() ; 
-   private ImageIcon Die1 = new ImageIcon("dice6.png");
+   private ImageIcon Die1 = new ImageIcon("Resources/dice6.png");
    private Image ResizedDie1 = Die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
-   private ImageIcon Die2 = new ImageIcon("dice6.png");
+   private ImageIcon Die2 = new ImageIcon("Resources/dice6.png");
    private Image ResizedDie2 = Die2.getImage().getScaledInstance(80,80, Image.SCALE_DEFAULT);
    private int count = 0 ; 
    

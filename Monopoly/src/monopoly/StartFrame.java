@@ -26,7 +26,7 @@ public class StartFrame extends JFrame
     public StartFrame()
     {
         Container c = getContentPane();
-        setContentPane(new JLabel(new ImageIcon("Background2.jpg")));
+        setContentPane(new JLabel(new ImageIcon("Resources/Background2.jpg")));
         setSize(1000,730);
         setTitle("Monopoly");
         setLocation(150,0);
@@ -96,17 +96,30 @@ public class StartFrame extends JFrame
                 if(P1Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
                 
+                else if(P1Name.getText().length() > 20)
+                {
+                    P1Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 1's name exceeded character limit(max 20)"); 
+                }
+                
                 else
                     names[0] = P1Name.getText();
                 
                 if(P2Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
                 
-                else
+                else if(P2Name.getText().length() > 20)
                 {
-                    names[1] = P2Name.getText();
-                    startFlag = true;
+                    P2Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 2's name exceeded character limit(max 20)"); 
                 }
+                
+                else
+                    names[1] = P2Name.getText();
+                
+                if(names[0] != null && names[1] != null)
+                    startFlag = true;
+
             }
             
             else if(n == 3)
@@ -114,11 +127,23 @@ public class StartFrame extends JFrame
                 if(P1Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
                 
+                else if(P1Name.getText().length() > 20)
+                {
+                    P1Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 1's name exceeded character limit(max 20)"); 
+                }
+                
                 else
                     names[0] = P1Name.getText();
                 
                 if(P2Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
+                
+                else if(P2Name.getText().length() > 20)
+                {
+                    P2Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 2's name exceeded character limit(max 20)"); 
+                }
                 
                 else
                     names[1] = P2Name.getText();
@@ -126,11 +151,17 @@ public class StartFrame extends JFrame
                 if(P3Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 3!");
                 
-                else
+                else if(P3Name.getText().length() > 20)
                 {
-                    names[2] = P3Name.getText();
-                    startFlag = true;
+                    P3Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 3's name exceeded character limit(max 20)"); 
                 }
+                
+                else
+                    names[2] = P3Name.getText();
+                
+                if(names[0] != null && names[1] != null && names[2] != null)
+                    startFlag = true;
             }
             
             else if(n == 4)
@@ -138,11 +169,23 @@ public class StartFrame extends JFrame
                 if(P1Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 1!");
                 
+                else if(P1Name.getText().length() > 20)
+                {
+                    P1Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 1's name exceeded character limit(max 20)");  
+                }
+                
                 else
                     names[0] = P1Name.getText();
                 
                 if(P2Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 2!");
+                
+                else if(P2Name.getText().length() > 20)
+                {
+                    P2Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 2's name exceeded character limit(max 20)"); 
+                }
                 
                 else
                     names[1] = P2Name.getText();
@@ -150,19 +193,31 @@ public class StartFrame extends JFrame
                 if(P3Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 3!");
                 
+                else if(P3Name.getText().length() > 20)
+                {
+                    P3Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 3's name exceeded character limit(max 20)"); 
+                }
+                
                 else
                     names[2] = P3Name.getText();
                 
                 if(P4Name.getText().equals(""))
                     JOptionPane.showMessageDialog(null, "Enter a name for player 4!");
                 
-                else
+                else if(P4Name.getText().length() > 20)
                 {
-                    names[3] = P4Name.getText();
-                    startFlag = true;
+                    P4Name.setText("");
+                    JOptionPane.showMessageDialog(null, "Player 4's name exceeded character limit(max 20)"); 
                 }
+                
+                else
+                    names[3] = P4Name.getText();
+                
+                if(names[0] != null && names[1] != null && names[2] != null && names[3] != null)
+                    startFlag = true;
             }
-            
+ 
             for(int i=0 ; i < names.length-1 ; i++)
             {
                 for(int j=i+1 ; j < names.length ; j++)
@@ -170,7 +225,7 @@ public class StartFrame extends JFrame
                     if(i == j)
                         continue;
                     
-                    if(names[j] != null && names[i] != null && names[i].equalsIgnoreCase(names[j]) && names[j] != null && names[i] != null)
+                    if(names[i].equalsIgnoreCase(names[j]))
                     {
                         JOptionPane.showMessageDialog(null, "Players "+(i+1)+" and "+(j+1)+" have the same name!");
                         startFlag = false;

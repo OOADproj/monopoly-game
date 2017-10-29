@@ -34,17 +34,30 @@ public class Game extends JFrame
     private Player p2;
     private Player p3;
     private Player p4;
-    Player currPlayer;
+    private Player currPlayer;
     private int current = 0;
     private int numberOfPlayers;
     
     private ArrayList<Player> Players = new ArrayList();
 
-    ArrayList<Location> Countries = new ArrayList();
+    private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
     int DiceRoll;
     int DiceConst = 10;
+    
+    DefaultListModel<String> modelP1 = new DefaultListModel<>();
+    JList<String> listP1 = new JList<>( modelP1 );
+    DefaultListModel<String> modelP2 = new DefaultListModel<>();
+    JList<String> listP2 = new JList<>( modelP2 );
+    DefaultListModel<String> modelP3 = new DefaultListModel<>();
+    JList<String> listP3 = new JList<>( modelP3 );
+    DefaultListModel<String> modelP4 = new DefaultListModel<>();
+    JList<String> listP4 = new JList<>( modelP4 );
+    
+     
+     
+     String xx = listP1.getSelectedValue() ;
             
     private javax.swing.Timer motionTimer = new javax.swing.Timer(50,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(50,new DiceListener());
@@ -57,6 +70,7 @@ public class Game extends JFrame
         initializePlayers(n,names);
         initializeCountries(); 
         initializeComponents(); 
+        updateLists();
     } 
     
     public void initializeComponents() 
@@ -70,6 +84,7 @@ public class Game extends JFrame
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        System.out.println(xx);
         Data.setPreferredSize(new Dimension(293,700));
         Data.setBackground(new Color(85,107,47));
         
@@ -120,6 +135,7 @@ public class Game extends JFrame
         Sell.addActionListener(new SellButtonListener());
         BuildHouse.addActionListener(new BtnBuildListener());
         setVisible(true); 
+
     }
     public class BtnBuildListener implements ActionListener
     {
@@ -145,8 +161,8 @@ public class Game extends JFrame
     {
         if(n == 2)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
@@ -155,9 +171,11 @@ public class Game extends JFrame
             TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
             
             Data.add(P1Lbl); 
-            Data.add(P1Owned);
+           //Data.add(P1Owned);
+            Data.add(listP1);
+
             Data.add(P2Lbl); 
-            Data.add(P2Owned);
+            Data.add(listP2);
             
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
@@ -168,14 +186,16 @@ public class Game extends JFrame
             P2Lbl.setForeground(Color.white);
             
             P1Owned.setEditable(false);
+           // listP1.setEditable(false);
+
             P1Owned.setBorder(P1Title);
-            P1Owned.setPreferredSize(new Dimension(293,300));
-            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
-        
+            listP1.setPreferredSize(new Dimension(293,300));
+            listP1.setFont(new Font("Arial",Font.PLAIN,12));
+            listP2.setPreferredSize(new Dimension(293,300));
+            listP2.setFont(new Font("Arial",Font.PLAIN,12));
             P2Owned.setEditable(false);
-            P2Owned.setBorder(P2Title);
-            P2Owned.setPreferredSize(new Dimension(293,300));
-            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP1.setBorder(P1Title);
+            listP2.setBorder(P2Title);
             
             Players.add(p1);
             Players.add(p2);
@@ -183,9 +203,9 @@ public class Game extends JFrame
         
         else if(n == 3)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
-            p3 = new Player(names[2],"p3.png",640,670);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
+            p3 = new Player(names[2],"Resources/p3.png",640,670);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
@@ -196,11 +216,11 @@ public class Game extends JFrame
             TitledBorder P3Title = BorderFactory.createTitledBorder(p3.getName()+" Properties");
             
             Data.add(P1Lbl); 
-            Data.add(P1Owned);
+            Data.add(listP1);
             Data.add(P2Lbl); 
-            Data.add(P2Owned);
+            Data.add(listP2);
             Data.add(P3Lbl); 
-            Data.add(P3Owned);
+            Data.add(listP3);
             
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
@@ -214,20 +234,18 @@ public class Game extends JFrame
             P3Lbl.setFont((new Font("Arial",Font.BOLD,15)));
             P3Lbl.setForeground(Color.white);
             
-            P1Owned.setEditable(false);
-            P1Owned.setBorder(P1Title);
-            P1Owned.setPreferredSize(new Dimension(293,200));
-            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
+           
+            listP1.setBorder(P1Title);
+            listP1.setPreferredSize(new Dimension(293,200));
+            listP1.setFont(new Font("Arial",Font.PLAIN,12));
         
-            P2Owned.setEditable(false);
-            P2Owned.setBorder(P2Title);
-            P2Owned.setPreferredSize(new Dimension(293,200));
-            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP2.setBorder(P2Title);
+            listP2.setPreferredSize(new Dimension(293,200));
+            listP2.setFont(new Font("Arial",Font.PLAIN,12));
             
-            P3Owned.setEditable(false);
-            P3Owned.setBorder(P3Title);
-            P3Owned.setPreferredSize(new Dimension(293,200));
-            P3Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP3.setBorder(P3Title);
+            listP3.setPreferredSize(new Dimension(293,200));
+            listP3.setFont(new Font("Arial",Font.PLAIN,12));
             
             Players.add(p1);
             Players.add(p2);
@@ -236,10 +254,10 @@ public class Game extends JFrame
         
         else if(n == 4)
         {
-            p1 = new Player(names[0],"p1.png",640,640);
-            p2 = new Player(names[1],"p2.png",667,640);
-            p3 = new Player(names[2],"p3.png",640,670);
-            p4 = new Player(names[3],"p4.png",667,670);
+            p1 = new Player(names[0],"Resources/p1.png",640,640);
+            p2 = new Player(names[1],"Resources/p2.png",667,640);
+            p3 = new Player(names[2],"Resources/p3.png",640,670);
+            p4 = new Player(names[3],"Resources/p4.png",667,670);
             
             P1Lbl = new JLabel(p1.getName()+" : $"+p1.getMoney());
             P2Lbl = new JLabel(p2.getName()+" : $"+p2.getMoney());
@@ -252,13 +270,13 @@ public class Game extends JFrame
             TitledBorder P4Title = BorderFactory.createTitledBorder(p4.getName()+" Properites");
             
             Data.add(P1Lbl); 
-            Data.add(P1Owned);
+            Data.add(listP1);
             Data.add(P2Lbl); 
-            Data.add(P2Owned);
+            Data.add(listP2);
             Data.add(P3Lbl); 
-            Data.add(P3Owned);
+            Data.add(listP3);
             Data.add(P4Lbl); 
-            Data.add(P4Owned);
+            Data.add(listP4);
         
             P1Lbl.setPreferredSize(new Dimension(293,15));
             P1Lbl.setFont((new Font("Arial",Font.BOLD,15)));
@@ -276,25 +294,21 @@ public class Game extends JFrame
             P4Lbl.setFont((new Font("Arial",Font.BOLD,15)));
             P4Lbl.setForeground(Color.white);
             
-            P1Owned.setEditable(false);
-            P1Owned.setBorder(P1Title);
-            P1Owned.setPreferredSize(new Dimension(293,150));
-            P1Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP1.setBorder(P1Title);
+            listP1.setPreferredSize(new Dimension(293,150));
+            listP1.setFont(new Font("Arial",Font.PLAIN,12));
         
-            P2Owned.setEditable(false);
-            P2Owned.setBorder(P2Title);
-            P2Owned.setPreferredSize(new Dimension(293,150));
-            P2Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP2.setBorder(P2Title);
+            listP2.setPreferredSize(new Dimension(293,150));
+            listP2.setFont(new Font("Arial",Font.PLAIN,12));
             
-            P3Owned.setEditable(false);
-            P3Owned.setBorder(P3Title);
-            P3Owned.setPreferredSize(new Dimension(293,150));
-            P3Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP3.setBorder(P3Title);
+            listP3.setPreferredSize(new Dimension(293,150));
+            listP3.setFont(new Font("Arial",Font.PLAIN,12));
             
-            P4Owned.setEditable(false);
-            P4Owned.setBorder(P4Title);
-            P4Owned.setPreferredSize(new Dimension(293,150));
-            P4Owned.setFont(new Font("Arial",Font.PLAIN,12));
+            listP4.setBorder(P4Title);
+            listP4.setPreferredSize(new Dimension(293,150));
+            listP4.setFont(new Font("Arial",Font.PLAIN,12));
             
             Players.add(p1);
             Players.add(p2);
@@ -368,64 +382,101 @@ public class Game extends JFrame
       
     void updateLists()
     {
-        int gapIndex;
-        char[] Text;
-        String newText = "";
-        if(currPlayer.equals(p1))
-        {
-            gapIndex = P1Owned.getText().indexOf("");
-            newText = "";
-            Text = P1Owned.getText().toCharArray();
-            for(int i=0 ; i < gapIndex ; i++)
-                newText += Text[i];
+if(currPlayer.getName().equals(p1.getName())){
+              if(numberOfPlayers==2)
+              {
+                  listP1.setEnabled(true);
+                  listP2.setEnabled(false);
+                  listP2.clearSelection();
+              }
+              
+              else if(numberOfPlayers==3)
+              {
+                  listP1.setEnabled(true);
+                  listP2.setEnabled(false);
+                  listP3.setEnabled(false);
+                  listP2.clearSelection();
+                  listP3.clearSelection();
+              }
+              
+              else if(numberOfPlayers ==4)
+              {
+                  listP1.setEnabled(true);
+                  listP2.setEnabled(false);
+                  listP3.setEnabled(false);
+                  listP4.setEnabled(false);
+                  listP2.clearSelection();
+                  listP3.clearSelection();
+                  listP4.clearSelection();
+
+              }
+            }
+          
+            else if(currPlayer.getName().equals(p2.getName()))
+            {
+                if(numberOfPlayers==2)
+                {
+                  listP1.setEnabled(false);
+                  listP2.setEnabled(true);
+                  listP1.clearSelection();
+
+                }
+                
+              else if(numberOfPlayers==3)
+              {
+                  listP1.setEnabled(false);
+                  listP2.setEnabled(true);
+                  listP3.setEnabled(false);
+                  listP1.clearSelection();
+                  listP3.clearSelection();
+
+              }
+              
+              else if(numberOfPlayers ==4)
+              {
+                  listP1.setEnabled(false);
+                  listP2.setEnabled(true);
+                  listP3.setEnabled(false);
+                  listP4.setEnabled(false);
+                  listP1.clearSelection();
+                  listP3.clearSelection();
+                  listP4.clearSelection();
+              }
+            }
             
-            for(int i=gapIndex+1 ; i < Text.length ; i++)
-                newText += Text[i];
-            
-            P1Owned.setText(newText);
-        }
-        
-        else if(currPlayer.equals(p2))
-        {
-            gapIndex = P2Owned.getText().indexOf("");
-            newText = "";
-            Text = P2Owned.getText().toCharArray();
-            for(int i=0 ; i < gapIndex ; i++)
-                newText += Text[i];
-            
-            for(int i=gapIndex+1 ; i < Text.length ; i++)
-                newText += Text[i];
-            
-            P2Owned.setText(newText);
-        }
-        
-        else if(currPlayer.equals(p3))
-        {
-            gapIndex = P3Owned.getText().indexOf("");
-            newText = "";
-            Text = P3Owned.getText().toCharArray();
-            for(int i=0 ; i < gapIndex ; i++)
-                newText += Text[i];
-            
-            for(int i=gapIndex+1 ; i < Text.length ; i++)
-                newText += Text[i];
-            
-            P3Owned.setText(newText);
-        }
-        
-        else if(currPlayer.equals(p4))
-        {
-            gapIndex = P4Owned.getText().indexOf("");
-            newText = "";
-            Text = P4Owned.getText().toCharArray();
-            for(int i=0 ; i < gapIndex ; i++)
-                newText += Text[i];
-            
-            for(int i=gapIndex+1 ; i < Text.length ; i++)
-                newText += Text[i];
-            
-            P4Owned.setText(newText);
-        }
+            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
+            {
+                if(numberOfPlayers == 3)
+                {
+                    listP1.setEnabled(false);
+                  listP2.setEnabled(false);
+                  listP3.setEnabled(true);
+                  listP1.clearSelection();
+                  listP2.clearSelection();
+                }
+                
+                else if(numberOfPlayers == 4)
+                {
+                    listP1.setEnabled(false);
+                  listP2.setEnabled(false);
+                  listP3.setEnabled(true);
+                  listP4.setEnabled(false);
+                  listP1.clearSelection();
+                  listP2.clearSelection();
+                  listP4.clearSelection();
+                }
+            }
+
+            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
+            {
+                listP1.setEnabled(false);
+                  listP2.setEnabled(false);
+                  listP3.setEnabled(false);
+                  listP4.setEnabled(true);
+                  listP1.clearSelection();
+                  listP2.clearSelection();
+                  listP3.clearSelection();
+            }
     }
     
     public void checkIfLost()
@@ -508,6 +559,7 @@ public class Game extends JFrame
             Roll.setEnabled(true);
             Buy.setEnabled(false);
             EndTurn.setEnabled(false);
+            updateLists();
         }
     }
     
@@ -518,16 +570,18 @@ public class Game extends JFrame
             boolean Success = currPlayer.Buy();
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-                P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
+                //P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
+                  modelP1.addElement( p1.getCurrentLocation().getName()  );
+
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-                P2Owned.setText(P2Owned.getText()+p2.getCurrentLocation().getName()+"\n");
+                  modelP2.addElement( p2.getCurrentLocation().getName()  );
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-                P3Owned.setText(P3Owned.getText()+p3.getCurrentLocation().getName()+"\n");
-
+                 modelP3.addElement( p3.getCurrentLocation().getName()  );
+            
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                P4Owned.setText(P4Owned.getText()+p4.getCurrentLocation().getName()+"\n");
+                 modelP4.addElement( p4.getCurrentLocation().getName()  );      
             if (currPlayer.getCurrentLocation() instanceof Country)
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
@@ -543,21 +597,34 @@ public class Game extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
-            boolean Success = currPlayer.Sell();
+                    try{
+                       int index = getListIndex();
+                    
+                    
+                    
+                       System.out.println(index);
+            boolean Success = currPlayer.Sell(index);
+            
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-                P1Owned.setText(P1Owned.getText().replace(p1.getCurrentLocation().getName(),""));
+                //P1Owned.setText(P1Owned.getText().replace(p1.getCurrentLocation().getName(),""));
+                modelP1.removeElementAt(index);
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-                P2Owned.setText(P2Owned.getText().replace(p2.getCurrentLocation().getName(),""));
+                modelP2.removeElementAt(index);
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-                P3Owned.setText(P3Owned.getText().replace(p3.getCurrentLocation().getName(),""));
-
-            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                P4Owned.setText(P4Owned.getText().replace(p4.getCurrentLocation().getName(),""));
+            modelP3.removeElementAt(index);
             
-            updateLists();
+            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
+                modelP4.removeElementAt(index);
+            
+                    }
+                    
+                    catch(Exception ex)
+                    {
+                        System.out.println("3abdo");
+                        }
         }
     }
     
@@ -618,6 +685,7 @@ public class Game extends JFrame
             
             else
             {
+                //DiceRoll = 5;
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();
@@ -626,7 +694,67 @@ public class Game extends JFrame
             }
         }   
     }
-    
+   public int getListIndex()
+   {
+          if(currPlayer.getName().equals(p1.getName())){
+//              if(numberOfPlayers==2)
+//              {
+//                  listP1.setEnabled(true);
+//                  listP2.setEnabled(false);
+//              }
+//              
+//              else if(numberOfPlayers==3)
+//              {
+//                  listP1.setEnabled(true);
+//                  listP2.setEnabled(false);
+//                  listP3.setEnabled(false);
+//              }
+//              
+//              else if(numberOfPlayers ==4)
+//              {
+//                  listP1.setEnabled(true);
+//                  listP2.setEnabled(false);
+//                  listP3.setEnabled(false);
+//                  listP4.setEnabled(false);
+//              }
+                return listP1.getSelectedIndex();}
+          
+            else if(currPlayer.getName().equals(p2.getName()))
+            {
+//                 
+                return listP2.getSelectedIndex();
+            }
+            
+            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
+            {
+//                if(numberOfPlayers == 3)
+//                {
+//                    listP1.setEnabled(false);
+//                  listP2.setEnabled(false);
+//                  listP3.setEnabled(true);
+//                }
+//                
+//                else if(numberOfPlayers == 4)
+//                {
+//                    listP1.setEnabled(false);
+//                  listP2.setEnabled(false);
+//                  listP2.setEnabled(true);
+//                  listP4.setEnabled(false);
+//                }
+                return listP3.getSelectedIndex();
+            }
+
+            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
+            {
+//                listP1.setEnabled(false);
+//                  listP2.setEnabled(false);
+//                  listP3.setEnabled(false);
+//                  listP4.setEnabled(true);
+                return listP4.getSelectedIndex();
+            }
+        return 0;
+   }
+
    
 }
  
