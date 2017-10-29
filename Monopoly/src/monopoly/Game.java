@@ -16,24 +16,37 @@ public class Game extends JFrame
     private JTextArea P4Owned = new JTextArea();
     
     private Board Board; 
-    private JPanel Data = new JPanel(); 
+    
+    private JPanel Data = new JPanel();
+    
     private JButton Buy = new JButton("Buy"); 
     private JButton Sell = new JButton("Sell"); 
     private JButton Roll = new JButton("Roll"); 
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
     private JButton BuildHouse = new JButton("Build House");
+    
     private JLabel InfoLbl = new JLabel("Tile Information");
     private JLabel P1Lbl;
     private JLabel P2Lbl;
     private JLabel P3Lbl;
     private JLabel P4Lbl;
-     
+    
+    private DefaultListModel<String> modelP1 = new DefaultListModel<>();
+    private JList<String> listP1 = new JList<>( modelP1 );
+    private DefaultListModel<String> modelP2 = new DefaultListModel<>();
+    private JList<String> listP2 = new JList<>( modelP2 );
+    private DefaultListModel<String> modelP3 = new DefaultListModel<>();
+    private JList<String> listP3 = new JList<>( modelP3 );
+    private DefaultListModel<String> modelP4 = new DefaultListModel<>();
+    private JList<String> listP4 = new JList<>( modelP4 );
+    
     private Player p1;
     private Player p2;
     private Player p3;
     private Player p4;
     private Player currPlayer;
+    
     private int current = 0;
     private int numberOfPlayers;
     
@@ -42,26 +55,12 @@ public class Game extends JFrame
     private ArrayList<Location> Countries = new ArrayList();
     
     private Dice Dice = new Dice();
+    
     int DiceRoll;
     int DiceConst = 10;
-    
-    DefaultListModel<String> modelP1 = new DefaultListModel<>();
-    JList<String> listP1 = new JList<>( modelP1 );
-    DefaultListModel<String> modelP2 = new DefaultListModel<>();
-    JList<String> listP2 = new JList<>( modelP2 );
-    DefaultListModel<String> modelP3 = new DefaultListModel<>();
-    JList<String> listP3 = new JList<>( modelP3 );
-    DefaultListModel<String> modelP4 = new DefaultListModel<>();
-    JList<String> listP4 = new JList<>( modelP4 );
-    
-     
-     
-     String xx = listP1.getSelectedValue() ;
             
     private javax.swing.Timer motionTimer = new javax.swing.Timer(50,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(50,new DiceListener());
-    
-    
     
     public Game(int n,String[] names)
     {
@@ -82,7 +81,6 @@ public class Game extends JFrame
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        System.out.println(xx);
         Data.setPreferredSize(new Dimension(293,700));
         Data.setBackground(new Color(85,107,47));
         
@@ -124,22 +122,8 @@ public class Game extends JFrame
         Sell.addActionListener(new SellButtonListener());
         BuildHouse.addActionListener(new BtnBuildListener());
         setVisible(true); 
-
     }
-    public class BtnBuildListener implements ActionListener
-    {
-    public void actionPerformed(ActionEvent e){
-        if(currPlayer.CanBuy(200))
-        {
-            currPlayer.deductMoney(200);
-            Country c = (Country) currPlayer.getCurrentLocation() ;
-            c.setnHouses(c.getnHouses()+1);
-            c.setRent(200*c.getnHouses());
-            updateLabels();
-        }
-    }
-    }
-    
+ 
     public ArrayList<Player> getPlayers(){return Players;}
     
     public void setDiceRoll(int x) { this.DiceRoll=x;}
@@ -160,7 +144,6 @@ public class Game extends JFrame
             TitledBorder P2Title = BorderFactory.createTitledBorder(p2.getName()+" Properties");
             
             Data.add(P1Lbl); 
-           //Data.add(P1Owned);
             Data.add(listP1);
 
             Data.add(P2Lbl); 
@@ -173,17 +156,13 @@ public class Game extends JFrame
             P2Lbl.setPreferredSize(new Dimension(293,15));
             P2Lbl.setFont((new Font("Arial",Font.BOLD,15)));
             P2Lbl.setForeground(Color.white);
-            
-            P1Owned.setEditable(false);
-           // listP1.setEditable(false);
-
-            P1Owned.setBorder(P1Title);
+          
             listP1.setPreferredSize(new Dimension(293,300));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
-            listP2.setPreferredSize(new Dimension(293,300));
-            listP2.setFont(new Font("Arial",Font.PLAIN,12));
-            P2Owned.setEditable(false);
             listP1.setBorder(P1Title);
+            
+            listP2.setPreferredSize(new Dimension(293,300));
+            listP2.setFont(new Font("Arial",Font.PLAIN,12));         
             listP2.setBorder(P2Title);
             
             Players.add(p1);
@@ -206,8 +185,10 @@ public class Game extends JFrame
             
             Data.add(P1Lbl); 
             Data.add(listP1);
+            
             Data.add(P2Lbl); 
             Data.add(listP2);
+            
             Data.add(P3Lbl); 
             Data.add(listP3);
             
@@ -260,10 +241,13 @@ public class Game extends JFrame
             
             Data.add(P1Lbl); 
             Data.add(listP1);
+            
             Data.add(P2Lbl); 
             Data.add(listP2);
+            
             Data.add(P3Lbl); 
             Data.add(listP3);
+            
             Data.add(P4Lbl); 
             Data.add(listP4);
         
@@ -371,101 +355,100 @@ public class Game extends JFrame
       
     void updateLists()
     {
-if(currPlayer.getName().equals(p1.getName())){
-              if(numberOfPlayers==2)
-              {
-                  listP1.setEnabled(true);
-                  listP2.setEnabled(false);
-                  listP2.clearSelection();
-              }
-              
-              else if(numberOfPlayers==3)
-              {
-                  listP1.setEnabled(true);
-                  listP2.setEnabled(false);
-                  listP3.setEnabled(false);
-                  listP2.clearSelection();
-                  listP3.clearSelection();
-              }
-              
-              else if(numberOfPlayers ==4)
-              {
-                  listP1.setEnabled(true);
-                  listP2.setEnabled(false);
-                  listP3.setEnabled(false);
-                  listP4.setEnabled(false);
-                  listP2.clearSelection();
-                  listP3.clearSelection();
-                  listP4.clearSelection();
-
-              }
+        if(currPlayer.getName().equals(p1.getName()))
+        {
+            if(numberOfPlayers==2)
+            {
+                listP1.setEnabled(true);
+                listP2.setEnabled(false);
+                listP2.clearSelection();
             }
+              
+            else if(numberOfPlayers==3)
+            {
+                listP1.setEnabled(true);
+                listP2.setEnabled(false);
+                listP3.setEnabled(false);
+                listP2.clearSelection();
+                listP3.clearSelection();
+            }
+
+            else if(numberOfPlayers ==4)
+            {
+                listP1.setEnabled(true);
+                listP2.setEnabled(false);
+                listP3.setEnabled(false);
+                listP4.setEnabled(false);
+                listP2.clearSelection();
+                listP3.clearSelection();
+                listP4.clearSelection();
+            }
+          }
           
-            else if(currPlayer.getName().equals(p2.getName()))
-            {
-                if(numberOfPlayers==2)
-                {
-                  listP1.setEnabled(false);
-                  listP2.setEnabled(true);
-                  listP1.clearSelection();
-
-                }
-                
-              else if(numberOfPlayers==3)
-              {
-                  listP1.setEnabled(false);
-                  listP2.setEnabled(true);
-                  listP3.setEnabled(false);
-                  listP1.clearSelection();
-                  listP3.clearSelection();
-
-              }
-              
-              else if(numberOfPlayers ==4)
-              {
-                  listP1.setEnabled(false);
-                  listP2.setEnabled(true);
-                  listP3.setEnabled(false);
-                  listP4.setEnabled(false);
-                  listP1.clearSelection();
-                  listP3.clearSelection();
-                  listP4.clearSelection();
-              }
-            }
-            
-            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
-            {
-                if(numberOfPlayers == 3)
-                {
-                    listP1.setEnabled(false);
-                  listP2.setEnabled(false);
-                  listP3.setEnabled(true);
-                  listP1.clearSelection();
-                  listP2.clearSelection();
-                }
-                
-                else if(numberOfPlayers == 4)
-                {
-                    listP1.setEnabled(false);
-                  listP2.setEnabled(false);
-                  listP3.setEnabled(true);
-                  listP4.setEnabled(false);
-                  listP1.clearSelection();
-                  listP2.clearSelection();
-                  listP4.clearSelection();
-                }
-            }
-
-            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
+        else if(currPlayer.getName().equals(p2.getName()))
+        {
+            if(numberOfPlayers==2)
             {
                 listP1.setEnabled(false);
-                  listP2.setEnabled(false);
-                  listP3.setEnabled(false);
-                  listP4.setEnabled(true);
-                  listP1.clearSelection();
-                  listP2.clearSelection();
-                  listP3.clearSelection();
+                listP2.setEnabled(true);
+                listP1.clearSelection();
             }
+
+             else if(numberOfPlayers==3)
+            {
+                listP1.setEnabled(false);
+                listP2.setEnabled(true);
+                listP3.setEnabled(false);
+                listP1.clearSelection();
+                listP3.clearSelection();
+
+            }
+
+            else if(numberOfPlayers ==4)
+            {
+                listP1.setEnabled(false);
+                listP2.setEnabled(true);
+                listP3.setEnabled(false);
+                listP4.setEnabled(false);
+                listP1.clearSelection();
+                listP3.clearSelection();
+                listP4.clearSelection();
+            }
+        }
+
+        else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
+        {
+            if(numberOfPlayers == 3)
+            {
+                listP1.setEnabled(false);
+                listP2.setEnabled(false);
+                listP3.setEnabled(true);
+                listP1.clearSelection();
+                listP2.clearSelection();
+            }
+
+            else if(numberOfPlayers == 4)
+            {
+                listP1.setEnabled(false);
+                listP2.setEnabled(false);
+                listP3.setEnabled(true);
+                listP4.setEnabled(false);
+                listP1.clearSelection();
+                listP2.clearSelection();
+                listP4.clearSelection();
+            }
+        }
+
+        else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
+        {
+            listP1.setEnabled(false);
+            listP2.setEnabled(false);
+            listP3.setEnabled(false);
+            listP4.setEnabled(true);
+            listP1.clearSelection();
+            listP2.clearSelection();
+            listP3.clearSelection();
+        }
     }
     
     public void checkIfLost()
@@ -536,6 +519,7 @@ if(currPlayer.getName().equals(p1.getName())){
         {
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
+            
             while(currPlayer.isPrisoned() && !(currPlayer.hasFreePass()))
             {
                 currPlayer.setPrisoned(false);
@@ -558,61 +542,52 @@ if(currPlayer.getName().equals(p1.getName())){
             boolean Success = currPlayer.Buy();
             updateLabels();
             if(currPlayer.getName().equals(p1.getName()) && Success)
-                //P1Owned.setText(P1Owned.getText()+p1.getCurrentLocation().getName()+"\n");
-                  modelP1.addElement( p1.getCurrentLocation().getName()  );
-
+                  modelP1.addElement(p1.getCurrentLocation().getName());
 
             else if(currPlayer.getName().equals(p2.getName()) && Success)
-                  modelP2.addElement( p2.getCurrentLocation().getName()  );
+                  modelP2.addElement(p2.getCurrentLocation().getName());
 
             else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-                 modelP3.addElement( p3.getCurrentLocation().getName()  );
+                 modelP3.addElement(p3.getCurrentLocation().getName());
             
             else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                 modelP4.addElement( p4.getCurrentLocation().getName()  );      
+                 modelP4.addElement(p4.getCurrentLocation().getName());    
+            
             if (currPlayer.getCurrentLocation() instanceof Country)
             {
-                Country c = (Country) currPlayer.getCurrentLocation() ;
-                   if(c.isSetComplete()&&Success)
-                   {
-                       BuildHouse.setEnabled(true);
-                   }
+                Country c = (Country) currPlayer.getCurrentLocation();
+                if(c.isSetComplete()&&Success)
+                    BuildHouse.setEnabled(true);
             }
-            
         }
     }
+    
     class SellButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
-                    try{
-                       int index = getListIndex();
-                    
-                    
-                    
-                       System.out.println(index);
-            boolean Success = currPlayer.Sell(index);
-            
-            updateLabels();
-            if(currPlayer.getName().equals(p1.getName()) && Success)
-                //P1Owned.setText(P1Owned.getText().replace(p1.getCurrentLocation().getName(),""));
-                modelP1.removeElementAt(index);
+            try
+            {
+                int index = getListIndex(); 
+                boolean Success = currPlayer.Sell(index);    
+                updateLabels();
+                if(currPlayer.getName().equals(p1.getName()) && Success)
+                    modelP1.removeElementAt(index);
 
-            else if(currPlayer.getName().equals(p2.getName()) && Success)
-                modelP2.removeElementAt(index);
+                else if(currPlayer.getName().equals(p2.getName()) && Success)
+                    modelP2.removeElementAt(index);
 
-            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
-            modelP3.removeElementAt(index);
-            
-            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
-                modelP4.removeElementAt(index);
-            
-                    }
+                else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()) && Success)
+                    modelP3.removeElementAt(index);
+
+                else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()) && Success)
+                    modelP4.removeElementAt(index);            
+            }
                     
-                    catch(Exception ex)
-                    {
-                        System.out.println("3abdo");
-                        }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null,"Select a country first from your list to sell!");
+            }  
         }
     }
     
@@ -634,21 +609,20 @@ if(currPlayer.getName().equals(p1.getName())){
            
            else
            {
-               currPlayer.setDirection(true);
-               Location l = Countries.get(currPlayer.getIndex());
-               currPlayer.setCurr(l);
-               motionTimer.stop();
-               Buy.setEnabled(true);
-               Sell.setEnabled(true);
+                currPlayer.setDirection(true);
+                Location l = Countries.get(currPlayer.getIndex());
+                currPlayer.setCurr(l);
+                motionTimer.stop();
+                Buy.setEnabled(true);
+                Sell.setEnabled(true);
                
                if(l instanceof Country)
                {
                    Country c = (Country) l;
                    if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
-                   {
                        BuildHouse.setEnabled(true);
-                   }
                }
+               
                currPlayer.checkRent(Players,Dice);
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
@@ -673,7 +647,6 @@ if(currPlayer.getName().equals(p1.getName())){
             
             else
             {
-                //DiceRoll = 5;
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();
@@ -682,68 +655,38 @@ if(currPlayer.getName().equals(p1.getName())){
             }
         }   
     }
+    
+    public class BtnBuildListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            if(currPlayer.CanBuy(200))
+            {
+                currPlayer.deductMoney(200);
+                Country c = (Country) currPlayer.getCurrentLocation() ;
+                c.setnHouses(c.getnHouses()+1);
+                c.setRent(200*c.getnHouses());
+                updateLabels();
+            }
+        }
+    }
+    
    public int getListIndex()
    {
-          if(currPlayer.getName().equals(p1.getName())){
-//              if(numberOfPlayers==2)
-//              {
-//                  listP1.setEnabled(true);
-//                  listP2.setEnabled(false);
-//              }
-//              
-//              else if(numberOfPlayers==3)
-//              {
-//                  listP1.setEnabled(true);
-//                  listP2.setEnabled(false);
-//                  listP3.setEnabled(false);
-//              }
-//              
-//              else if(numberOfPlayers ==4)
-//              {
-//                  listP1.setEnabled(true);
-//                  listP2.setEnabled(false);
-//                  listP3.setEnabled(false);
-//                  listP4.setEnabled(false);
-//              }
-                return listP1.getSelectedIndex();}
+        if(currPlayer.getName().equals(p1.getName()))
+            return listP1.getSelectedIndex();
+
+        else if(currPlayer.getName().equals(p2.getName()))        
+            return listP2.getSelectedIndex();
+
+        else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
+            return listP3.getSelectedIndex();
+
+        else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
+            return listP4.getSelectedIndex();
           
-            else if(currPlayer.getName().equals(p2.getName()))
-            {
-//                 
-                return listP2.getSelectedIndex();
-            }
-            
-            else if(!(p3 == null) && currPlayer.getName().equals(p3.getName()))
-            {
-//                if(numberOfPlayers == 3)
-//                {
-//                    listP1.setEnabled(false);
-//                  listP2.setEnabled(false);
-//                  listP3.setEnabled(true);
-//                }
-//                
-//                else if(numberOfPlayers == 4)
-//                {
-//                    listP1.setEnabled(false);
-//                  listP2.setEnabled(false);
-//                  listP2.setEnabled(true);
-//                  listP4.setEnabled(false);
-//                }
-                return listP3.getSelectedIndex();
-            }
-
-            else if(!(p4 == null) && currPlayer.getName().equals(p4.getName()))
-            {
-//                listP1.setEnabled(false);
-//                  listP2.setEnabled(false);
-//                  listP3.setEnabled(false);
-//                  listP4.setEnabled(true);
-                return listP4.getSelectedIndex();
-            }
         return 0;
-   }
-
-   
+   } 
 }
  
 

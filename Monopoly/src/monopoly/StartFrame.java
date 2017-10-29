@@ -235,7 +235,8 @@ public class StartFrame extends JFrame
             
             if(startFlag)
             {
-                Game Monopoly = new Game(n,names);
+                Btn1.setEnabled(false);
+                DiceFrame f = new DiceFrame(n,names);
                 setVisible(false);
             }
         }

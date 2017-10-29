@@ -26,7 +26,7 @@ public class Dice extends JPanel
    {
         this.setLayout(null);
         this.setBounds(275,130,170,85);
-        setBackground(new Color(85,107,47));
+        setBackground(new Color(0,0,0,1));
         Die1_Lbl.setIcon(new ImageIcon(ResizedDie1));
         Die2_Lbl.setIcon(new ImageIcon(ResizedDie2));
         Die1_Lbl.setBounds(0, 0, 80, 80);

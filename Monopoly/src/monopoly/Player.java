@@ -71,40 +71,41 @@ public class Player
     public boolean isForward(){return Forward;}
     
     public boolean hasLost(){ return hasLost; }
+    
     public void checker(int a,int b)
     {
       if(myCountries[a]==1&&myCountries[b]==1)
-        { for(int i=0;i<OwnedCountries.size();i++)
+        { 
+            for(int i=0;i<OwnedCountries.size();i++)
             {
                 if(OwnedCountries.get(i) instanceof Country)
                 {
                     Country c = (Country) OwnedCountries.get(i);
                     if(c.getcIndex()==a||c.getcIndex()==b)
-                    {
                         c.setSetComplete(true);
-                    }
                 }
             }
         }
     }
+    
     public void checker(int a, int b ,int c)
     {
         if(myCountries[a]==1&&myCountries[b]==1&&myCountries[c]==1)
-            { for(int i=0;i<OwnedCountries.size();i++)
+            { 
+                for(int i=0;i<OwnedCountries.size();i++)
                 {
                     if(OwnedCountries.get(i) instanceof Country)
                     {
                         Country d = (Country) OwnedCountries.get(i);
                         if(d.getcIndex()==a||d.getcIndex()==b||d.getcIndex()==c)
-                        {
                             d.setSetComplete(true);
-                            
-                        }
                     }
                 }
             }
     }
-    public void checkFullSet(){
+    
+    public void checkFullSet()
+    {
         checker(1,3);
         checker(6,8,9);
         checker(11,13,14); 
@@ -115,8 +116,6 @@ public class Player
         checker(37,39);    
     }
             
-    
-    
     public boolean Buy()
     {
         if(currentLocation instanceof Country)
@@ -129,7 +128,6 @@ public class Player
                     if(OwnedCountries.get(i).getName().equals(c.getName()))
                     {
                         JOptionPane.showMessageDialog(null,"You already own this property");
-    
                         return false;
                     }
                 }
@@ -243,10 +241,7 @@ public class Player
     
     public void draw(Graphics g , Board b)
     {
-       // if(!hasLost())
-            g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);
-      
-        
+            g.drawImage(Img.getImage(),x,y,Img.getIconWidth(),Img.getIconHeight(),b);  
     }
     
     public boolean Sell(int index)
@@ -255,28 +250,29 @@ public class Player
         {
             Country c =  (Country) this.getOwnedCountries().get(index);
             if(c.isBought())
-            {int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+c.getName()+"?", "", JOptionPane.YES_NO_OPTION);
-               if(c.getOwner().equals(this.Name))
-               {
+            {
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+c.getName()+"?", "", JOptionPane.YES_NO_OPTION);
+                if(c.getOwner().equals(this.Name))
+                {
                     if (reply == JOptionPane.YES_OPTION)
                     {
-                   
-                    c.removeOwner();
-                    this.OwnedCountries.remove(c) ; 
-                    this.addMoney(c.getCost()/2);
-                    c.setBought(false);
-                    JOptionPane.showMessageDialog(null, "You sold "+c.getName());
-                    return true; 
+                        c.removeOwner();
+                        this.OwnedCountries.remove(c) ; 
+                        this.addMoney(c.getCost()/2);
+                        c.setBought(false);
+                        JOptionPane.showMessageDialog(null, "You sold "+c.getName());
+                        return true; 
                     }
-                    else { return false;}
+                    
+                    else 
+                        return false;
                }
-               
-               else
-               {
-                   JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
-                   return false;
-               }
-                   
+                
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
+                    return false;
+                }
             }
             
             else
@@ -291,22 +287,22 @@ public class Player
             RailRoad r = (RailRoad) this.getOwnedCountries().get(index);
             
             if(r.isBought())
-            {   int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+r.getName()+"?", "", JOptionPane.YES_NO_OPTION);
+            {   
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+r.getName()+"?", "", JOptionPane.YES_NO_OPTION);
                 if(r.getOwner().equals(this.Name))
                 {
                     if (reply == JOptionPane.YES_OPTION)
                     {
-                    r.removeOwner();
-                    this.OwnedCountries.remove(r) ; 
-                    this.addMoney(r.getCost());
-                    r.setBought(false);
-                    JOptionPane.showMessageDialog(null, "You sold "+r.getName());
-                    return true ; 
+                        r.removeOwner();
+                        this.OwnedCountries.remove(r) ; 
+                        this.addMoney(r.getCost()/2);
+                        r.setBought(false);
+                        JOptionPane.showMessageDialog(null, "You sold "+r.getName());
+                        return true ; 
                    }
-                   else {
-//           JOptionPane.showMessageDialog(null, "GOODBYE");
-           return false;
-        }
+                    
+                   else
+                    return false;
                 }
                 
                 else
@@ -328,26 +324,29 @@ public class Player
             waterelec w = (waterelec) this.getOwnedCountries().get(index);
                 
             if(w.isBought())
-            { int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+w.getName()+"?", "", JOptionPane.YES_NO_OPTION);
+            {
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+w.getName()+"?", "", JOptionPane.YES_NO_OPTION);
                 if(w.getOwner().equals(this.Name))
                 {
-                     if (reply == JOptionPane.YES_OPTION)
+                    if (reply == JOptionPane.YES_OPTION)
                     {
-                    w.removeOwner();
-                    this.OwnedCountries.remove(w) ; 
-                    this.addMoney(w.getCost());
-                    w.setBought(false);
-                    JOptionPane.showMessageDialog(null, "You sold "+w.getName());
-                    return true ; 
+                        w.removeOwner();
+                        this.OwnedCountries.remove(w) ; 
+                        this.addMoney(w.getCost()/2);
+                        w.setBought(false);
+                        JOptionPane.showMessageDialog(null, "You sold "+w.getName());
+                        return true ; 
                     }
-                     else { return false;}
+                    
+                    else
+                        return false;
                 }
                 
                 else
                 {
                     JOptionPane.showMessageDialog(null, "You do not own "+w.getName());
                     return false;
-                }          
+                }
             }
             
             else
@@ -358,14 +357,10 @@ public class Player
         } 
         
         else
-        {
-            JOptionPane.showMessageDialog(null, "You cannot sell this tile");
-            return false ; 
-        }
-        
-        
+            return false; 
     }
-      public void Move(boolean Forward)
+    
+    public void Move(boolean Forward)
     {       
         if(Forward)
         {
@@ -489,8 +484,7 @@ public class Player
                     }
                     
                 }
-            }
-                
+            }          
         }
        
        else if(currentLocation instanceof waterelec)
@@ -662,7 +656,6 @@ public class Player
         }
     } 
     
-
     public void checkChance(javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)
     {
         if(currentLocation instanceof Chance)
@@ -690,9 +683,6 @@ public class Player
                 this.Money -= 650;
                 JOptionPane.showMessageDialog(null,"You paid $650 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
             }
-            
-            //else
-                //hasLost = true;
         }
         
         else if(currentLocation.getName().equals("Income Tax"))
@@ -714,7 +704,6 @@ public class Player
         }
     }
     
-    
     public boolean CanBuy (int c)
     {
         if ((this.Money - c) < 0)
@@ -722,7 +711,7 @@ public class Player
         else 
             return true;
     }
-    
+
     public void Kick()
     {
         for(int i=0; i<OwnedCountries.size(); i++)
