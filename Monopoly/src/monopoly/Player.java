@@ -702,14 +702,19 @@ public class Player
             int choice = JOptionPane.showOptionDialog(null, "Choose your Fate !", "Warning",
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
-         if(choice== 0)
+            
+            if(choice== 0)
             {
                 Money-=50;
                 PaidForPrison=true;
             }
-            Game.setDiceRoll(20);
-            moveTimer.start();
-            isPrisoned = true;
+         
+            else
+            {
+                Game.setDiceRoll(20);
+                moveTimer.start();
+                isPrisoned = true;
+            }
         }
     }
     

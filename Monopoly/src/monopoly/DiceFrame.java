@@ -9,9 +9,10 @@ public class DiceFrame extends JFrame
     private int numberOfPlayers;
     private String[] names;
     private int[] results;
+    private boolean Conflict = false;
     private int count = 0;
     private int DiceConst = 10;
-    private Dice Dice = new Dice();
+    private Die Dice = new Die();
     
     private JButton Roll = new JButton("Roll");
     private JButton Play = new JButton("Play");
@@ -27,7 +28,6 @@ public class DiceFrame extends JFrame
     private JTextField P3Num;
     private JTextField P4Num;
     
-    private javax.swing.Timer DiceTimer = new javax.swing.Timer(50,new DiceListener());
     
     public DiceFrame(int n, String[] names)
     {
@@ -49,15 +49,13 @@ public class DiceFrame extends JFrame
         InitializePlayerComponents();
         
         add(Play);
-        add(Dice);
         add(Roll);
         
-        Play.setBounds(465,530,80,30);
-        Roll.setBounds(465,220,80,30);
-        Dice.setBounds(430,130,170,85);
+        Play.setBounds(435,530,80,30);
+        Roll.setBounds(520,530,80,30);
         
         Play.setEnabled(false);
-        Play.addActionListener(null);
+        Play.addActionListener(new PlayButtonListener());
         Roll.addActionListener(new RollButtonListener());
     }
     
@@ -65,11 +63,11 @@ public class DiceFrame extends JFrame
     {
         if(numberOfPlayers==2)
         {
-            P1NameLbl = new JLabel(names[0]+" (Token 1)");
+            P1NameLbl = new JLabel(names[0]);
             P1NameLbl.setForeground(Color.red);
             P1NameLbl.setBounds(500,320,300,40);
             
-            P2NameLbl = new JLabel(names[1]+" (Token 2)");
+            P2NameLbl = new JLabel(names[1]);
             P2NameLbl.setForeground(Color.red);
             P2NameLbl.setBounds(500,360,300,40);
             
@@ -89,15 +87,15 @@ public class DiceFrame extends JFrame
         
         else if(numberOfPlayers==3)
         {
-            P1NameLbl = new JLabel(names[0]+" (Token 1)");
+            P1NameLbl = new JLabel(names[0]);
             P1NameLbl.setForeground(Color.red);
             P1NameLbl.setBounds(500,320,300,40);
             
-            P2NameLbl = new JLabel(names[1]+" (Token 2)");
+            P2NameLbl = new JLabel(names[1]);
             P2NameLbl.setForeground(Color.red);
             P2NameLbl.setBounds(500,360,300,40);
             
-            P3NameLbl = new JLabel(names[2]+" (Token 3)");
+            P3NameLbl = new JLabel(names[2]);
             P3NameLbl.setForeground(Color.red);
             P3NameLbl.setBounds(500,400,300,40);
             
@@ -123,19 +121,19 @@ public class DiceFrame extends JFrame
         
         else if(numberOfPlayers==4)
         {
-            P1NameLbl = new JLabel(names[0]+" (Token 1)");
+            P1NameLbl = new JLabel(names[0]);
             P1NameLbl.setForeground(Color.red);
             P1NameLbl.setBounds(500,320,300,40);
             
-            P2NameLbl = new JLabel(names[1]+" (Token 2)");
+            P2NameLbl = new JLabel(names[1]);
             P2NameLbl.setForeground(Color.red);
             P2NameLbl.setBounds(500,360,300,40);
             
-            P3NameLbl = new JLabel(names[2]+" (Token 3)");
+            P3NameLbl = new JLabel(names[2]);
             P3NameLbl.setForeground(Color.red);
             P3NameLbl.setBounds(500,400,300,40);
             
-            P4NameLbl = new JLabel(names[3]+" (Token 4)");
+            P4NameLbl = new JLabel(names[3]);
             P4NameLbl.setForeground(Color.red);
             P4NameLbl.setBounds(500,440,300,40);
             
@@ -166,44 +164,94 @@ public class DiceFrame extends JFrame
         }
     }
     
-//    public boolean checkSameNumbers()
-//    {
-//        
-//    }
+    public boolean SameNumbers()
+    {
+        for(int i=0 ; i < numberOfPlayers ; i++)
+            for(int j=0 ; j < numberOfPlayers ; j++)
+            {
+                if(i == j)
+                    continue;
+                
+                else
+                    if(results[i] == results[j])
+                        return true;
+                
+            }
+        return false;
+    }
+    
+    public void getPlayerRolls()
+    {
+        for(int i=0 ; i < numberOfPlayers ; i++)
+            {
+                results[i] = Dice.Roll();
+                PNums[i].setText(results[i]+"");
+            }
+    }
+    
+    public void reSortPlayers()
+    {
+        String[] s = new String[numberOfPlayers];
+        
+         for(int i=0 ; i < numberOfPlayers ; i++)
+                s[i] = names[getMaxIndex()];
+         
+         names = s;
+    }
+    
+    public int getMaxIndex()
+    {
+        int maxIndex = 0;
+        for(int i=0 ; i < numberOfPlayers ; i++)
+            if(results[i] > results[maxIndex])
+                maxIndex = i;
+        
+        results[maxIndex] = 0;
+        return maxIndex;
+    }  
+    
+    public String getMessage()
+    {
+        String n = "";
+        for(int i=0 ; i < numberOfPlayers ; i++)
+            n+=names[i]+" is "+"Token("+(i+1)+")\n";
+        
+        return n;       
+    }
     
     class RollButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
-            DiceTimer.start();         
-            Roll.setEnabled(false);    
+            getPlayerRolls();
+            while(SameNumbers())
+            {
+                getPlayerRolls();
+            }
+            
+            Roll.setEnabled(false);
+            reSortPlayers();
+            Play.setEnabled(true);
         }
     }
     
-    class DiceListener implements ActionListener
+    class PlayButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(Dice.getCount() < DiceConst)
-            {
-                Dice.Roll();
-                repaint();
-            }
+            boolean startFlag = false;
+            int choice = JOptionPane.showConfirmDialog(null, getMessage()+"Ready to play?", "Ready?", JOptionPane.YES_NO_OPTION);
+            if(choice == JOptionPane.YES_OPTION)
+                startFlag = true;
             
             else
-            {               
-                count++;
-                if(count == numberOfPlayers)
-                    Roll.setEnabled(false);
-                
-                else
-                    Roll.setEnabled(true);
-                
-                results[count-1] = Dice.getDiceRoll();
-                PNums[count-1].setText(results[count-1]+"");
-                Dice.setCount(0);
-                DiceTimer.stop();
-            }
-        }   
+                startFlag = false;
+            
+            if(startFlag)
+            {
+                Game Monopoly = new Game(numberOfPlayers,names);
+                setVisible(false);
+            }           
+        }
     }
 }
