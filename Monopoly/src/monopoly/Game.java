@@ -14,6 +14,7 @@ public class Game extends JFrame
     private JTextArea P2Owned = new JTextArea();
     private JTextArea P3Owned = new JTextArea();
     private JTextArea P4Owned = new JTextArea();
+    private JTextArea InfoLog = new JTextArea();
     
     private Board Board; 
     
@@ -73,6 +74,7 @@ public class Game extends JFrame
     
     public void initializeComponents() 
     {
+        TitledBorder InfoLogName = BorderFactory.createTitledBorder("News Log");
         TitledBorder InfoTitle = BorderFactory.createTitledBorder("Tile Info");
         c = getContentPane(); 
         setSize(1000,730);
@@ -83,6 +85,14 @@ public class Game extends JFrame
         
         Data.setPreferredSize(new Dimension(293,700));
         Data.setBackground(new Color(85,107,47));
+        
+        InfoLog.setBounds(100, 390, 165 ,200);
+        
+        InfoLog.setEditable(false);
+        InfoLog.setBorder(InfoLogName);
+       
+        
+        
         
         Buy.setPreferredSize(new Dimension(80,40));
         Buy.setBounds(220,295,80,40);
@@ -111,6 +121,7 @@ public class Game extends JFrame
         Board.add(Dice);
         Board.add(Sell);
         Board.add(BuildHouse);
+        Board.add(InfoLog);
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -519,8 +530,12 @@ public class Game extends JFrame
         {
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
+<<<<<<< HEAD
             
             while(currPlayer.isPrisoned() && !(currPlayer.hasFreePass()))
+=======
+            while(currPlayer.isPrisoned() && !(currPlayer.hasFreePass()) && !(currPlayer.PaidForPrison))
+>>>>>>> 2f6dce72bfadc131e29b8f8b667c25f6de7843f7
             {
                 currPlayer.setPrisoned(false);
                 current = (current+1)%numberOfPlayers;
@@ -528,6 +543,7 @@ public class Game extends JFrame
             }
            
             currPlayer.setFreePass(false);
+            currPlayer.PaidForPrison=false ;
             Roll.setEnabled(true);
             Buy.setEnabled(false);
             EndTurn.setEnabled(false);
