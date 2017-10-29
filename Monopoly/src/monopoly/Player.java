@@ -18,6 +18,7 @@ public class Player
     private boolean freePass = false;
     private boolean cannotCollect = false;
     private boolean hasLost = false;
+    public boolean PaidForPrison = false;
 
     private char[] myCountries=new char[40];
 
@@ -688,7 +689,15 @@ public class Player
     {
         if (this.currentLocation.getName().equals( "Go to Jail"))
         {
-            JOptionPane.showMessageDialog(null, "You have been imprisoned" , "GO TO JAIL" , JOptionPane.PLAIN_MESSAGE);
+            Object[] options = { "Pay $50", "Go to Jail" };
+            int choice = JOptionPane.showOptionDialog(null, "Choose your Fate !", "Warning",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+         if(choice== 0)
+            {
+                Money-=50;
+                PaidForPrison=true;
+            }
             Game.setDiceRoll(20);
             moveTimer.start();
             isPrisoned = true;
