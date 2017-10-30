@@ -26,6 +26,8 @@ public class Game extends JFrame
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
     private JButton BuildHouse = new JButton("Build House");
+    private JButton Save = new JButton("Save");
+    private JButton Exit = new JButton("New game");
     
     private JLabel InfoLbl = new JLabel("Tile Information");
     private JLabel P1Lbl;
@@ -111,6 +113,8 @@ public class Game extends JFrame
         BuildHouse.setPreferredSize(new Dimension(120,40));
         BuildHouse.setBounds(460,390,120,40);
         BuildHouse.setEnabled(false);
+        Save.setBounds(470,100,120,40);
+        Exit.setBounds(470,150,120,40);
         
         
         Board = new Board(Players,numberOfPlayers);
@@ -124,6 +128,8 @@ public class Game extends JFrame
         Board.add(Sell);
         Board.add(BuildHouse);
         Board.add(InfoLog);
+        Board.add(Save);
+        Board.add(Exit);
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -134,6 +140,8 @@ public class Game extends JFrame
         EndTurn.addActionListener(new EndButtonListener());
         Sell.addActionListener(new SellButtonListener());
         BuildHouse.addActionListener(new BtnBuildListener());
+        Save.addActionListener(new SaveBtnListener());
+        Exit.addActionListener(new ExitBtnListener());
         setVisible(true); 
     }
  
@@ -854,6 +862,26 @@ public class Game extends JFrame
         }
     }
     
+    
+    public class SaveBtnListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            
+        }
+    }
+    
+    public class ExitBtnListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            
+            Object[] options = {"Yes" , "No"} ;
+            int n = JOptionPane.showOptionDialog(Game.this, "Are yo sure you want to exit!", "!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
+            EndGame(n);
+        }
+    }
+    
    public int getListIndex()
    {
         if(currPlayer.getName().equals(p1.getName()))
@@ -870,6 +898,22 @@ public class Game extends JFrame
           
         return 0;
    } 
+   
+   public void EndGame(int n)
+   {
+       if(n == 0)
+       {
+            new StartFrame();
+            JFrame GameFrame =(JFrame) SwingUtilities.getWindowAncestor(this);
+            this.setVisible(false);
+       }
+       
+       else 
+       {
+            JOptionPane.getRootFrame().dispose(); 
+       }
+   }
+   
 }
  
 
