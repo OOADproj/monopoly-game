@@ -6,8 +6,8 @@ public class Country extends Location
     private int Cost;
     private int Rent;
     private boolean Bought =false;
-    private int nHotels;
-    private int nHouses;
+    private int nHotels ;
+    private int nHouses ;
     private String Owner;
     private int cIndex;
     private boolean setComplete;

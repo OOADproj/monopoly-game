@@ -252,30 +252,31 @@ public class Player
             Country c =  (Country) this.getOwnedCountries().get(index);
             if(c.isBought())
             {
-                int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+c.getName()+"?", "", JOptionPane.YES_NO_OPTION);
-                if(c.getOwner().equals(this.Name))
+                if(c.getnHouses()!=0)
                 {
-                    if (reply == JOptionPane.YES_OPTION)
-                    {
+                JOptionPane.showMessageDialog(null, "You must sell houses first");
+                return false ; 
+                }
+                else 
+                {    
+                  int reply = JOptionPane.showConfirmDialog(null, "Are you sure that you want to sell "+c.getName()+"?", "", JOptionPane.YES_NO_OPTION);
+                    if(c.getOwner().equals(this.Name))
+                     {
+                       if (reply == JOptionPane.YES_OPTION)
+                       {
                         c.removeOwner();
                         this.OwnedCountries.remove(c) ; 
                         this.addMoney(c.getCost()/2);
                         c.setBought(false);
                         JOptionPane.showMessageDialog(null, "You sold "+c.getName());
                         return true; 
-                    }
-                    
-                    else 
+                       }
+                     else 
                         return false;
-               }
-                
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
-                    return false;
+                      }
                 }
+               
             }
-            
             else
             {
                 JOptionPane.showMessageDialog(null, "You do not own "+c.getName());
@@ -356,10 +357,12 @@ public class Player
                 return false;
             }
         } 
-        
-        else
+    
+       else
             return false; 
+        return false;
     }
+    
     
     public void Move(boolean Forward)
     {       

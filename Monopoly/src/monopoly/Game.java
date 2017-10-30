@@ -605,6 +605,20 @@ public class Game extends JFrame
             }  
         }
     }
+    public class SellHousesBtnListener implements ActionListener
+    {
+    @Override
+    public void actionPerformed(ActionEvent e){
+           
+           currPlayer.addMoney(100);
+           Country c = (Country) currPlayer.getCurrentLocation() ;
+           c.setnHouses(c.getnHouses()-1);
+           c.setRent(200*(c.getnHouses()-1));
+           updateLabels();
+        
+    }
+    }
+
     
     class motionListener implements ActionListener
     {
