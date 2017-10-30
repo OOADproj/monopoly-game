@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 
-public class Board extends JPanel
+public class Board extends JPanel 
 {
     private ArrayList<Player> Players = new ArrayList();
     private ArrayList<Tile> Tiles = new ArrayList();

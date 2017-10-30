@@ -1,5 +1,6 @@
 package monopoly;
 
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -16,7 +17,7 @@ public class Chance extends Location
         "Get Out of Jail Free",
         "Go Back 3 Spaces",
         "Go to Jail–Go directly to Jail–Do not pass Go, do not collect $200",
-        "Make general repairs on all your property–For each house pay $25–For each hotel $100",
+        "Make general repairs on all your property–For each house pay $25",
         "Pay poor tax of $15",
         "Take a trip to Reading Railroad–If you pass Go, collect $200",
         "Take a walk on Wall Street–Advance token to Wall Street",
@@ -175,6 +176,17 @@ public class Chance extends Location
         if (index == 9)
         {
             JOptionPane.showMessageDialog(null,card[9],"CHANCE",JOptionPane.PLAIN_MESSAGE);
+            ArrayList <Location> cc= p.getOwnedCountries();
+            for(int i=0;i<cc.size();i++)
+            {
+                if(cc.get(i) instanceof Country)
+                {
+                    Country c = (Country)cc.get(i);
+                    if(c.getnHouses()>0)
+                        p.deductMoney(25*c.getnHouses());
+                }
+                
+            }
         }
         if (index == 10)
         {
