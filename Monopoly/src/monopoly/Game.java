@@ -606,6 +606,7 @@ public class Game extends JFrame
             }  
         }
     }
+    
     public class SellHousesBtnListener implements ActionListener
     {
     @Override
@@ -689,6 +690,9 @@ public class Game extends JFrame
             
             else
             {
+//                Scanner sc = new Scanner(System.in);
+//                DiceRoll = sc.nextInt();
+                
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();
@@ -697,6 +701,7 @@ public class Game extends JFrame
             }
         }   
     }
+    
     public boolean checkEvenHouses(int index,int nHouses)
     {
         Country c1;
@@ -820,6 +825,7 @@ public class Game extends JFrame
      
         return false;
     }
+    
     public class BtnBuildListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -843,6 +849,7 @@ public class Game extends JFrame
                 c.setnHouses(c.getnHouses()+1);
                 c.setRent(200*c.getnHouses());
                 updateLabels();
+                repaint();
             }
         }
     }

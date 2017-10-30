@@ -19,7 +19,7 @@ public class Player
     private boolean cannotCollect = false;
     private boolean hasLost = false;
     public boolean PaidForPrison = false;
-    private static ImageIcon house = new ImageIcon("Resources/house.png");
+    private static ImageIcon house = new ImageIcon("Resources/house2.png");
     private char[] myCountries=new char[40];
 
     private boolean DifferentRent = false;
