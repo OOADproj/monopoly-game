@@ -21,6 +21,7 @@ public class StartFrame extends JFrame
     
     private JButton Btn1 = new JButton("Start Game");
     private JButton Btn2 = new JButton("Set number");
+    private JButton Btn3 = new JButton ("Load Game");
     
     private int n;
     public StartFrame()
@@ -76,12 +77,16 @@ public class StartFrame extends JFrame
         
         add(Btn1);
         add(Btn2);
+        add(Btn3);
         
-        Btn1.setBounds(430,470,120,30);
+        Btn1.setBounds(430,420,120,30);
         Btn2.setBounds(600,410,140,30);
+        Btn3.setBounds(430,470,120,30);
+       
         
         Btn1.addActionListener(new Btn1Listener());
         Btn2.addActionListener(new Btn2Listener());
+        Btn3.addActionListener(new Btn3Listener());
     }
     
     class Btn1Listener implements ActionListener
@@ -285,6 +290,14 @@ public class StartFrame extends JFrame
             {
                 JOptionPane.showMessageDialog(null, "Enter a number!");
             }
+        }
+    }
+    
+    class Btn3Listener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            
         }
     }
 }
