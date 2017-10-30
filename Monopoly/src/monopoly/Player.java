@@ -1,9 +1,10 @@
 package monopoly;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
-public class Player
+public class Player implements Serializable
 {
     private String Name;
     private Location currentLocation;
@@ -969,4 +970,5 @@ public class Player
             c.setBought(false);
         }
     }
+    
 }

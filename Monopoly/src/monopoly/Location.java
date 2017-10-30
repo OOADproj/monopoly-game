@@ -1,5 +1,8 @@
 package monopoly;
-public class Location 
+
+import java.io.*;
+
+public class Location implements Serializable
 {
     private String Name;
 
@@ -12,5 +15,11 @@ public class Location
     public String viewInformation()
     {
        return "";
+    }
+    
+    public String toString()
+    {
+        return
+                Name+"\n";
     }
 }

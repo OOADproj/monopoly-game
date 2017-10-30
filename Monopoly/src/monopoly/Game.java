@@ -692,7 +692,6 @@ public class Game extends JFrame
             {
 //                Scanner sc = new Scanner(System.in);
 //                DiceRoll = sc.nextInt();
-                
                 DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();

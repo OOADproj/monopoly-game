@@ -25,4 +25,13 @@ public class waterelec extends Location
         "Cost: "+"$"+Cost+"\n"+        
         "Owner: "+Owner;  
     }
+    
+    public String toString()
+    {
+        return
+                super.toString()+
+                Cost+"\n"+
+                Bought+"\n"+
+                Owner+"\n";             
+    }
 }

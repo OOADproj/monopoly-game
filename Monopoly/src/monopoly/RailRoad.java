@@ -35,4 +35,13 @@ public class RailRoad extends Location
         "Cost: "+"$"+Cost+"\n"+        
         "Owner: "+Owner;  
     }
+    
+    public String toString()
+    {
+        return
+                super.toString()+
+                Cost+"\n"+
+                Rent+"\n"+
+                Owner+"\n";       
+    }
 }

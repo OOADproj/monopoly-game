@@ -71,7 +71,22 @@ public class Country extends Location
         "Name: "+getName()+"\n"+
         "Cost: "+"$"+Cost+"\n"+        
         "Rent: "+"$"+Rent+"\n"+
-        "Owner: "+Owner;  
-        
+        "Owner: "+Owner+"\n"+
+        "Houses: "+nHouses;             
+    }
+    
+    public String toString()
+    {
+        return
+                super.toString()+
+                Cost+"\n"+
+                Rent+"\n"+
+                Bought+"\n"+
+                nHotels+"\n"+
+                nHouses+"\n"+
+                Owner+"\n"+
+                cIndex+"\n"+
+                setComplete+"\n"+
+                listIndex+"\n";               
     }
 }
