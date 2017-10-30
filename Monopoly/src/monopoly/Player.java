@@ -525,7 +525,7 @@ public class Player
                                 
                                 else
                                 {
-                                    if(l.get(i).getName().equals("Electric Company"))
+                                    if(l.get(j).getName().equals("Electric Company"))
                                     {
                                         if(CanBuy(10*d.getDiceRoll()))
                                         {  
@@ -568,7 +568,7 @@ public class Player
                                 
                                 else
                                 {
-                                    if(l.get(i).getName().equals("Water Works") )
+                                    if(l.get(j).getName().equals("Water Works") )
                                     {
                                         if(CanBuy(10*d.getDiceRoll()))
                                         {  

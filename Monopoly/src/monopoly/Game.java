@@ -539,9 +539,10 @@ public class Game extends JFrame
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
             }
-           
+            
+            isFirstTurn = true;
             currPlayer.setFreePass(false);
-            currPlayer.PaidForPrison=false ;
+            currPlayer.PaidForPrison=false;
             Roll.setEnabled(true);
             Buy.setEnabled(false);
             EndTurn.setEnabled(false);
@@ -645,12 +646,15 @@ public class Game extends JFrame
                updateLabels();                
                EndTurn.setEnabled(true);
                checkIfLost();
-               if(Dice.getIsDouble() && isFirstTurn){
+               if(Dice.getIsDouble() && isFirstTurn && !currPlayer.isPrisoned())
+               {
                     Roll.setEnabled(true); 
-                    InfoLog.setText(InfoLog.getText() + "You get to roll one more time!");
+                    InfoLog.setText(InfoLog.getText()+"You get to roll one more time!\n");
                     isFirstTurn = false;                    
                 }
-               else{
+               
+               else
+               {
                    Roll.setEnabled(false);
                    isFirstTurn = true;
                }
@@ -670,8 +674,7 @@ public class Game extends JFrame
             
             else
             {
-                DiceRoll = 30;
-                //DiceRoll = Dice.getDiceRoll();
+                DiceRoll = Dice.getDiceRoll();
                 Dice.setCount(0);
                 DiceTimer.stop();
                 motionTimer.start();
