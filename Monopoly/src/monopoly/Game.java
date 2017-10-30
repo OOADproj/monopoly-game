@@ -59,6 +59,8 @@ public class Game extends JFrame
     
     int DiceRoll;
     int DiceConst = 10;
+    
+    private boolean isFirstTurn = true;
             
     private javax.swing.Timer motionTimer = new javax.swing.Timer(50,new motionListener());
     private javax.swing.Timer DiceTimer = new javax.swing.Timer(50,new DiceListener());
@@ -640,9 +642,18 @@ public class Game extends JFrame
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.checkCommunityChest(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.CheckJail(motionTimer, Game.this);      
-               updateLabels();        
+               updateLabels();                
                EndTurn.setEnabled(true);
                checkIfLost();
+               if(Dice.getIsDouble() && isFirstTurn){
+                    Roll.setEnabled(true); 
+                    InfoLog.setText(InfoLog.getText() + "You get to roll one more time!");
+                    isFirstTurn = false;                    
+                }
+               else{
+                   Roll.setEnabled(false);
+                   isFirstTurn = true;
+               }
            }
         }
     }

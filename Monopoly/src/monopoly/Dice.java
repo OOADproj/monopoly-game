@@ -17,6 +17,7 @@ public class Dice extends JPanel
    private ImageIcon Die2 = new ImageIcon("Resources/dice6.png");
    private Image ResizedDie2 = Die2.getImage().getScaledInstance(80,80, Image.SCALE_DEFAULT);
    private int count = 0 ; 
+   private boolean doubleDice = false;
    
    public  Dice() { init() ; }
    
@@ -41,6 +42,10 @@ public class Dice extends JPanel
         Random r = new Random();
         Index1 =  r.nextInt(6);
         Index2 =  r.nextInt(6);
+        if(Index1 == Index2)
+            doubleDice = true;
+        else 
+            doubleDice = false;
         Die1 =  new ImageIcon(Dice[Index1]) ;  ;
         ResizedDie1 =  Die1.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT) ;
         Die2 = new ImageIcon(Dice[Index2]) ;
@@ -54,4 +59,8 @@ public class Dice extends JPanel
     public int getDiceRoll(){return Index1+Index2+2;}
     
     public void setCount(int n){count = n;} //??
+    
+    public boolean getIsDouble(){
+        return doubleDice;
+    }
 }
