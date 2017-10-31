@@ -221,6 +221,7 @@ public class Game extends JFrame implements Serializable
             oos.writeBoolean(EndTurn.isEnabled());
             oos.writeBoolean(Buy.isEnabled());
             oos.writeBoolean(BuildHouse.isEnabled());
+            oos.writeBoolean(SellHouse.isEnabled());
         }
         
         catch(Exception e)
@@ -240,6 +241,18 @@ public class Game extends JFrame implements Serializable
             
         }
     }
+    private void saveLog(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeUTF(InfoLog.getText());
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
     public void saveGame(ObjectOutputStream oos)
     {
         savePlayerCount(oos);
@@ -249,6 +262,7 @@ public class Game extends JFrame implements Serializable
         savePlayers(oos);
         saveButtonStates(oos);
         saveCountries(oos);
+        saveLog(oos);
     }
     
     
@@ -334,12 +348,17 @@ public class Game extends JFrame implements Serializable
         EndTurn.setEnabled(states[1]);
         Buy.setEnabled(states[2]);
         BuildHouse.setEnabled(states[3]);
+        SellHouse.setEnabled(states[4]);
     }
     private void loadCountries(ArrayList<Location> Countries)
     {
         this.Countries = Countries;
     }
-    public void loadGame(int count,int curr,Player[] players , Player p , String[] names , Boolean[] states , ArrayList<Location> Countries)
+    private void loadInfoLog(String s)
+    {
+        InfoLog.setText(s);
+    }
+    public void loadGame(int count,int curr,Player[] players , Player p , String[] names , Boolean[] states , ArrayList<Location> Countries,String s)
     {
         loadPlayerCount(count);
         loadCurrentTurn(curr);
@@ -349,6 +368,7 @@ public class Game extends JFrame implements Serializable
         loadLists();
         loadButtonStates(states);
         loadCountries(Countries);
+        loadInfoLog(s);
         updateLabels();
         updateLists();
         Board.repaint();

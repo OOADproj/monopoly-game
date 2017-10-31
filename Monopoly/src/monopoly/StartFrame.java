@@ -311,7 +311,9 @@ public class StartFrame extends JFrame
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 
                 int n = ois.readInt();
+                
                 int current = ois.readInt();
+                
                 Player currPlayer = (Player) ois.readObject();
                 
                 String[] names = new String[n];
@@ -322,14 +324,15 @@ public class StartFrame extends JFrame
                 for(int i=0 ; i < n ; i++)
                     players[i] = (Player) ois.readObject();
                    
-                Boolean[] states = new Boolean[4];
-                for(int i=0 ; i < 4 ; i++)
+                Boolean[] states = new Boolean[5];
+                for(int i=0 ; i < 5 ; i++)
                     states[i] = ois.readBoolean();
-                
+             
                 ArrayList<Location> Countries = (ArrayList<Location>) ois.readObject();
                 
+                String log = ois.readUTF();
                 Game g = new Game(n,names);
-                g.loadGame(n, current, players, currPlayer, names, states, Countries);
+                g.loadGame(n, current, players, currPlayer, names, states, Countries,log);
                 setVisible(false);
             }
             
