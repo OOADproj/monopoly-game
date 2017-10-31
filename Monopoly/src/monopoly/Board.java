@@ -1,12 +1,13 @@
 package monopoly;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
 
-public class Board extends JPanel 
+public class Board extends JPanel implements Serializable
 {
     private ArrayList<Player> Players = new ArrayList();
     private ArrayList<Tile> Tiles = new ArrayList();

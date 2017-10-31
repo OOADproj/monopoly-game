@@ -250,6 +250,7 @@ public class DiceFrame extends JFrame
             if(startFlag)
             {
                 Game Monopoly = new Game(numberOfPlayers,names);
+                Play.setEnabled(false);
                 setVisible(false);
             }           
         }

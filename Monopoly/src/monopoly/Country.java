@@ -1,7 +1,8 @@
 package monopoly;
+import java.io.Serializable;
 import java.util.*;
 
-public class Country extends Location
+public class Country extends Location implements Serializable
 {
     private int Cost;
     private int Rent;

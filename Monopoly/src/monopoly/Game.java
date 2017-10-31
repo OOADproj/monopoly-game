@@ -2,18 +2,15 @@ package monopoly;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class Game extends JFrame 
+public class Game extends JFrame implements Serializable
 {
     private Container c;
     private JTextArea Info = new JTextArea();
-    private JTextArea P1Owned = new JTextArea();
-    private JTextArea P2Owned = new JTextArea();
-    private JTextArea P3Owned = new JTextArea();
-    private JTextArea P4Owned = new JTextArea();
     private JTextArea InfoLog = new JTextArea();
     
     private Board Board; 
@@ -26,6 +23,7 @@ public class Game extends JFrame
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
     private JButton BuildHouse = new JButton("Build House");
+    private JButton SellHouse = new JButton("Sell House");
     private JButton Save = new JButton("Save");
     private JButton Exit = new JButton("New game");
     
@@ -53,6 +51,8 @@ public class Game extends JFrame
     private int current = 0;
     private int numberOfPlayers;
     
+    private String[] names;
+    
     private ArrayList<Player> Players = new ArrayList();
 
     private ArrayList<Location> Countries = new ArrayList();
@@ -70,6 +70,7 @@ public class Game extends JFrame
     public Game(int n,String[] names)
     {
         numberOfPlayers = n;
+        this.names = names;
         initializePlayers(n,names);
         initializeCountries(); 
         initializeComponents(); 
@@ -94,27 +95,27 @@ public class Game extends JFrame
         
         InfoLog.setEditable(false);
         InfoLog.setBorder(InfoLogName);
-       
-        
-        
         
         Buy.setPreferredSize(new Dimension(80,40));
-        Buy.setBounds(220,295,80,40);
+        Buy.setBounds(210,295,80,40);
         Buy.setEnabled(false);
         InfoButton.setBounds(270,250,180,40);
-        Roll.setBounds(420,295,80,40);
+        Roll.setBounds(320,295,80,40);
         Info.setBounds(270,390,180,200);
         EndTurn.setBounds(300,340,120,40);
         EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
         Sell.setPreferredSize(new Dimension(80,40));
-        Sell.setBounds(320,295,80,40);
+        Sell.setBounds(430,295,80,40);
         BuildHouse.setPreferredSize(new Dimension(120,40));
-        BuildHouse.setBounds(460,390,120,40);
+        BuildHouse.setBounds(170,340,120,40);
         BuildHouse.setEnabled(false);
-        Save.setBounds(470,100,120,40);
-        Exit.setBounds(470,150,120,40);
+        SellHouse.setPreferredSize(new Dimension(120,40));
+        SellHouse.setBounds(430,340,120,40);
+        SellHouse.setEnabled(false);
+        Save.setBounds(460,390,120,40);
+        Exit.setBounds(460,435,120,40);
         
         
         Board = new Board(Players,numberOfPlayers);
@@ -130,6 +131,7 @@ public class Game extends JFrame
         Board.add(InfoLog);
         Board.add(Save);
         Board.add(Exit);
+        Board.add(SellHouse);
         
         c.add(Board);
         c.add(Data , BorderLayout.WEST) ; 
@@ -148,8 +150,214 @@ public class Game extends JFrame
     public ArrayList<Player> getPlayers(){return Players;}
     
     public void setDiceRoll(int x) { this.DiceRoll=x;}
+        
+    private void savePlayerCount(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeInt(numberOfPlayers);
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void saveCurrentTurn(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeInt(current);
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void saveCurrentPlayer(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeObject(currPlayer);
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void savePlayerNames(ObjectOutputStream oos)
+    {
+        try
+        {
+            for(int i=0 ; i < numberOfPlayers ; i++)
+                    oos.writeUTF(names[i]);
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void savePlayers(ObjectOutputStream oos)
+    {
+        try
+        {
+           for(int i=0 ; i < numberOfPlayers ; i++)
+                oos.writeObject(Players.get(i)); 
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void saveButtonStates(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeBoolean(Roll.isEnabled());
+            oos.writeBoolean(EndTurn.isEnabled());
+            oos.writeBoolean(Buy.isEnabled());
+            oos.writeBoolean(BuildHouse.isEnabled());
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    private void saveCountries(ObjectOutputStream oos)
+    {
+        try
+        {
+            oos.writeObject(Countries);
+        }
+        
+        catch(Exception e)
+        {
+            
+        }
+    }
+    public void saveGame(ObjectOutputStream oos)
+    {
+        savePlayerCount(oos);
+        saveCurrentTurn(oos);
+        saveCurrentPlayer(oos);
+        savePlayerNames(oos);
+        savePlayers(oos);
+        saveButtonStates(oos);
+        saveCountries(oos);
+    }
     
-    public JButton getRollButton(){return Roll;}
+    
+    private void loadPlayerCount(int count)
+    {numberOfPlayers = count;}
+    private void loadCurrentTurn(int curr)
+    {this.current = curr;}
+    private void loadLists()
+    {
+        if( numberOfPlayers == 2)
+        {
+            for(int i=0 ; i < p1.getOwnedCountries().size() ; i++)
+                modelP1.addElement(p1.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p2.getOwnedCountries().size() ; i++)
+                modelP2.addElement(p2.getOwnedCountries().get(i).getName());
+        }
+        
+        if(numberOfPlayers == 3)
+        {
+            for(int i=0 ; i < p1.getOwnedCountries().size() ; i++)
+                modelP1.addElement(p1.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p2.getOwnedCountries().size() ; i++)
+                modelP2.addElement(p2.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p3.getOwnedCountries().size() ; i++)
+                modelP3.addElement(p3.getOwnedCountries().get(i).getName());
+        }
+        
+        if(numberOfPlayers == 4)
+        {
+            for(int i=0 ; i < p1.getOwnedCountries().size() ; i++)
+                modelP1.addElement(p1.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p2.getOwnedCountries().size() ; i++)
+                modelP2.addElement(p2.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p3.getOwnedCountries().size() ; i++)
+                modelP3.addElement(p3.getOwnedCountries().get(i).getName());
+            
+            for(int i=0 ; i < p4.getOwnedCountries().size() ; i++)
+                modelP4.addElement(p4.getOwnedCountries().get(i).getName());
+        }
+    }
+    private void loadPlayers(Player[] players)
+    {
+      if(players.length == 2)
+        {
+            p1 = players[0];
+            p2 = players[1];
+        }
+        
+        if(players.length == 3)
+        {
+            p1 = players[0];
+            p2 = players[1];
+            p3 = players[2];
+        }
+        
+        if(players.length == 4)
+        {
+            p1 = players[0];
+            p2 = players[1];
+            p3 = players[2];
+            p4 = players[3];
+        }
+        
+        for(int i=0 ; i < players.length ; i++)
+            Players.set(i,players[i]);
+    }
+    private void loadCurrentPlayer(Player p)
+    {
+        currPlayer = p;
+    }
+    private void loadPlayerNames(String[] names)
+    {
+        this.names = names;
+    }
+    private void loadButtonStates(Boolean[] states)
+    {
+        Roll.setEnabled(states[0]);
+        EndTurn.setEnabled(states[1]);
+        Buy.setEnabled(states[2]);
+        BuildHouse.setEnabled(states[3]);
+    }
+    private void loadCountries(ArrayList<Location> Countries)
+    {
+        this.Countries = Countries;
+    }
+    public void loadGame(int count,int curr,Player[] players , Player p , String[] names , Boolean[] states , ArrayList<Location> Countries)
+    {
+        loadPlayerCount(count);
+        loadCurrentTurn(curr);
+        loadCurrentPlayer(p);
+        loadPlayerNames(names);
+        loadPlayers(players);
+        loadLists();
+        loadButtonStates(states);
+        loadCountries(Countries);
+        updateLabels();
+        updateLists();
+        Board.repaint();
+        for(int i=0 ; i < 40 ; i++)
+        {
+            System.out.print(Countries.get(i));
+            System.out.println("------------------------");
+        }
+    }
     
     void initializePlayers(int n, String[] names)
     {
@@ -363,7 +571,7 @@ public class Game extends JFrame
         Countries.add(new Country("Wall Street",400,50,39));
     }
     
-    void updateLabels()
+    public void updateLabels()
     {
         P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
         P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
@@ -480,25 +688,25 @@ public class Game extends JFrame
                if(currPlayer.getName().equals(p1.getName()))
                {
                    P1Lbl.setText(p1.getName()+" : LOST");
-                   P1Owned.setText("");
+                   listP1.setListData(new String[]{""});
                }
                
                else if(currPlayer.getName().equals(p2.getName()))
                {
                    P2Lbl.setText(p1.getName()+" : LOST");
-                   P2Owned.setText("");
+                   listP2.setListData(new String[]{""});
                }
                
                else if(currPlayer.getName().equals(p3.getName()))
                {
                    P3Lbl.setText(p3.getName()+" : LOST");
-                   P3Owned.setText("");
+                   listP3.setListData(new String[]{""});
                }
                
                else if(currPlayer.getName().equals(p4.getName()))
                {
                    P4Lbl.setText(p4.getName()+" : LOST");
-                   P4Owned.setText("");
+                   listP4.setListData(new String[]{""});
                }
                
                numberOfPlayers--;
@@ -629,7 +837,6 @@ public class Game extends JFrame
     }
     }
 
-    
     class motionListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -861,12 +1068,27 @@ public class Game extends JFrame
         }
     }
     
-    
     public class SaveBtnListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
+            try
+            {
+                File f = new File("SavedGame.data");
+                f.delete();
+                FileOutputStream fos = new FileOutputStream("SavedGame.data");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                saveGame(oos);
+                oos.flush();
+                oos.close();
+                fos.close();
+                JOptionPane.showMessageDialog(null, "Game has been saved!");
+            }
             
+            catch(Exception ex)
+            {
+                
+            }
         }
     }
     
@@ -876,7 +1098,7 @@ public class Game extends JFrame
         {
             
             Object[] options = {"Yes" , "No"} ;
-            int n = JOptionPane.showOptionDialog(Game.this, "Are yo sure you want to exit!", "!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
+            int n = JOptionPane.showOptionDialog(Game.this, "Are you sure you want to exit!", "!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
             EndGame(n);
         }
     }

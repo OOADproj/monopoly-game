@@ -1,6 +1,8 @@
 package monopoly;
 
-public class waterelec extends Location 
+import java.io.Serializable;
+
+public class waterelec extends Location implements Serializable
 {
     private int Cost = 150;
     private boolean Bought = false;

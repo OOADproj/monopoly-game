@@ -1,5 +1,6 @@
 package monopoly;
 
+import java.io.Serializable;
 import monopoly.Location;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -7,7 +8,7 @@ import monopoly.Dice;
 import monopoly.Game;
 import monopoly.Player;
 
-public class communityChest extends Location
+public class communityChest extends Location implements Serializable
 {
     String[] cccard =new String[]
     { 

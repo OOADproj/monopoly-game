@@ -1,9 +1,12 @@
 package monopoly;
-public class RailRoad extends Location
+
+import java.io.Serializable;
+
+public class RailRoad extends Location implements Serializable
 {  
     private int Cost = 200;
     private int Rent;
-    private String Owner;
+    private String Owner = "None";
    
     
     public RailRoad(String Name) 

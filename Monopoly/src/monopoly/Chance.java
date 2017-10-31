@@ -1,10 +1,11 @@
 package monopoly;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
-public class Chance extends Location
+public class Chance extends Location implements Serializable
 {
     String[] card = new String[]
     {

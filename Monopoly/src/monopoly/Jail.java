@@ -1,5 +1,8 @@
 package monopoly;
-public class Jail extends Location
+
+import java.io.Serializable;
+
+public class Jail extends Location implements Serializable
 {
     boolean hasVisitor;
 

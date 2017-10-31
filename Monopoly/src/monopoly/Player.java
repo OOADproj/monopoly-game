@@ -970,5 +970,4 @@ public class Player implements Serializable
             c.setBought(false);
         }
     }
-    
 }

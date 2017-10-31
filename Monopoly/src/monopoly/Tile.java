@@ -1,8 +1,9 @@
 package monopoly;
 import java.awt.*;
+import java.io.Serializable;
 import javax.swing.*;
 
-public class Tile extends JLabel
+public class Tile extends JLabel implements Serializable
 {
     private ImageIcon Img;
     private int height;

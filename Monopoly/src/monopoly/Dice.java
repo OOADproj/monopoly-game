@@ -1,11 +1,12 @@
 package monopoly;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.util.*;
 import javax.swing.*;
 
 
-public class Dice extends JPanel
+public class Dice extends JPanel implements Serializable
 {
    String[] Dice = new String[]{"Resources/dice1.png","Resources/dice2.png","Resources/dice3.png","Resources/dice4.png","Resources/dice5.png","Resources/dice6.png" }; 
    private int Index1 ;

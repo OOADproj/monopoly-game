@@ -3,6 +3,8 @@ package monopoly;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class StartFrame extends JFrame
@@ -95,6 +97,12 @@ public class StartFrame extends JFrame
         {
             String[] names = new String[n];
             boolean startFlag = false;
+            
+            if(playerNumber.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(null,"Enter number of players");
+                return;
+            }
             
             if(n == 2)
             {
@@ -230,7 +238,7 @@ public class StartFrame extends JFrame
                     if(i == j)
                         continue;
                     
-                    if(names[i].equalsIgnoreCase(names[j]))
+                    if(names[i] != null && names[j] != null && names[i].equalsIgnoreCase(names[j]))
                     {
                         JOptionPane.showMessageDialog(null, "Players "+(i+1)+" and "+(j+1)+" have the same name!");
                         startFlag = false;
@@ -297,7 +305,38 @@ public class StartFrame extends JFrame
     {
         public void actionPerformed(ActionEvent e)
         {
+            try
+            {
+                FileInputStream fis = new FileInputStream("SavedGame.data");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                
+                int n = ois.readInt();
+                int current = ois.readInt();
+                Player currPlayer = (Player) ois.readObject();
+                
+                String[] names = new String[n];
+                for(int i=0 ; i < n ; i++)
+                    names[i] = ois.readUTF();
+                
+                Player[] players = new Player[n];
+                for(int i=0 ; i < n ; i++)
+                    players[i] = (Player) ois.readObject();
+                   
+                Boolean[] states = new Boolean[4];
+                for(int i=0 ; i < 4 ; i++)
+                    states[i] = ois.readBoolean();
+                
+                ArrayList<Location> Countries = (ArrayList<Location>) ois.readObject();
+                
+                Game g = new Game(n,names);
+                g.loadGame(n, current, players, currPlayer, names, states, Countries);
+                setVisible(false);
+            }
             
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, "No saved Data found");
+            }
         }
     }
 }
