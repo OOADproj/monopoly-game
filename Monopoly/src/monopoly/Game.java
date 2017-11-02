@@ -128,7 +128,9 @@ public class Game extends JFrame implements Serializable
         Board.add(Dice);
         Board.add(Sell);
         Board.add(BuildHouse);
-        Board.add(InfoLog);
+        JScrollPane ScrollableLog = new JScrollPane(InfoLog);
+        ScrollableLog.setBounds(100, 390, 165 ,200);
+        Board.add(ScrollableLog);
         Board.add(Save);
         Board.add(Exit);
         Board.add(SellHouse);
@@ -372,11 +374,6 @@ public class Game extends JFrame implements Serializable
         updateLabels();
         updateLists();
         Board.repaint();
-        for(int i=0 ; i < 40 ; i++)
-        {
-            System.out.print(Countries.get(i));
-            System.out.println("------------------------");
-        }
     }
     
     void initializePlayers(int n, String[] names)
@@ -409,10 +406,12 @@ public class Game extends JFrame implements Serializable
             listP1.setPreferredSize(new Dimension(293,300));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
             listP1.setBorder(P1Title);
+            listP1.setCellRenderer(new MyCellRenderer(Countries));  
             
             listP2.setPreferredSize(new Dimension(293,300));
             listP2.setFont(new Font("Arial",Font.PLAIN,12));         
             listP2.setBorder(P2Title);
+            listP2.setCellRenderer(new MyCellRenderer(Countries));
             
             Players.add(p1);
             Players.add(p2);
@@ -457,15 +456,18 @@ public class Game extends JFrame implements Serializable
             listP1.setBorder(P1Title);
             listP1.setPreferredSize(new Dimension(293,200));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
-        
+            listP1.setCellRenderer(new MyCellRenderer(Countries));
+            
             listP2.setBorder(P2Title);
             listP2.setPreferredSize(new Dimension(293,200));
             listP2.setFont(new Font("Arial",Font.PLAIN,12));
+            listP2.setCellRenderer(new MyCellRenderer(Countries));
             
             listP3.setBorder(P3Title);
             listP3.setPreferredSize(new Dimension(293,200));
             listP3.setFont(new Font("Arial",Font.PLAIN,12));
-            
+            listP3.setCellRenderer(new MyCellRenderer(Countries));
+           
             Players.add(p1);
             Players.add(p2);
             Players.add(p3);
@@ -519,18 +521,22 @@ public class Game extends JFrame implements Serializable
             listP1.setBorder(P1Title);
             listP1.setPreferredSize(new Dimension(293,150));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
-        
+            listP1.setCellRenderer(new MyCellRenderer(Countries));
+            
             listP2.setBorder(P2Title);
             listP2.setPreferredSize(new Dimension(293,150));
             listP2.setFont(new Font("Arial",Font.PLAIN,12));
+            listP2.setCellRenderer(new MyCellRenderer(Countries));
             
             listP3.setBorder(P3Title);
             listP3.setPreferredSize(new Dimension(293,150));
             listP3.setFont(new Font("Arial",Font.PLAIN,12));
+            listP3.setCellRenderer(new MyCellRenderer(Countries));
             
             listP4.setBorder(P4Title);
             listP4.setPreferredSize(new Dimension(293,150));
             listP4.setFont(new Font("Arial",Font.PLAIN,12));
+            listP4.setCellRenderer(new MyCellRenderer(Countries));
             
             Players.add(p1);
             Players.add(p2);
@@ -542,53 +548,53 @@ public class Game extends JFrame implements Serializable
     
     void initializeCountries()
     {
-        Countries.add(new Location("GO"));
+        Countries.add(new Location("GO",null));
         
-        Countries.add(new Country("Times Square",60,2,1));
+        Countries.add(new Country("Times Square",60,2,1,new Color(5,76,130)));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Baltic Avenue",60,4,3));
-        Countries.add(new Location ("Income Tax"));
-        Countries.add(new RailRoad("Reading Railroad"));
-        Countries.add(new Country("Oriental Avenue",100,6,6));
+        Countries.add(new Country("Baltic Avenue",60,4,3,new Color(5,76,130)));
+        Countries.add(new Location ("Income Tax",null));
+        Countries.add(new RailRoad("Reading Railroad",new Color(255,231,204)));
+        Countries.add(new Country("Oriental Avenue",100,6,6,new Color(138,90,226)));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Vermont Avenue",100,6,8));
-        Countries.add(new Country("Ellis Island",120,8,9));
+        Countries.add(new Country("Vermont Avenue",100,6,8,new Color(138,90,226)));
+        Countries.add(new Country("Ellis Island",120,8,9,new Color(138,90,226)));
 
         Countries.add(new Jail());
 
-        Countries.add(new Country("East Village",140,10,11));
-        Countries.add(new waterelec("Electric Company"));
-        Countries.add(new Country("States Avenue",140,10,13));
-        Countries.add(new Country("Virginia Avenue",160,12,14));
-        Countries.add(new RailRoad("Pennsylvania Railroad"));
-        Countries.add(new Country("St James Place",160,14,16));
+        Countries.add(new Country("East Village",140,10,11,new Color(203,0,125)));
+        Countries.add(new waterelec("Electric Company",new Color(84,183,255)));
+        Countries.add(new Country("States Avenue",140,10,13,new Color(203,0,125)));
+        Countries.add(new Country("Virginia Avenue",160,12,14,new Color(203,0,125)));
+        Countries.add(new RailRoad("Pennsylvania Railroad",new Color(255,231,204)));
+        Countries.add(new Country("St James Place",160,14,16,new Color(252,165,0)));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Tennesee Avenue",180,14,18));
-        Countries.add(new Country("New York Avenue",200,16,19));
+        Countries.add(new Country("Tennesee Avenue",180,14,18,new Color(252,165,0)));
+        Countries.add(new Country("New York Avenue",200,16,19,new Color(252,165,0)));
         
-        Countries.add(new Location("Free Parking"));
+        Countries.add(new Location("Free Parking",null));
         
-        Countries.add(new Country("Kentucky Avenue",220,18,21));
+        Countries.add(new Country("Kentucky Avenue",220,18,21,new Color(217,2,0)));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Indiana Avenue",220,18,23));
-        Countries.add(new Country("Illinois Avenue",240,20,24));
-        Countries.add(new RailRoad("B&O Railroad"));
-        Countries.add(new Country("Atlantic Avenue",260,22,26));
-        Countries.add(new Country("Ventor Avenue",260,22,27));
-        Countries.add(new waterelec("Water Works"));        
-        Countries.add(new Country("Marvin Gardens",280,24,29));
+        Countries.add(new Country("Indiana Avenue",220,18,23,new Color(217,2,0)));
+        Countries.add(new Country("Illinois Avenue",240,20,24,new Color(217,2,0)));
+        Countries.add(new RailRoad("B&O Railroad",new Color(255,231,204)));
+        Countries.add(new Country("Atlantic Avenue",260,22,26,new Color(249,215,4)));
+        Countries.add(new Country("Ventor Avenue",260,22,27,new Color(249,215,4)));
+        Countries.add(new waterelec("Water Works",new Color(196,255,248)));        
+        Countries.add(new Country("Marvin Gardens",280,24,29,new Color(249,215,4)));
         
-        Countries.add(new Location ("Go to Jail"));
+        Countries.add(new Location ("Go to Jail",null));
         
-        Countries.add(new Country("Pacific Avenue",300,26,31));      
-        Countries.add(new Country("Central Park",300,26,32));
+        Countries.add(new Country("Pacific Avenue",300,26,31,new Color(53,168,5)));      
+        Countries.add(new Country("Central Park",300,26,32,new Color(53,168,5)));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Penn Avenue",320,28,34));
-        Countries.add(new RailRoad("Short Line"));
+        Countries.add(new Country("Penn Avenue",320,28,34,new Color(53,168,5)));
+        Countries.add(new RailRoad("Short Line",new Color(255,231,204)));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Park Place",350,35,37));
-        Countries.add(new Location ("Luxury Tax"));
-        Countries.add(new Country("Wall Street",400,50,39));
+        Countries.add(new Country("Park Place",350,35,37,new Color(15,108,178)));
+        Countries.add(new Location ("Luxury Tax",null));
+        Countries.add(new Country("Wall Street",400,50,39,new Color(15,108,178)));
     }
     
     public void updateLabels()

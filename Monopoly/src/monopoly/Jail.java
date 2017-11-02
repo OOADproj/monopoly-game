@@ -8,7 +8,7 @@ public class Jail extends Location implements Serializable
 
     public Jail() 
     {
-        super("Jail");
+        super("Jail",null);
     }
     
     public boolean isVisited(){return hasVisitor;}

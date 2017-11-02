@@ -32,7 +32,7 @@ public class communityChest extends Location implements Serializable
             
     public communityChest (String s) 
     {
-        super(s);
+        super(s,null);
     }
 
     public void assignCommunityChest (Player p,javax.swing.Timer moveTimer,javax.swing.Timer DiceTimer, Dice Dice , Game Game)

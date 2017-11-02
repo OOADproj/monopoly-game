@@ -1,5 +1,6 @@
 package monopoly;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 public class RailRoad extends Location implements Serializable
@@ -7,13 +8,13 @@ public class RailRoad extends Location implements Serializable
     private int Cost = 200;
     private int Rent;
     private String Owner = "None";
-   
     
-    public RailRoad(String Name) 
+    
+    public RailRoad(String Name,Color c) 
     {
-        super(Name);
+        super(Name,c);
     }
-   
+    
     public void setRent(int Rent){this.Rent = Rent;}
 
     private boolean Bought =false;

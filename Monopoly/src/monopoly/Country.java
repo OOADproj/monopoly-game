@@ -1,4 +1,5 @@
 package monopoly;
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.*;
 
@@ -32,9 +33,9 @@ public class Country extends Location implements Serializable
         this.setComplete = setComplete;
     }
     
-    public Country(String Name, int Cost, int Rent,int cind)
+    public Country(String Name, int Cost, int Rent,int cind,Color c)
     {
-        super(Name);
+        super(Name,c);
         this.Cost = Cost;
         this.Rent = Rent;
         this.cIndex=cind;

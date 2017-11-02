@@ -28,7 +28,7 @@ public class Chance extends Location implements Serializable
     };
 
     public Chance(String s) {
-        super(s);
+        super(s,null);
     }
 
     public void assignChance(Player p, javax.swing.Timer moveTimer, javax.swing.Timer DiceTimer, Dice Dice, Game Game) 

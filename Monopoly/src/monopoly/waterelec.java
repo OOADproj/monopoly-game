@@ -1,5 +1,6 @@
 package monopoly;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 public class waterelec extends Location implements Serializable
@@ -8,7 +9,7 @@ public class waterelec extends Location implements Serializable
     private boolean Bought = false;
     private String Owner = "None";
     
-    public waterelec(String Name)  {super(Name);}
+    public waterelec(String Name,Color c)  {super(Name,c);}
     
     public boolean isBought(){return Bought;}
     
