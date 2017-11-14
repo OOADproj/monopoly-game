@@ -943,7 +943,8 @@ public class Game extends JFrame implements Serializable
                    Country c = (Country) l;
                    if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
                    {   BuildHouse.setEnabled(true);
-                       if(c.getnHouses()==4 && checkEvenHouses(c.getcIndex(),4) &&c.getnHotels()==0)
+                       if(c.getnHouses()==4)
+                           if((checkHotels(c.getcIndex()) || checkEvenHouses(c.getcIndex(),4)) && c.getnHotels()==0)
                             BuildHotel.setEnabled(true);
                    }              
                }
@@ -1109,6 +1110,129 @@ public class Game extends JFrame implements Serializable
      
         return false;
     }
+    public boolean checkHotels(int index)
+    {
+        Country c1;
+        Country c2;
+        if(index==1|index==3||index==37||index==39)
+        {
+            if(index==1)
+            {
+              c1 = (Country)Countries.get(3);
+            }
+            else if(index==3)
+            {    c1= (Country)Countries.get(1);
+            }
+
+            else if(index==37)
+            {
+                c1= (Country)Countries.get(39);
+            }
+            else 
+            {    
+                c1= (Country)Countries.get(37);            
+            }
+            
+            if(c1.getnHotels()==1)
+                    return true;
+            else 
+                return false;
+        }
+         else if(index==6)
+        {    
+            c1= (Country)Countries.get(8);
+            c2= (Country)Countries.get(9);           
+        }
+         else if(index==8)
+        {    
+            c1= (Country)Countries.get(6);
+            c2= (Country)Countries.get(9);           
+        }
+         else if(index==6)
+        {    
+            c1= (Country)Countries.get(8);
+            c2= (Country)Countries.get(6);           
+        }
+         else if(index==11)
+        {    
+            c1= (Country)Countries.get(13);
+            c2= (Country)Countries.get(14);           
+        }
+         else if(index==13)
+        {    
+            c1= (Country)Countries.get(11);
+            c2= (Country)Countries.get(14);           
+        }
+         else if(index==14)
+        {    
+            c1= (Country)Countries.get(11);
+            c2= (Country)Countries.get(13);           
+        }
+         else if(index==16)
+        {    
+            c1= (Country)Countries.get(18);
+            c2= (Country)Countries.get(19);           
+        }
+         else if(index==18)
+        {    
+            c1= (Country)Countries.get(16);
+            c2= (Country)Countries.get(19);           
+        }
+         else if(index==19)
+        {    
+            c1= (Country)Countries.get(16);
+            c2= (Country)Countries.get(18);           
+        }
+         else if(index==21)
+        {    
+            c1= (Country)Countries.get(23);
+            c2= (Country)Countries.get(24);           
+        }
+         else if(index==23)
+        {    
+            c1= (Country)Countries.get(21);
+            c2= (Country)Countries.get(24);           
+        }
+         else if(index==24)
+        {    
+            c1= (Country)Countries.get(21);
+            c2= (Country)Countries.get(23);           
+        }
+         else if(index==26)
+        {    
+            c1= (Country)Countries.get(27);
+            c2= (Country)Countries.get(29);           
+        }
+         else if(index==27)
+        {    
+            c1= (Country)Countries.get(26);
+            c2= (Country)Countries.get(29);           
+        }
+         else if(index==29)
+        {    
+            c1= (Country)Countries.get(26);
+            c2= (Country)Countries.get(27);           
+        }
+         else if(index==31)
+        {    
+            c1= (Country)Countries.get(32);
+            c2= (Country)Countries.get(34);           
+        }
+         else if(index==32)
+        {    
+            c1= (Country)Countries.get(31);
+            c2= (Country)Countries.get(34);           
+        }
+         else
+        {    
+            c1= (Country)Countries.get(31);
+            c2= (Country)Countries.get(32);           
+        }
+        if((c1.getnHotels()==1)||(c2.getnHotels()==1))
+                return true;
+     
+        return false;
+    }
     
     public class BtnBuildListener implements ActionListener
     {
@@ -1146,7 +1270,7 @@ public class Game extends JFrame implements Serializable
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(currPlayer.CanBuy(200))
+            if(currPlayer.CanBuy(200,false))
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
                 

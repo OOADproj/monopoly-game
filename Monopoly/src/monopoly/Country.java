@@ -40,6 +40,7 @@ public class Country extends Location implements Serializable
         this.Rent = Rent;
         this.cIndex=cind;
         Owner = "None";
+        nHotels=0;
     }
     
     public int getCost(){return Cost;}
