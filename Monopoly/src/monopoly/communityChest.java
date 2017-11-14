@@ -55,7 +55,11 @@ public class communityChest extends Location implements Serializable
         if(index==2 )
         {
             JOptionPane.showMessageDialog(null,cccard[2],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(50);
+            if(p.CanBuy(50, true))
+                p.deductMoney(50);
+            
+            else
+                p.setLost(true);
         }
         
         if(index==3 )
@@ -92,7 +96,13 @@ public class communityChest extends Location implements Serializable
             JOptionPane.showMessageDialog(null,cccard[6],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
             p.addMoney(50*Game.getPlayers().size());
             for (int i = 0; i < Game.getPlayers().size(); i++)
-                Game.getPlayers().get(i).deductMoney(50);    
+            {
+                if(Game.getPlayers().get(i).CanBuy(50, true))
+                    Game.getPlayers().get(i).deductMoney(50);    
+                
+                else
+                    Game.getPlayers().get(i).setLost(true);
+            }
         }
         
         if(index==7 )
@@ -122,13 +132,21 @@ public class communityChest extends Location implements Serializable
         if(index==11 )
         {
             JOptionPane.showMessageDialog(null,cccard[11],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(100);
+            if(p.CanBuy(100, true))
+                p.deductMoney(100);
+            
+            else
+                p.setLost(true);
         }
         
         if(index==12 )
         {
             JOptionPane.showMessageDialog(null,cccard[12],"Coummnity Chest",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(150);
+            if(p.CanBuy(150, true))
+                p.deductMoney(150);
+            
+            else
+                p.setLost(true);
         }
         
         if(index==13 )

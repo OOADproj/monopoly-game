@@ -21,20 +21,12 @@ public class waterelec extends Location implements Serializable
     
     public void setOwner(String Owner){this.Owner = Owner;}
     public void removeOwner(){this.Owner= "None" ;} 
-    public String viewInformation()
-    {
-        return
-        "Name: "+getName()+"\n"+
-        "Cost: "+"$"+Cost+"\n"+        
-        "Owner: "+Owner;  
-    }
     
     public String toString()
     {
         return
                 super.toString()+
-                Cost+"\n"+
-                Bought+"\n"+
-                Owner+"\n";             
+                "Cost: $"+Cost+"\n"+
+                "Owner: "+Owner+"\n";             
     }
 }

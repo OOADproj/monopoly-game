@@ -74,6 +74,8 @@ public class Player implements Serializable
     
     public boolean hasLost(){ return hasLost; }
     
+    public void setLost(boolean b){hasLost = b;}
+    
     public void checker(int a,int b)
     {
       if(myCountries[a]==1&&myCountries[b]==1)
@@ -140,13 +142,14 @@ public class Player implements Serializable
             
             else
             {
-                if(CanBuy(c.getCost()))
+                if(CanBuy(c.getCost(),false))
                 {
                     c.setOwner(this.Name);
                     c.setBought(true); 
                     this.deductMoney(c.getCost());
                     this.OwnedCountries.add(c);
                     myCountries[c.getcIndex()]=1;
+                    Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has bought "+c.getName());
                     checkFullSet();
                     return true;
                 }
@@ -179,12 +182,13 @@ public class Player implements Serializable
             
             else
             {
-                if(CanBuy(r.getCost()))
+                if(CanBuy(r.getCost(),false))
                 {
                     r.setOwner(this.Name);
                     r.setBought(true);
                     this.deductMoney(r.getCost());
                     this.OwnedCountries.add(r);
+                    Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has bought "+r.getName());
                     return true;
                 }
                 else
@@ -216,12 +220,13 @@ public class Player implements Serializable
             
             else
             {
-                if(CanBuy(w.getCost()))
+                if(CanBuy(w.getCost(),false))
                 {
                     w.setOwner(this.Name);
                     w.setBought(true);
                     this.deductMoney(w.getCost());
                     this.OwnedCountries.add(w);
+                    Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has bought "+w.getName());
                     return true;
                 }
                 
@@ -501,6 +506,7 @@ public class Player implements Serializable
                         this.addMoney(c.getCost()/2);
                         c.setBought(false);
                         JOptionPane.showMessageDialog(null, "You sold "+c.getName());
+                        Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has sold "+c.getName());
                         return true; 
                        }
                      else 
@@ -532,6 +538,7 @@ public class Player implements Serializable
                         this.addMoney(r.getCost()/2);
                         r.setBought(false);
                         JOptionPane.showMessageDialog(null, "You sold "+r.getName());
+                        Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has sold "+r.getName());
                         return true ; 
                    }
                     
@@ -569,6 +576,7 @@ public class Player implements Serializable
                         this.addMoney(w.getCost()/2);
                         w.setBought(false);
                         JOptionPane.showMessageDialog(null, "You sold "+w.getName());
+                        Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" has sold "+w.getName());
                         return true ; 
                     }
                     
@@ -707,10 +715,11 @@ public class Player implements Serializable
                       
                     else if (ps.get(i).getName().equals(name))
                     {   
-                        if(CanBuy(c.getRent()))
+                        if(CanBuy(c.getRent(),true))
                         {   this.Money -= c.getRent();
                             ps.get(i).addMoney(c.getRent());
                             JOptionPane.showMessageDialog(null,"You paid rent of $"+c.getRent()+" to "+c.getOwner());
+                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+c.getRent()+" to "+c.getOwner());
                         }
                         else 
                         
@@ -747,12 +756,13 @@ public class Player implements Serializable
                             {
                                 if(DifferentRent)
                                 {
-                                    if(CanBuy(10*d.getDiceRoll()))
+                                    if(CanBuy(10*d.getDiceRoll(),true))
                                     {  
                                         DifferentRent = false;
                                         this.Money -= 10*d.getDiceRoll();
                                         ps.get(i).addMoney(10*d.getDiceRoll()); 
                                         JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                        Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
@@ -762,22 +772,24 @@ public class Player implements Serializable
                                 {
                                     if(l.get(j).getName().equals("Electric Company"))
                                     {
-                                        if(CanBuy(10*d.getDiceRoll()))
+                                        if(CanBuy(10*d.getDiceRoll(),true))
                                         {  
                                             this.Money -= 10*d.getDiceRoll();
                                             ps.get(i).addMoney(10*d.getDiceRoll()); 
                                             JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                         }
                                         else
                                             hasLost = true;
                                     }
                                     else
                                     {
-                                        if(CanBuy(4*d.getDiceRoll()))
+                                        if(CanBuy(4*d.getDiceRoll(),true))
                                         {  
                                             this.Money -= 4*d.getDiceRoll();
                                             ps.get(i).addMoney(4*d.getDiceRoll());
                                             JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
                                         }
                                         else
                                             hasLost = true;
@@ -790,12 +802,13 @@ public class Player implements Serializable
                             {
                                 if(DifferentRent)
                                 {
-                                    if(CanBuy(10*d.getDiceRoll()))
+                                    if(CanBuy(10*d.getDiceRoll(),true))
                                     {  
                                         DifferentRent = false;
                                         this.Money -= 10*d.getDiceRoll();
                                         ps.get(i).addMoney(10*d.getDiceRoll()); 
                                         JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                        Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                     }
                                     else
                                         hasLost = true;
@@ -805,22 +818,24 @@ public class Player implements Serializable
                                 {
                                     if(l.get(j).getName().equals("Water Works") )
                                     {
-                                        if(CanBuy(10*d.getDiceRoll()))
+                                        if(CanBuy(10*d.getDiceRoll(),true))
                                         {  
                                             this.Money -= 10*d.getDiceRoll();
                                             ps.get(i).addMoney(10*d.getDiceRoll());
                                             JOptionPane.showMessageDialog(null,"You paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
+                                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+10*d.getDiceRoll()+" to "+w.getOwner());
                                         }
                                         else
                                             hasLost = true;
                                     }
                                     else
                                     {
-                                        if(CanBuy(4*d.getDiceRoll()))
+                                        if(CanBuy(4*d.getDiceRoll(),true))
                                         { 
                                             this.Money -= 4*d.getDiceRoll();
                                             ps.get(i).addMoney(4*d.getDiceRoll());
                                             JOptionPane.showMessageDialog(null,"You paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
+                                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+4*d.getDiceRoll()+" to "+w.getOwner());
                                         }
                                         else
 
@@ -872,11 +887,12 @@ public class Player implements Serializable
                             DifferentRent = false;
                         }
                         
-                        if(CanBuy(rent))
+                        if(CanBuy(rent,true))
                         { 
                             this.Money -= rent;
                             ps.get(i).addMoney(rent);
                             JOptionPane.showMessageDialog(null,"You paid $"+rent+" to "+r.getOwner());
+                            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+rent+" to "+r.getOwner());
                             
                         }
                         
@@ -914,10 +930,11 @@ public class Player implements Serializable
     {
         if(currentLocation.getName().equals("Luxury Tax"))
         {
-            if(CanBuy(650))
+            if(CanBuy(650,true))
             {
                 this.Money -= 650;
                 JOptionPane.showMessageDialog(null,"You paid $650 luxury taxes","Luxury Tax",JOptionPane.PLAIN_MESSAGE);
+                Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $650 luxury taxes");
             }
         }
         
@@ -926,6 +943,7 @@ public class Player implements Serializable
             double fees = Math.round(0.1*this.Money);
             this.Money -= fees;
             JOptionPane.showMessageDialog(null,"You paid $"+fees+" income taxes","Income Tax",JOptionPane.PLAIN_MESSAGE);
+            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $"+fees+" income taxes");
         }
     }
     
@@ -940,12 +958,25 @@ public class Player implements Serializable
             
             if(choice== 0)
             {
-                Money-=50;
-                PaidForPrison=true;
+                if(CanBuy(50,false))
+                {
+                    Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" paid $50 fine and escaped jail!");
+                    PaidForPrison=true;
+                }
+                
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "You don't have enough money, you must go to jail");
+                    Game.setDiceRoll(20);
+                    moveTimer.start();
+                    isPrisoned = true;
+                }
+                
             }
          
             else
             {
+                Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+this.Name+" was sent to jail!");
                 Game.setDiceRoll(20);
                 moveTimer.start();
                 isPrisoned = true;
@@ -953,12 +984,37 @@ public class Player implements Serializable
         }
     }
     
-    public boolean CanBuy (int c)
+    public boolean CanBuy (int c , boolean mustPay)
     {
         if ((this.Money - c) < 0)
-            return false;
-        else 
-            return true;
+        {
+            if(!(this.OwnedCountries.isEmpty()) && mustPay)
+            {
+                JOptionPane.showMessageDialog(null, "You don't have enough money to pay $"+c+"\n"+
+                        "countries will be sold to the bank until your debt is settled.", "Warning", JOptionPane.WARNING_MESSAGE);
+                
+                for(int i=0 ; i < this.OwnedCountries.size() ; i++)
+                {                  
+                    this.Money += this.OwnedCountries.get(i).getCost()/2;
+                    this.OwnedCountries.remove(i);
+                    Game.Models[Game.current].removeElementAt(i);
+                        
+                    if(this.Money >= c)
+                    {
+                        JOptionPane.showMessageDialog(null, "Your debt has been settled, you can continue playing.");
+                        return true;
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(null, "You don't have enough countries to cover your debt.");
+                return false;
+            }
+            
+            else
+              return false;
+        }
+        
+        return true;
     }
 
     public void Kick()

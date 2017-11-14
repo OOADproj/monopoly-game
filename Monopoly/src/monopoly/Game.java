@@ -11,7 +11,7 @@ public class Game extends JFrame implements Serializable
 {
     private Container c;
     private JTextArea Info = new JTextArea();
-    private JTextArea InfoLog = new JTextArea();
+    static JTextArea InfoLog = new JTextArea();
     
     private Board Board; 
     
@@ -41,6 +41,10 @@ public class Game extends JFrame implements Serializable
     private JList<String> listP3 = new JList<>( modelP3 );
     private DefaultListModel<String> modelP4 = new DefaultListModel<>();
     private JList<String> listP4 = new JList<>( modelP4 );
+  
+    static DefaultListModel<String>[] Models;
+    
+   
     
     private Player p1;
     private Player p2;
@@ -48,7 +52,7 @@ public class Game extends JFrame implements Serializable
     private Player p4;
     private Player currPlayer;
     
-    private int current = 0;
+    static int current = 0;
     private int numberOfPlayers;
     
     private String[] names;
@@ -414,7 +418,11 @@ public class Game extends JFrame implements Serializable
             listP2.setCellRenderer(new MyCellRenderer(Countries));
             
             Players.add(p1);
-            Players.add(p2);
+            Players.add(p2); 
+            
+            Models = new DefaultListModel[2];
+            Models[0] = modelP1;
+            Models[1] = modelP2;
         }
         
         else if(n == 3)
@@ -470,7 +478,12 @@ public class Game extends JFrame implements Serializable
            
             Players.add(p1);
             Players.add(p2);
-            Players.add(p3);
+            Players.add(p3);  
+            
+            Models = new DefaultListModel[3];
+            Models[0] = modelP1;
+            Models[1] = modelP2;
+            Models[2] = modelP3;
         }
         
         else if(n == 4)
@@ -542,6 +555,12 @@ public class Game extends JFrame implements Serializable
             Players.add(p2);
             Players.add(p3);
             Players.add(p4);
+            
+            Models = new DefaultListModel[4];
+            Models[0] = modelP1;
+            Models[1] = modelP2;
+            Models[2] = modelP3;
+            Models[3] = modelP4;
         }
         currPlayer = Players.get(current);
     }
@@ -550,7 +569,7 @@ public class Game extends JFrame implements Serializable
     {
         Countries.add(new Location("GO",null));
         
-        Countries.add(new Country("Times Square",60,2,1,new Color(5,76,130)));
+        Countries.add(new Country("Times Square",60,3,1,new Color(5,76,130)));
         Countries.add(new communityChest("Community Chest"));
         Countries.add(new Country("Baltic Avenue",60,4,3,new Color(5,76,130)));
         Countries.add(new Location ("Income Tax",null));
@@ -599,12 +618,16 @@ public class Game extends JFrame implements Serializable
     
     public void updateLabels()
     {
-        P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
-        P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
-        if(!(p3 == null))
+        if(!p1.hasLost())
+            P1Lbl.setText(p1.getName()+" : $"+p1.getMoney());
+        
+        if(!p2.hasLost())
+            P2Lbl.setText(p2.getName()+" : $"+p2.getMoney());
+        
+        if(!(p3 == null) && !p3.hasLost())
             P3Lbl.setText(p3.getName()+" : $"+p3.getMoney());
         
-        if(!(p4 == null))
+        if(!(p4 == null) && !p4.hasLost())
             P4Lbl.setText(p4.getName()+" : $"+p4.getMoney());
     }
       
@@ -719,7 +742,7 @@ public class Game extends JFrame implements Serializable
                
                else if(currPlayer.getName().equals(p2.getName()))
                {
-                   P2Lbl.setText(p1.getName()+" : LOST");
+                   P2Lbl.setText(p2.getName()+" : LOST");
                    listP2.setListData(new String[]{""});
                }
                
@@ -734,17 +757,21 @@ public class Game extends JFrame implements Serializable
                    P4Lbl.setText(p4.getName()+" : LOST");
                    listP4.setListData(new String[]{""});
                }
-               
-               numberOfPlayers--;
-               Board.setNumberOfPlayers(numberOfPlayers);
+
                currPlayer.Kick();
+               numberOfPlayers--;
+               current--;
                Players.remove(currPlayer); 
                Board.setPlayers(Players);
-               Board.repaint();               
-               currPlayer = Players.get(current);
-               Roll.setEnabled(true);
-               Buy.setEnabled(false);
-               EndTurn.setEnabled(false);
+               Board.setNumberOfPlayers(numberOfPlayers);
+               Board.repaint();  
+               EndTurn.doClick();
+               
+               if(Players.size() == 1)
+               {
+                   JOptionPane.showMessageDialog(null, "CONGRATULATIONS! "+Players.get(0).getName().toUpperCase()+"IS THE WINNER");
+                   EndGame(0);
+               }
            }
     }
     
@@ -753,7 +780,7 @@ public class Game extends JFrame implements Serializable
         public void actionPerformed(ActionEvent e)
         {
             Location l = Countries.get(currPlayer.getIndex());
-            Info.setText(l.viewInformation());
+            Info.setText(l.toString());
             Info.setFont(new Font("Arial",Font.BOLD,14));
         }
     }
@@ -772,17 +799,20 @@ public class Game extends JFrame implements Serializable
     {
         public void actionPerformed(ActionEvent e)
         {
+            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" ended their turn.");
             BuildHouse.setEnabled(false);
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
             
             while(currPlayer.isPrisoned() && !(currPlayer.hasFreePass()) && !(currPlayer.PaidForPrison))
             {
+                Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" is in jail and cannot play this turn.");
                 currPlayer.setPrisoned(false);
                 current = (current+1)%numberOfPlayers;
                 currPlayer = Players.get(current);
             }
             
+            Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+"'s turn");
             isFirstTurn = true;
             currPlayer.setFreePass(false);
             currPlayer.PaidForPrison=false;
@@ -888,6 +918,19 @@ public class Game extends JFrame implements Serializable
                 Buy.setEnabled(true);
                 Sell.setEnabled(true);
                
+                if(Dice.getIsDouble() && isFirstTurn && !currPlayer.isPrisoned())
+               {
+                    Roll.setEnabled(true); 
+                    InfoLog.setText(InfoLog.getText()+"\n"+currPlayer.getName()+" gets to roll one more time!");
+                    isFirstTurn = false;                    
+                }
+               
+               else
+               {
+                   Roll.setEnabled(false);
+                   isFirstTurn = true;
+               }
+                
                if(l instanceof Country)
                {
                    Country c = (Country) l;
@@ -899,22 +942,12 @@ public class Game extends JFrame implements Serializable
                currPlayer.checkTaxes();
                currPlayer.checkChance(motionTimer, DiceTimer, Dice, Game.this);
                currPlayer.checkCommunityChest(motionTimer, DiceTimer, Dice, Game.this);
-               currPlayer.CheckJail(motionTimer, Game.this);      
-               updateLabels();                
+               currPlayer.CheckJail(motionTimer, Game.this);
                EndTurn.setEnabled(true);
                checkIfLost();
-               if(Dice.getIsDouble() && isFirstTurn && !currPlayer.isPrisoned())
-               {
-                    Roll.setEnabled(true); 
-                    InfoLog.setText(InfoLog.getText()+"You get to roll one more time!\n");
-                    isFirstTurn = false;                    
-                }
-               
-               else
-               {
-                   Roll.setEnabled(false);
-                   isFirstTurn = true;
-               }
+               updateLabels();                
+               updateLists();
+
            }
         }
     }
@@ -934,6 +967,7 @@ public class Game extends JFrame implements Serializable
 //                Scanner sc = new Scanner(System.in);
 //                DiceRoll = sc.nextInt();
                 DiceRoll = Dice.getDiceRoll();
+                Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" rolled "+DiceRoll);
                 Dice.setCount(0);
                 DiceTimer.stop();
                 motionTimer.start();
@@ -1070,7 +1104,7 @@ public class Game extends JFrame implements Serializable
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(currPlayer.CanBuy(200))
+            if(currPlayer.CanBuy(200,false))
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
                 
@@ -1085,7 +1119,7 @@ public class Game extends JFrame implements Serializable
                     
                 }
                 currPlayer.deductMoney(200);
-                
+                Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" built a house on "+c.getName());
                 c.setnHouses(c.getnHouses()+1);
                 c.setRent(200*c.getnHouses());
                 updateLabels();
@@ -1160,7 +1194,6 @@ public class Game extends JFrame implements Serializable
             JOptionPane.getRootFrame().dispose(); 
        }
    }
-   
 }
  
 

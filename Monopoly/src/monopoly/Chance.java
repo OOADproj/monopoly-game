@@ -184,7 +184,11 @@ public class Chance extends Location implements Serializable
                 {
                     Country c = (Country)cc.get(i);
                     if(c.getnHouses()>0)
-                        p.deductMoney(25*c.getnHouses());
+                        if(p.CanBuy(25*c.getnHouses(), true))
+                            p.deductMoney(25*c.getnHouses());
+                    
+                        else
+                            p.setLost(true);
                 }
                 
             }
@@ -192,7 +196,11 @@ public class Chance extends Location implements Serializable
         if (index == 10)
         {
             JOptionPane.showMessageDialog(null,card[10],"CHANCE",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(15);
+            if(p.CanBuy(15, true))
+                p.deductMoney(15);
+            
+            else
+                p.setLost(true);
         }
         
         if (index == 11) 
@@ -212,9 +220,18 @@ public class Chance extends Location implements Serializable
         if (index == 13) 
         {
             JOptionPane.showMessageDialog(null,card[13],"CHANCE",JOptionPane.PLAIN_MESSAGE);
-            p.deductMoney(50 * Game.getPlayers().size());
-            for (int i = 0; i < Game.getPlayers().size(); i++)
+            if(p.CanBuy(50*Game.getPlayers().size(), true))
+            {
+                p.deductMoney(50 * Game.getPlayers().size());
+                
+                for (int i = 0; i < Game.getPlayers().size(); i++)
                 Game.getPlayers().get(i).addMoney(50);
+            }
+            
+            else
+                p.setLost(true);
+            
+            
         }
         
         if (index == 14)

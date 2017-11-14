@@ -67,28 +67,14 @@ public class Country extends Location implements Serializable
     public void setOwner(String Owner){this.Owner = Owner;}
     public void removeOwner(){this.Owner = "None" ; }
     
-    public String viewInformation()
-    {
-        return
-        "Name: "+getName()+"\n"+
-        "Cost: "+"$"+Cost+"\n"+        
-        "Rent: "+"$"+Rent+"\n"+
-        "Owner: "+Owner+"\n"+
-        "Houses: "+nHouses;             
-    }
-    
     public String toString()
     {
         return
                 super.toString()+
-                Cost+"\n"+
-                Rent+"\n"+
-                Bought+"\n"+
-                nHotels+"\n"+
-                nHouses+"\n"+
-                Owner+"\n"+
-                cIndex+"\n"+
-                setComplete+"\n"+
-                listIndex+"\n";               
+                "Cost: $"+Cost+"\n"+
+                "Rent: $"+Rent+"\n"+
+                "Owner: "+Owner+"\n"+
+                "Houses built: "+nHouses+"\n"+
+                "Hotels built: "+nHotels;             
     }
 }

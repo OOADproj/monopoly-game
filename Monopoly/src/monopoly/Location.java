@@ -16,16 +16,16 @@ public class Location implements Serializable
     public void setName(String Name){this.Name = Name;}
 
     public Location(String Name,Color c){this.Name = Name; this.c = c;}
-    
-    public String viewInformation()
-    {
-       return "";
-    }
-    
+     
     public String toString()
     {
         return
-                Name+"\n";
+                "Name: "+Name+"\n";
+    }
+    
+    public int getCost()
+    {
+        return 0;
     }
     
     public static Color getTileColor(String s, ArrayList<Location> Countries)
