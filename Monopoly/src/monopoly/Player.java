@@ -21,6 +21,7 @@ public class Player implements Serializable
     private boolean hasLost = false;
     public boolean PaidForPrison = false;
     private static ImageIcon house = new ImageIcon("Resources/house2.png");
+    private static ImageIcon hotel = new ImageIcon("Resources/hotel.png");
     private char[] myCountries=new char[40];
 
     private boolean DifferentRent = false;
@@ -265,6 +266,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),586,616,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),599,616,13,15,b);
+                            if (c.getnHotels()==1)
+                            g.drawImage(hotel.getImage(),560,616,13,15,b);
                         }
                         if(c.getcIndex()==3)
                         {   if(c.getnHouses()>=1)
@@ -275,6 +278,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),468,616,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),481,616,13,15,b);
+                            if (c.getnHotels()==1)
+                            g.drawImage(hotel.getImage(),442,616,13,15,b); 
                         }
                         if(c.getcIndex()==6)
                         {   if(c.getnHouses()>=1)
@@ -285,6 +290,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),294,616,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),307,616,13,15,b);
+                            if (c.getnHotels()==1)
+                             g.drawImage(hotel.getImage(),268,616,13,15,b);    
                         }
                         if(c.getcIndex()==8)
                         {   if(c.getnHouses()>=1)
@@ -295,6 +302,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),178,616,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),191,616,13,15,b);
+                             if (c.getnHotels()==1)
+                                  g.drawImage(hotel.getImage(),152,616,13,15,b);  
                         }
                         if(c.getcIndex()==9)
                         {   if(c.getnHouses()>=1)
@@ -305,6 +314,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),119,616,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),132,616,13,15,b);
+                             if (c.getnHotels()==1)
+                                  g.drawImage(hotel.getImage(),93,616,13,15,b);    
                         }
                         if(c.getcIndex()==11)
                         {   if(c.getnHouses()>=1)
@@ -315,6 +326,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,584,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,597,15,13,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),72,558,15,13,b); 
                         }
                         if(c.getcIndex()==13)
                         {   if(c.getnHouses()>=1)
@@ -325,6 +338,9 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,468,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,481,15,13,b);
+                             if (c.getnHotels()==1)
+                                  g.drawImage(hotel.getImage(),72,442,15,13,b);
+                                 
                         }
                         if(c.getcIndex()==14)
                         {   if(c.getnHouses()>=1)
@@ -335,6 +351,9 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,410,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,423,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),72,384,15,13,b);
+                                
                         }
                         if(c.getcIndex()==16)
                         {   if(c.getnHouses()>=1)
@@ -345,6 +364,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,293,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,306,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),72,267,15,13,b); 
                         }
                         if(c.getcIndex()==18)
                         {   if(c.getnHouses()>=1)
@@ -355,6 +376,9 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,178,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,191,15,13,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),72,152,15,13,b); 
+                                
                         }
                         if(c.getcIndex()==19)
                         {   if(c.getnHouses()>=1)
@@ -365,6 +389,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),72,120,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),72,133,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),72,94,15,13,b);      
                         }
                         if(c.getcIndex()==29)
                         {   if(c.getnHouses()>=1)
@@ -375,6 +401,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),586,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),599,75,13,15,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),560,75,13,15,b);
                         }
                         if(c.getcIndex()==27)
                         {   if(c.getnHouses()>=1)
@@ -385,6 +413,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),468,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),481,75,13,15,b);
+                             if (c.getnHotels()==1)
+                                  g.drawImage(hotel.getImage(),442,75,13,15,b);
                         }
                         if(c.getcIndex()==24)
                         {   if(c.getnHouses()>=1)
@@ -395,6 +425,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),294,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),307,75,13,15,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),268,75,13,15,b);  
                         }
                         if(c.getcIndex()==26)
                         {   if(c.getnHouses()>=1)
@@ -405,6 +437,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),411,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),424,75,13,15,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),385,75,13,15,b);  
                         }
                         if(c.getcIndex()==23)
                         {   if(c.getnHouses()>=1)
@@ -415,6 +449,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),236,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),249,75,13,15,b);
+                             if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),210,75,13,15,b);      
                         }
                         if(c.getcIndex()==21)
                         {   if(c.getnHouses()>=1)
@@ -425,6 +461,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),119,75,13,15,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),132,75,13,15,b);
+                             if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),93,75,13,15,b);    
                         }
                         if(c.getcIndex()==39)
                         {   if(c.getnHouses()>=1)
@@ -435,6 +473,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),620,584,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),620,597,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),620,558,15,13,b); 
                         }
                         if(c.getcIndex()==37)
                         {   if(c.getnHouses()>=1)
@@ -445,6 +485,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),620,468,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),620,481,15,13,b);
+                            if (c.getnHotels()==1)
+                                g.drawImage(hotel.getImage(),620,442,15,13,b);
                         }
                         
                         if(c.getcIndex()==34)
@@ -456,6 +498,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),620,293,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),620,306,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),620,267,15,13,b);
                         }
                         if(c.getcIndex()==32)
                         {   if(c.getnHouses()>=1)
@@ -466,6 +510,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),620,178,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),620,191,15,13,b);
+                            if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),620,152,15,13,b); 
                         }
                         if(c.getcIndex()==31)
                         {   if(c.getnHouses()>=1)
@@ -476,6 +522,8 @@ public class Player implements Serializable
                             g.drawImage(house.getImage(),620,120,15,13,b);
                             if(c.getnHouses()==4)
                             g.drawImage(house.getImage(),620,133,15,13,b);
+                             if (c.getnHotels()==1)
+                                 g.drawImage(hotel.getImage(),620,94,15,13,b);
                         }
                     }
                 }

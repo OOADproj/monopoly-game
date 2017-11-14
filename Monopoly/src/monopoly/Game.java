@@ -23,6 +23,7 @@ public class Game extends JFrame implements Serializable
     private JButton InfoButton = new JButton("View Tile Information");
     private JButton EndTurn = new JButton("End Turn");
     private JButton BuildHouse = new JButton("Build House");
+    private JButton BuildHotel = new JButton("Build Hotel");
     private JButton SellHouse = new JButton("Sell House");
     private JButton Save = new JButton("Save");
     private JButton Exit = new JButton("New game");
@@ -115,6 +116,9 @@ public class Game extends JFrame implements Serializable
         BuildHouse.setPreferredSize(new Dimension(120,40));
         BuildHouse.setBounds(170,340,120,40);
         BuildHouse.setEnabled(false);
+        BuildHotel.setPreferredSize(new Dimension(120,40));
+        BuildHotel.setBounds(460,480,120,40);
+        BuildHotel.setEnabled(false);
         SellHouse.setPreferredSize(new Dimension(120,40));
         SellHouse.setBounds(430,340,120,40);
         SellHouse.setEnabled(false);
@@ -132,6 +136,7 @@ public class Game extends JFrame implements Serializable
         Board.add(Dice);
         Board.add(Sell);
         Board.add(BuildHouse);
+        Board.add(BuildHotel);
         JScrollPane ScrollableLog = new JScrollPane(InfoLog);
         ScrollableLog.setBounds(100, 390, 165 ,200);
         Board.add(ScrollableLog);
@@ -148,6 +153,7 @@ public class Game extends JFrame implements Serializable
         EndTurn.addActionListener(new EndButtonListener());
         Sell.addActionListener(new SellButtonListener());
         BuildHouse.addActionListener(new BtnBuildListener());
+        BuildHotel.addActionListener(new BtnHotelBuildListener());
         Save.addActionListener(new SaveBtnListener());
         Exit.addActionListener(new ExitBtnListener());
         setVisible(true); 
@@ -801,6 +807,7 @@ public class Game extends JFrame implements Serializable
         {
             Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" ended their turn.");
             BuildHouse.setEnabled(false);
+            BuildHotel.setEnabled(false);
             current = (current+1)%numberOfPlayers;
             currPlayer = Players.get(current);
             
@@ -935,7 +942,10 @@ public class Game extends JFrame implements Serializable
                {
                    Country c = (Country) l;
                    if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
-                       BuildHouse.setEnabled(true);
+                   {   BuildHouse.setEnabled(true);
+                       if(c.getnHouses()==4 && checkEvenHouses(c.getcIndex(),4) &&c.getnHotels()==0)
+                            BuildHotel.setEnabled(true);
+                   }              
                }
                
                currPlayer.checkRent(Players,Dice);
@@ -1107,11 +1117,16 @@ public class Game extends JFrame implements Serializable
             if(currPlayer.CanBuy(200,false))
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
-                
+                try
+                {
                   if(!checkEvenHouses(c.getcIndex(),c.getnHouses()))
-                  {   JOptionPane.showMessageDialog(null, "You must build evenly");
-                            return;
-                  }             
+                  throw new BuildEvenException();
+                }
+                catch(BuildEvenException exc)
+                {
+                    JOptionPane.showMessageDialog(null, exc.getMessage());
+                    return;
+                }            
                 if (c.getnHouses()==4)
                 {
                      JOptionPane.showMessageDialog(null, "You already own 4 houses which is the maximum");
@@ -1127,7 +1142,25 @@ public class Game extends JFrame implements Serializable
             }
         }
     }
-    
+    public class BtnHotelBuildListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            if(currPlayer.CanBuy(200))
+            {
+                Country c = (Country) currPlayer.getCurrentLocation() ;
+                
+                c.setnHouses(0);
+                c.setnHotels(1);
+                currPlayer.deductMoney(200);
+                
+                
+                c.setRent(200*5);
+                updateLabels();
+                repaint();
+            }
+        }
+    }
     public class SaveBtnListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
