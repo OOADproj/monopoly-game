@@ -463,7 +463,6 @@ public class Game extends JFrame implements Serializable
             listP1.setBorder(P1Title);
             listP1.setPreferredSize(new Dimension(293,200));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
-        
             listP2.setBorder(P2Title);
             listP2.setPreferredSize(new Dimension(293,200));
             listP2.setFont(new Font("Arial",Font.PLAIN,12));
@@ -471,7 +470,7 @@ public class Game extends JFrame implements Serializable
             listP3.setBorder(P3Title);
             listP3.setPreferredSize(new Dimension(293,200));
             listP3.setFont(new Font("Arial",Font.PLAIN,12));
-            
+           
             Players.add(p1);
             Players.add(p2);
             Players.add(p3);
@@ -525,7 +524,6 @@ public class Game extends JFrame implements Serializable
             listP1.setBorder(P1Title);
             listP1.setPreferredSize(new Dimension(293,150));
             listP1.setFont(new Font("Arial",Font.PLAIN,12));
-        
             listP2.setBorder(P2Title);
             listP2.setPreferredSize(new Dimension(293,150));
             listP2.setFont(new Font("Arial",Font.PLAIN,12));
@@ -548,53 +546,20 @@ public class Game extends JFrame implements Serializable
     
     void initializeCountries()
     {
-        Countries.add(new Location("GO"));
         
-        Countries.add(new Country("Times Square",60,2,1));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Baltic Avenue",60,4,3));
-        Countries.add(new Location ("Income Tax"));
-        Countries.add(new RailRoad("Reading Railroad"));
-        Countries.add(new Country("Oriental Avenue",100,6,6));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Vermont Avenue",100,6,8));
-        Countries.add(new Country("Ellis Island",120,8,9));
 
         Countries.add(new Jail());
 
-        Countries.add(new Country("East Village",140,10,11));
-        Countries.add(new waterelec("Electric Company"));
-        Countries.add(new Country("States Avenue",140,10,13));
-        Countries.add(new Country("Virginia Avenue",160,12,14));
-        Countries.add(new RailRoad("Pennsylvania Railroad"));
-        Countries.add(new Country("St James Place",160,14,16));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Tennesee Avenue",180,14,18));
-        Countries.add(new Country("New York Avenue",200,16,19));
         
-        Countries.add(new Location("Free Parking"));
         
-        Countries.add(new Country("Kentucky Avenue",220,18,21));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Indiana Avenue",220,18,23));
-        Countries.add(new Country("Illinois Avenue",240,20,24));
-        Countries.add(new RailRoad("B&O Railroad"));
-        Countries.add(new Country("Atlantic Avenue",260,22,26));
-        Countries.add(new Country("Ventor Avenue",260,22,27));
-        Countries.add(new waterelec("Water Works"));        
-        Countries.add(new Country("Marvin Gardens",280,24,29));
         
-        Countries.add(new Location ("Go to Jail"));
         
-        Countries.add(new Country("Pacific Avenue",300,26,31));      
-        Countries.add(new Country("Central Park",300,26,32));
         Countries.add(new communityChest("Community Chest"));
-        Countries.add(new Country("Penn Avenue",320,28,34));
-        Countries.add(new RailRoad("Short Line"));
         Countries.add(new Chance("Chance"));
-        Countries.add(new Country("Park Place",350,35,37));
-        Countries.add(new Location ("Luxury Tax"));
-        Countries.add(new Country("Wall Street",400,50,39));
     }
     
     public void updateLabels()
@@ -892,11 +857,8 @@ public class Game extends JFrame implements Serializable
                {
                    Country c = (Country) l;
                    if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
-                       BuildHouse.setEnabled(true);
-                   {   BuildHouse.setEnabled(true);
                        if(c.getnHouses()==4 && checkEvenHouses(c.getcIndex(),4) &&c.getnHotels()==0)
                             BuildHotel.setEnabled(true);
-                   }
                }
                
                currPlayer.checkRent(Players,Dice);
@@ -1079,9 +1041,11 @@ public class Game extends JFrame implements Serializable
                 Country c = (Country) currPlayer.getCurrentLocation() ;
                 try
                 {
+                
                   if(!checkEvenHouses(c.getcIndex(),c.getnHouses()))
                   {   JOptionPane.showMessageDialog(null, "You must build evenly");
                             return;
+                  {   
                   }             
                   throw new BuildEvenException();
                 }
