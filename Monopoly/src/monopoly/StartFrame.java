@@ -324,8 +324,8 @@ public class StartFrame extends JFrame
                 for(int i=0 ; i < n ; i++)
                     players[i] = (Player) ois.readObject();
                    
-                Boolean[] states = new Boolean[5];
-                for(int i=0 ; i < 5 ; i++)
+                Boolean[] states = new Boolean[6];
+                for(int i=0 ; i < 6 ; i++)
                     states[i] = ois.readBoolean();
              
                 ArrayList<Location> Countries = (ArrayList<Location>) ois.readObject();

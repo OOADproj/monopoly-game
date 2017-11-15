@@ -102,25 +102,25 @@ public class Game extends JFrame implements Serializable
         InfoLog.setBorder(InfoLogName);
         
         Buy.setPreferredSize(new Dimension(80,40));
-        Buy.setBounds(210,295,80,40);
+        Buy.setBounds(210,260,80,40);
         Buy.setEnabled(false);
-        InfoButton.setBounds(270,250,180,40);
-        Roll.setBounds(320,295,80,40);
+        InfoButton.setBounds(270,215,180,40);
+        Roll.setBounds(320,260,80,40);
         Info.setBounds(270,390,180,200);
-        EndTurn.setBounds(300,340,120,40);
+        EndTurn.setBounds(300,305,120,40);
         EndTurn.setEnabled(false);
         Info.setEditable(false);
         Info.setBorder(InfoTitle);
         Sell.setPreferredSize(new Dimension(80,40));
-        Sell.setBounds(430,295,80,40);
+        Sell.setBounds(430,260,80,40);
         BuildHouse.setPreferredSize(new Dimension(120,40));
-        BuildHouse.setBounds(170,340,120,40);
+        BuildHouse.setBounds(170,305,120,40);
         BuildHouse.setEnabled(false);
         BuildHotel.setPreferredSize(new Dimension(120,40));
-        BuildHotel.setBounds(460,480,120,40);
+        BuildHotel.setBounds(170,350,120,40);
         BuildHotel.setEnabled(false);
         SellHouse.setPreferredSize(new Dimension(120,40));
-        SellHouse.setBounds(430,340,120,40);
+        SellHouse.setBounds(430,305,120,40);
         SellHouse.setEnabled(false);
         Save.setBounds(460,390,120,40);
         Exit.setBounds(460,435,120,40);
@@ -153,6 +153,7 @@ public class Game extends JFrame implements Serializable
         EndTurn.addActionListener(new EndButtonListener());
         Sell.addActionListener(new SellButtonListener());
         BuildHouse.addActionListener(new BtnBuildListener());
+        SellHouse.addActionListener(new SellHousesBtnListener());
         BuildHotel.addActionListener(new BtnHotelBuildListener());
         Save.addActionListener(new SaveBtnListener());
         Exit.addActionListener(new ExitBtnListener());
@@ -234,6 +235,7 @@ public class Game extends JFrame implements Serializable
             oos.writeBoolean(Buy.isEnabled());
             oos.writeBoolean(BuildHouse.isEnabled());
             oos.writeBoolean(SellHouse.isEnabled());
+            oos.writeBoolean(BuildHotel.isEnabled());
         }
         
         catch(Exception e)
@@ -361,6 +363,7 @@ public class Game extends JFrame implements Serializable
         Buy.setEnabled(states[2]);
         BuildHouse.setEnabled(states[3]);
         SellHouse.setEnabled(states[4]);
+        BuildHotel.setEnabled(states[5]);
     }
     private void loadCountries(ArrayList<Location> Countries)
     {
@@ -890,12 +893,20 @@ public class Game extends JFrame implements Serializable
     {
     @Override
     public void actionPerformed(ActionEvent e){
-           
-           currPlayer.addMoney(100);
+        
            Country c = (Country) currPlayer.getCurrentLocation() ;
-           c.setnHouses(c.getnHouses()-1);
-           c.setRent(200*(c.getnHouses()-1));
-           updateLabels();
+           if(c.getnHouses() >= 1)
+           {
+                currPlayer.addMoney(100);
+
+                c.setnHouses(c.getnHouses()-1);
+                c.setRent(200*(c.getnHouses()-1));
+                updateLabels();
+                Board.repaint();
+           }
+           
+           else
+               JOptionPane.showMessageDialog(null, "You don't own any houses to sell!");
         
     }
     }
@@ -920,6 +931,12 @@ public class Game extends JFrame implements Serializable
            {
                 currPlayer.setDirection(true);
                 Location l = Countries.get(currPlayer.getIndex());
+                if(l instanceof Country)
+                    SellHouse.setEnabled(true);
+                
+                else
+                    SellHouse.setEnabled(false);
+                
                 currPlayer.setCurr(l);
                 motionTimer.stop();
                 Buy.setEnabled(true);
@@ -938,15 +955,15 @@ public class Game extends JFrame implements Serializable
                    isFirstTurn = true;
                }
                 
-               if(l instanceof Country)
-               {
-                   Country c = (Country) l;
-                   if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
-                   {   BuildHouse.setEnabled(true);
-                       if(c.getnHouses()==4 && checkEvenHouses(c.getcIndex(),4) &&c.getnHotels()==0)
-                            BuildHotel.setEnabled(true);
-                   }              
-               }
+//               if(l instanceof Country)
+//               {
+//                   Country c = (Country) l;
+//                   if(c.isSetComplete()&& c.getOwner().equals(currPlayer.getName()))
+//                   {   BuildHouse.setEnabled(true);
+//                       if(c.getnHouses()==4 && checkEvenHouses(c.getcIndex(),4) &&c.getnHotels()==0)
+//                            BuildHotel.setEnabled(true);
+//                   }              
+//               }
                
                currPlayer.checkRent(Players,Dice);
                currPlayer.checkTaxes();
@@ -974,9 +991,10 @@ public class Game extends JFrame implements Serializable
             
             else
             {
-//                Scanner sc = new Scanner(System.in);
-//                DiceRoll = sc.nextInt();
-                DiceRoll = Dice.getDiceRoll();
+                Scanner sc = new Scanner(System.in);
+                DiceRoll = sc.nextInt();
+                
+                //DiceRoll = Dice.getDiceRoll();
                 Game.InfoLog.setText(Game.InfoLog.getText()+"\n"+currPlayer.getName()+" rolled "+DiceRoll);
                 Dice.setCount(0);
                 DiceTimer.stop();
@@ -1009,7 +1027,7 @@ public class Game extends JFrame implements Serializable
                 c1= (Country)Countries.get(37);            
             }
             
-            if(c1.getnHouses()==nHouses||c1.getnHotels()==nHouses+1)
+            if(c1.getnHouses()==nHouses||c1.getnHouses()==nHouses+1)
                     return true;
             else 
                 return false;
@@ -1104,7 +1122,7 @@ public class Game extends JFrame implements Serializable
             c1= (Country)Countries.get(31);
             c2= (Country)Countries.get(32);           
         }
-        if((c1.getnHouses()==nHouses||c1.getnHotels()==nHouses+1)&&(c2.getnHouses()==nHouses||c2.getnHotels()==nHouses+1))
+        if((c1.getnHouses()==nHouses||c1.getnHouses()==nHouses+1)&&(c2.getnHouses()==nHouses||c2.getnHouses()==nHouses+1))
                 return true;
      
         return false;
@@ -1146,18 +1164,18 @@ public class Game extends JFrame implements Serializable
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(currPlayer.CanBuy(200))
+            if(currPlayer.CanBuy(200,false))
             {
                 Country c = (Country) currPlayer.getCurrentLocation() ;
-                
-                c.setnHouses(0);
-                c.setnHotels(1);
-                currPlayer.deductMoney(200);
-                
-                
-                c.setRent(200*5);
-                updateLabels();
-                repaint();
+                if(c.getnHouses() == 4)
+                {
+                    c.setnHouses(0);
+                    c.setnHotels(1);
+                    currPlayer.deductMoney(200);
+                    c.setRent(200*5);
+                    updateLabels();
+                    repaint();
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ public class Player implements Serializable
     private String Name;
     private Location currentLocation;
     private ArrayList<Location> OwnedCountries = new ArrayList();
-    private int Money = 1500;
+    private int Money = 999999;
     private ImageIcon Img;
     private int x;
     private int y;
