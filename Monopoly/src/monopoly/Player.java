@@ -9,7 +9,7 @@ public class Player implements Serializable
     private String Name;
     private Location currentLocation;
     private ArrayList<Location> OwnedCountries = new ArrayList();
-    private int Money = 999999;
+    private int Money = 1500;
     private ImageIcon Img;
     private int x;
     private int y;
@@ -255,7 +255,7 @@ public class Player implements Serializable
                 if(OwnedCountries.get(i) instanceof Country)
                 {
                     Country c = (Country) OwnedCountries.get(i);
-                    if (c.getnHouses()>0)
+                    if (c.getnHouses()>=0)
                     {
                         if(c.getcIndex()==1)
                         {   if(c.getnHouses()>=1)
